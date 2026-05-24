@@ -1,0 +1,3559 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, interactive-widget=resizes-content">
+<meta name="theme-color" content="#0f0f1a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Contrat de Location</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* Offline fallback font stack if Google Fonts unavailable */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400 800;
+  src: local('Inter'), local('Inter-Regular'), local('-apple-system'), local('BlinkMacSystemFont');
+}
+</style>
+<style>
+/* ===================== VARIABLES ===================== */
+:root {
+  --bg: #f4f4f9;
+  --card: #ffffff;
+  --primary: #0f0f1a;
+  --accent: #6c63ff;
+  --accent2: #a855f7;
+  --green: #06d6a0;
+  --blue: #4cc9f0;
+  --red: #e63946;
+  --gold: #ffd166;
+  --text: #1a1a2e;
+  --muted: #8888aa;
+  --border: #e8e8f0;
+  --shadow: 0 2px 12px rgba(108,99,255,0.08);
+  --shadow-md: 0 8px 32px rgba(108,99,255,0.15);
+  --radius: 16px;
+  --radius-sm: 12px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ===================== HEADER ===================== */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: linear-gradient(135deg, var(--primary) 0%, #1a1a3e 100%);
+  padding: 14px 18px 10px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.25);
+}
+
+.header-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.header-icon { font-size: 24px; flex-shrink: 0; }
+
+.header-info { flex: 1; }
+
+.header-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: white;
+  letter-spacing: -0.3px;
+}
+
+.header-sub {
+  font-size: 9px;
+  color: rgba(255,255,255,0.45);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-top: 2px;
+}
+
+.header-badge {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+  flex-shrink: 0;
+}
+
+.progress-track {
+  height: 3px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--green));
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
+.nav-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-pills {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  flex: 1;
+  padding-bottom: 2px;
+}
+
+.nav-pills::-webkit-scrollbar { display: none; }
+
+.pill {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.55);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 5px 10px;
+  border-radius: 20px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.pill.active {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  border-color: transparent;
+  color: white;
+}
+
+.capture-btn {
+  flex-shrink: 0;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 8px;
+  padding: 5px 8px;
+  cursor: pointer;
+  font-size: 15px;
+  line-height: 1;
+}
+
+/* ===================== SECTION TITLE ===================== */
+.section-title-bar {
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 18px;
+}
+
+.section-title-bar h2 {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.3px;
+}
+
+/* ===================== CONTENT ===================== */
+.content { padding: 16px 16px 140px; max-width: 600px; margin: 0 auto; }
+
+.section { display: none; }
+.section.active { display: block; }
+
+/* ===================== CARDS & FIELDS ===================== */
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+
+.card-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+
+.field {
+  margin-bottom: 14px;
+}
+
+.field label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  transition: border-color 0.2s;
+  outline: none;
+  -webkit-appearance: none;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: var(--accent);
+  background: white;
+}
+
+.field textarea {
+  min-height: 80px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.field .hint {
+  font-size: 10px;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* ===================== INFO BOXES ===================== */
+.info-box {
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.5;
+  margin-bottom: 14px;
+}
+
+.ib-blue   { background: #e8f4ff; color: #1565c0; border-left: 3px solid var(--blue); }
+.ib-orange { background: #fff3e0; color: #e65100; border-left: 3px solid #ff9800; }
+.ib-green  { background: #e8fff8; color: #00695c; border-left: 3px solid var(--green); }
+.ib-purple { background: #f3f0ff; color: #4c3db0; border-left: 3px solid var(--accent); }
+.ib-red    { background: #fff0f0; color: #b71c1c; border-left: 3px solid var(--red); }
+
+/* ===================== LOI REFERENCE ===================== */
+.loi {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin-top: 6px;
+  padding: 6px 10px;
+  background: linear-gradient(135deg, #edf5ff, #f3f0ff);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 8px 8px 0;
+  font-size: 9.5px;
+  color: #4c3db0;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.loi::before { content: "⚖️"; font-size: 10px; flex-shrink: 0; margin-top: 1px; }
+
+/* ===================== TYPE CARDS ===================== */
+.type-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.type-card {
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: var(--shadow);
+}
+
+.type-card.active {
+  border-color: var(--accent);
+  background: #f3f0ff;
+  box-shadow: 0 4px 16px rgba(108,99,255,0.2);
+}
+
+.type-icon {
+  font-size: 32px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+}
+.type-icon svg {
+  width: 40px;
+  height: 40px;
+  display: block;
+}
+.type-name { font-size: 13px; font-weight: 700; color: var(--text); }
+.type-sub  { font-size: 10px; color: var(--muted); margin-top: 2px; }
+
+/* ===================== DURATION BOX ===================== */
+.duration-box {
+  background: var(--card);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow);
+  border: 1.5px solid var(--accent);
+}
+
+.duration-box .box-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.duree-result {
+  margin-top: 8px;
+  background: #f0fff8;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 12px;
+  color: var(--green);
+  font-weight: 600;
+  text-align: center;
+  display: none;
+}
+
+/* ===================== CLAUSES ===================== */
+.clause {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+}
+
+.clause:last-of-type { border-bottom: none; }
+
+.cb {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  border: 2px solid var(--border);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  transition: all 0.2s;
+}
+
+.clause.checked .cb {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.cbm { font-size: 12px; color: white; display: none; }
+.clause.checked .cbm { display: block; }
+
+.cl-text { font-size: 12px; font-weight: 500; color: var(--text); line-height: 1.5; }
+.cl-tag  { font-size: 9px; color: var(--muted); margin-top: 2px; font-style: italic; }
+
+.cg-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 14px 0 8px;
+}
+
+/* ===================== SECTION HEADERS ===================== */
+.sec-header {
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  color: white;
+}
+
+.sec-header .sec-hd-title { font-size: 13px; font-weight: 700; }
+.sec-header .sec-hd-sub   { font-size: 10px; opacity: 0.6; margin-top: 2px; }
+
+/* ===================== DIAGNOSTICS ===================== */
+.diag-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.diag-card {
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.diag-card.ok    { border-color: var(--green); background: #f0fff8; }
+.diag-card.nok   { border-color: var(--red);   background: #fff0f0; }
+.diag-card.na    { border-color: var(--muted);  background: #f7f7fc; }
+
+.diag-icon  { font-size: 20px; margin-bottom: 6px; }
+.diag-name  { font-size: 11px; font-weight: 700; color: var(--text); }
+.diag-tag   { font-size: 9px; color: var(--muted); margin-top: 2px; }
+.diag-status-row { display: flex; gap: 4px; margin-top: 8px; flex-wrap: wrap; }
+.diag-btn {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 3px 7px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: white;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  color: var(--muted);
+  transition: all 0.2s;
+}
+.diag-btn.active-ok  { background: var(--green); color: white; border-color: var(--green); }
+.diag-btn.active-nok { background: var(--red);   color: white; border-color: var(--red); }
+.diag-btn.active-na  { background: var(--muted); color: white; border-color: var(--muted); }
+
+/* ===================== IRL ===================== */
+.irl-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  margin-bottom: 14px;
+}
+.irl-table th {
+  background: linear-gradient(135deg, var(--primary), #1a1a3e);
+  color: white;
+  padding: 8px 12px;
+  text-align: left;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.irl-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  font-weight: 500;
+}
+.irl-table tr:nth-child(even) td { background: #f7f7fc; }
+.irl-table .badge-irl {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: white;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 10px;
+}
+
+.calc-box {
+  background: linear-gradient(135deg, var(--primary), #1a1a3e);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  margin-bottom: 14px;
+}
+
+.calc-box label {
+  font-size: 10px;
+  color: rgba(255,255,255,0.5);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.calc-box input, .calc-box select {
+  width: 100%;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 14px;
+  color: white;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  margin-bottom: 10px;
+}
+
+.calc-result {
+  background: rgba(6,214,160,0.15);
+  border: 1px solid rgba(6,214,160,0.3);
+  border-radius: 8px;
+  padding: 10px 14px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--green);
+  margin-top: 8px;
+  display: none;
+}
+
+/* ===================== SIGNATURE ===================== */
+.sign-canvas-wrap {
+  background: white;
+  border: 2px dashed var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  margin-bottom: 8px;
+  position: relative;
+}
+
+.sign-canvas-wrap canvas {
+  display: block;
+  width: 100%;
+  height: 140px;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.sign-actions {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.sign-clear {
+  flex: 1;
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 9px;
+  font-size: 12px;
+  color: var(--muted);
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+}
+
+.sign-ok {
+  flex: 2;
+  background: #edffef;
+  border: 1.5px solid var(--green);
+  border-radius: 8px;
+  padding: 9px;
+  font-size: 12px;
+  color: var(--green);
+  text-align: center;
+  font-weight: 600;
+}
+
+/* ===================== RECAP ===================== */
+.recap-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+.rk { color: var(--muted); font-weight: 500; }
+.rv { color: var(--text); text-align: right; max-width: 60%; font-weight: 600; }
+
+/* ===================== ACTION BUTTONS ===================== */
+.action-btn {
+  width: 100%;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  font-size: 14px;
+  font-weight: 700;
+  color: white;
+  cursor: pointer;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: 0.2s;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0.1px;
+}
+.action-btn:active { transform: scale(0.98); }
+
+.btn-dark  { background: var(--primary); box-shadow: 0 4px 16px rgba(15,15,26,.2); }
+.btn-red   { background: linear-gradient(135deg, var(--accent), var(--accent2)); box-shadow: 0 4px 16px rgba(108,99,255,.3); }
+.btn-green { background: linear-gradient(135deg, #06d6a0, #00b494); box-shadow: 0 4px 16px rgba(6,214,160,.25); }
+.btn-blue  { background: linear-gradient(135deg, var(--blue), #3a7bd5); box-shadow: 0 4px 16px rgba(76,201,240,.25); }
+
+/* ===================== WARNING ===================== */
+.warning {
+  background: #fff3e0;
+  border: 1.5px solid #ff9800;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 12px;
+  color: #e65100;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+/* ===================== DOC ITEMS ===================== */
+.doc-item {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+}
+.doc-item:last-of-type { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+.doc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.doc-info  { display: flex; align-items: center; gap: 10px; }
+.doc-icon  { font-size: 22px; flex-shrink: 0; }
+.doc-name  { font-size: 13px; font-weight: 700; color: var(--text); }
+.doc-tag   { font-size: 9px; color: var(--muted); margin-top: 2px; font-style: italic; }
+.doc-status { font-size: 18px; }
+
+.doc-actions { display: flex; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+
+.doc-btn-cam {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  border: none;
+  border-radius: 8px;
+  padding: 8px 14px;
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+}
+
+.doc-btn-file {
+  background: linear-gradient(135deg, var(--blue), #3a7bd5);
+  border: none;
+  border-radius: 8px;
+  padding: 8px 14px;
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  display: inline-block;
+}
+
+.doc-preview { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+
+.doc-thumb {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid var(--accent);
+}
+
+/* ===================== ADD BTN ===================== */
+.add-btn {
+  width: 100%;
+  background: var(--card);
+  border: 1.5px dashed rgba(108,99,255,0.25);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  font-size: 13px;
+  color: var(--accent);
+  cursor: pointer;
+  font-weight: 600;
+  margin-top: 8px;
+  transition: 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+.add-btn:hover { background: #f3f0ff; border-color: var(--accent); }
+
+/* ===================== MOBILIER ===================== */
+.mob-item {
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  margin-bottom: 10px;
+}
+.mob-item-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.mob-name { flex: 1; font-size: 13px; font-weight: 600; color: var(--text); }
+.mob-del {
+  background: var(--red);
+  border: none;
+  border-radius: 6px;
+  padding: 4px 8px;
+  color: white;
+  font-size: 11px;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+}
+
+/* ===================== BOTTOM NAV ===================== */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 600px;
+  background: rgba(255,255,255,0.97);
+  border-top: 1px solid var(--border);
+  padding: 12px 18px calc(12px + env(safe-area-inset-bottom));
+  display: flex;
+  gap: 10px;
+  box-shadow: 0 -8px 32px rgba(108,99,255,0.12);
+  backdrop-filter: blur(16px);
+  z-index: 150;
+}
+
+.btn-prev {
+  flex: 1;
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 13px;
+  font-size: 14px;
+  color: var(--text);
+  cursor: pointer;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  transition: 0.2s;
+}
+.btn-prev:disabled { color: #ccc; cursor: default; }
+
+.btn-next {
+  flex: 2;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 13px;
+  font-size: 14px;
+  color: white;
+  cursor: pointer;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  box-shadow: 0 4px 16px rgba(108,99,255,0.35);
+  transition: 0.2s;
+}
+.btn-next:active { transform: scale(0.98); }
+
+/* ===================== MODAL ===================== */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(10,10,20,0.6);
+  z-index: 200;
+  overflow-y: auto;
+  backdrop-filter: blur(8px);
+}
+
+.modal-inner {
+  max-width: 480px;
+  margin: 16px auto;
+  border-radius: 24px;
+  overflow: hidden;
+  background: var(--bg);
+  box-shadow: 0 32px 80px rgba(0,0,0,0.3);
+}
+
+.modal-header {
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(135deg, var(--primary), #1a1a3e);
+}
+
+.modal-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+  letter-spacing: -0.2px;
+}
+
+.modal-sub {
+  font-size: 9px;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.modal-close {
+  background: rgba(255,255,255,0.15);
+  border: none;
+  border-radius: 8px;
+  padding: 7px 13px;
+  color: white;
+  font-size: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+}
+
+.modal-body { padding: 18px; }
+
+/* ===================== CITY AUTOCOMPLETE ===================== */
+.city-sug {
+  position: absolute;
+  top: 100%;
+  left: 0; right: 0;
+  background: white;
+  border: 1.5px solid var(--accent);
+  border-radius: 12px;
+  margin-top: 4px;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  z-index: 300;
+  display: none;
+}
+
+.city-sug.open { display: block; }
+
+.city-item {
+  padding: 10px 14px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.city-item:last-child { border-bottom: none; }
+.city-item:hover, .city-item:active { background: #f3f0ff; }
+
+.city-item-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+}
+.city-item-cp {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent);
+  background: #f3f0ff;
+  padding: 2px 8px;
+  border-radius: 8px;
+}
+.city-item-dep {
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 1px;
+}
+
+/* ===================== EDL TABS ===================== */
+.edl-tab {
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  border-radius: 20px;
+  padding: 7px 14px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.edl-tab.active {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  border-color: transparent;
+  color: white;
+}
+
+/* ===================== PIECE EDL ===================== */
+.piece-card {
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  margin-bottom: 10px;
+}
+.piece-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.piece-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+}
+.piece-del {
+  background: var(--red);
+  border: none;
+  border-radius: 6px;
+  padding: 4px 8px;
+  color: white;
+  font-size: 11px;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+}
+.etat-btns {
+  display: flex;
+  gap: 6px;
+  margin-top: 6px;
+  flex-wrap: wrap;
+}
+.etat-btn {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border);
+  background: white;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.2s;
+}
+.etat-btn.sel-bon    { background:#e8fff8; border-color:var(--green); color:#00695c; }
+.etat-btn.sel-usage  { background:#fff8e1; border-color:#f59e0b; color:#92400e; }
+.etat-btn.sel-moyen  { background:#fff3e0; border-color:#ff9800; color:#e65100; }
+.etat-btn.sel-mauvais{ background:#fff0f0; border-color:var(--red); color:#b71c1c; }
+
+/* ===================== SEND ITEMS ===================== */
+.send-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.send-item:last-child { border-bottom: none; }
+.send-check {
+  width: 24px;
+  height: 24px;
+  border-radius: 7px;
+  border: 2px solid var(--border);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.send-check.checked {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.send-cbm { font-size: 12px; color: white; display: none; }
+.send-check.checked .send-cbm { display: block; }
+.send-info { flex: 1; }
+.send-name { font-size: 13px; font-weight: 600; color: var(--text); }
+.send-tag  { font-size: 10px; color: var(--muted); margin-top: 2px; font-style: italic; }
+.send-status { font-size: 16px; flex-shrink: 0; }
+
+/* ===================== CNI THUMB ===================== */
+.cni-thumb {
+  width: 100%;
+  border-radius: 10px;
+  border: 2px solid var(--accent);
+  object-fit: cover;
+  display: block;
+}
+
+/* ===================== SCROLLBAR ===================== */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-thumb { background: rgba(108,99,255,0.2); border-radius: 4px; }
+</style>
+<!-- PWA Manifest inline -->
+<script>
+const _manifest = {
+  name: "Baileve — Contrat de Location",
+  short_name: "Baileve",
+  description: "Application de gestion de contrats de location conformes à la loi ALUR",
+  start_url: ".",
+  display: "standalone",
+  background_color: "#0f0f1a",
+  theme_color: "#0f0f1a",
+  orientation: "portrait",
+  icons: [
+    { src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='32' fill='%230f0f1a'/%3E%3Ctext x='96' y='130' font-size='110' text-anchor='middle'%3E%E2%9A%96%EF%B8%8F%3C/text%3E%3C/svg%3E", sizes: "192x192", type: "image/svg+xml" },
+    { src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='80' fill='%230f0f1a'/%3E%3Ctext x='256' y='360' font-size='300' text-anchor='middle'%3E%E2%9A%96%EF%B8%8F%3C/text%3E%3C/svg%3E", sizes: "512x512", type: "image/svg+xml" }
+  ]
+};
+const _blob = new Blob([JSON.stringify(_manifest)], {type:'application/json'});
+const _url  = URL.createObjectURL(_blob);
+const _link = document.createElement('link');
+_link.rel = 'manifest'; _link.href = _url;
+document.currentScript.parentNode.insertBefore(_link, document.currentScript);
+</script>
+</head>
+<body>
+
+<!-- OFFLINE BANNER -->
+<div id="offlineBanner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:9999;background:linear-gradient(135deg,#e63946,#c0392b);color:white;padding:8px 16px;font-size:12px;font-weight:700;text-align:center;font-family:Inter,sans-serif;letter-spacing:0.3px">
+  📵 Mode hors connexion — Toutes les fonctionnalités locales sont disponibles
+</div>
+
+<div id="onlineBanner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:9999;background:linear-gradient(135deg,#06d6a0,#00b494);color:white;padding:8px 16px;font-size:12px;font-weight:700;text-align:center;font-family:Inter,sans-serif;letter-spacing:0.3px">
+  ✅ Connexion rétablie
+</div>
+
+<div class="app">
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-top">
+    <div class="header-icon">⚖️</div>
+    <div class="header-info">
+      <div class="header-title" id="hTitle">Contrat de Location</div>
+      <div class="header-sub" id="hSub">LOI ALUR N°2014-366</div>
+    </div>
+    <div class="header-badge" id="badge">1/10</div>
+  </div>
+  <div class="progress-track">
+    <div class="progress-bar" id="progress" style="width:10%"></div>
+  </div>
+  <div class="nav-row">
+    <div class="nav-pills" id="navPills">
+      <button class="pill active" onclick="goTo(0)">📋 Type</button>
+      <button class="pill" onclick="goTo(1)">👤 Bailleur</button>
+      <button class="pill" onclick="goTo(2)">🧑 Locataire</button>
+      <button class="pill" onclick="goTo(3)">🏡 Bien</button>
+      <button class="pill" onclick="goTo(4)">💶 Finances</button>
+      <button class="pill" onclick="goTo(5)">📜 Clauses</button>
+      <button class="pill" onclick="goTo(6)">⚖️ Résolutoire</button>
+      <button class="pill" onclick="goTo(7)">📎 Diagnostics</button>
+      <button class="pill" onclick="goTo(8)">📈 IRL</button>
+      <button class="pill" onclick="goTo(9)">✍️ Signature</button>
+      <button class="pill" onclick="goTo(10)">🧾 Quittance</button>
+      <button class="pill" onclick="goTo(11)">🏠 État des lieux</button>
+      <button class="pill" onclick="goTo(12)">📧 Envoi</button>
+    </div>
+    <button class="capture-btn" title="Capturer" onclick="window.print()">📸</button>
+  </div>
+</div>
+
+<div class="section-title-bar">
+  <h2 id="secTitle">📋 Type de contrat</h2>
+</div>
+
+<div class="content">
+
+<!-- ===== 0. TYPE ===== -->
+<div class="section active" id="s0">
+  <div class="info-box ib-blue">⚖️ Sélectionnez le type de contrat. Chaque type a ses propres règles légales et clauses spécifiques.</div>
+
+  <div class="type-grid">
+    <div class="type-card active" id="card-vide" onclick="selectType('vide')">
+      <div class="type-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="36" height="36" fill="currentColor" style="color:var(--accent)">
+          <path d="M12,3L2,12h3v8h5v-5h4v5h5v-8h3L12,3z M17,14.5c-0.3,0-0.5-0.2-0.7-0.4l-1.5-2c-0.3-0.4-0.8-0.6-1.3-0.6h-2.1c-0.5,0-1,0.2-1.3,0.6l-1.5,2c-0.2,0.2-0.4,0.4-0.7,0.4c-0.5,0-1-0.4-1-1c0-0.3,0.1-0.5,0.3-0.7l1.5-2C9.4,10.3,10.2,10,11.1,10h1.8c0.9,0,1.7,0.3,2.3,0.8l1.5,2c0.2,0.2,0.3,0.4,0.3,0.7C18,14.1,17.5,14.5,17,14.5z"/>
+        </svg>
+      </div>
+      <div class="type-name">Location vide</div>
+      <div class="type-sub">3 ans · Loi ALUR</div>
+    </div>
+    <div class="type-card" id="card-meuble" onclick="selectType('meuble')">
+      <div class="type-icon">🛋️</div>
+      <div class="type-name">Meublée</div>
+      <div class="type-sub">1 an · Loi ALUR</div>
+    </div>
+    <div class="type-card" id="card-saisonnier" onclick="selectType('saisonnier')">
+      <div class="type-icon">🌴</div>
+      <div class="type-name">Saisonnière</div>
+      <div class="type-sub">Max 90 jours</div>
+    </div>
+    <div class="type-card" id="card-professionnel" onclick="selectType('professionnel')">
+      <div class="type-icon">💼</div>
+      <div class="type-name">Professionnel</div>
+      <div class="type-sub">6 ans · Libéral</div>
+    </div>
+  </div>
+
+  <div id="ti-vide">
+    <div class="info-box ib-blue">🏠 <strong>Location vide</strong> — Durée 3 ans min · Dépôt 1 mois HC · Préavis locataire 3 mois (1 mois zone tendue)</div>
+  </div>
+  <div id="ti-meuble" style="display:none">
+    <div class="info-box ib-orange">🛋️ <strong>Location meublée</strong> — Durée 1 an min (9 mois étudiant) · Dépôt 2 mois HC · Préavis 1 mois · Mobilier décret 31/07/2015</div>
+  </div>
+  <div id="ti-saisonnier" style="display:none">
+    <div class="info-box ib-green">🌴 <strong>Location saisonnière</strong> — Max 90 jours · Prix libre · Pas de droit au maintien · ⚠️ Hors loi ALUR</div>
+  </div>
+  <div id="ti-professionnel" style="display:none">
+    <div class="info-box ib-purple">💼 <strong>Bail professionnel libéral</strong> — Durée 6 ans min · Préavis 6 mois · ⚠️ Loi du 23/12/1986</div>
+  </div>
+
+  <div class="field">
+    <label>Référence du contrat</label>
+    <input type="text" id="refContrat" placeholder="Ex : CL-2026-001">
+    <div class="loi">Art. 3 loi 89-462 — Mentions obligatoires du contrat écrit</div>
+  </div>
+
+  <div class="duration-box">
+    <div class="box-label">📅 Durée du contrat</div>
+    <div class="grid2">
+      <div class="field" style="margin-bottom:0">
+        <label>Date d'entrée</label>
+        <input type="date" id="dateDebut" oninput="calcDuree()" style="border-color:var(--green);font-size:15px;font-weight:600">
+      </div>
+      <div class="field" style="margin-bottom:0">
+        <label>Date de fin</label>
+        <input type="date" id="dateFin" oninput="calcDuree()" style="font-size:15px;font-weight:600">
+      </div>
+    </div>
+    <div class="loi" style="margin-top:8px">Art. 10 loi ALUR — Durée min. 3 ans (vide) · 1 an (meublé) · 6 ans (pro) · 90 jours max (saisonnier)</div>
+    <div class="duree-result" id="dureeResult"></div>
+  </div>
+
+  <div id="fEtudiant" style="display:none">
+    <div class="clause checked">
+      <div class="cb"><span class="cbm">✓</span></div>
+      <div>
+        <div class="cl-text">Bail étudiant (9 mois non renouvelable)</div>
+        <div class="cl-tag">Art. 25-7 Loi ALUR</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 1. BAILLEUR ===== -->
+<div class="section" id="s1">
+  <div class="info-box ib-orange">👤 Documents autorisés uniquement (Art. 22-2 Loi ALUR).</div>
+
+  <div class="grid2">
+    <div class="field"><label>Nom</label><input type="text" id="bailleurNom" placeholder="Dupont"></div>
+    <div class="field"><label>Prénom</label><input type="text" id="bailleurPrenom" placeholder="Jean"></div>
+  </div>
+  <div class="field">
+    <label>Adresse</label>
+    <input type="text" id="bailleurAdresse" placeholder="12 rue de la Paix">
+  </div>
+  <div class="grid2">
+    <div class="field" style="position:relative">
+      <label>Ville</label>
+      <input type="text" id="bailleurVille" placeholder="Paris" autocomplete="off" oninput="citySearch(this,'bailleurCP','sugBailleur')">
+      <div class="city-sug" id="sugBailleur"></div>
+    </div>
+    <div class="field"><label>Code postal</label><input type="text" id="bailleurCP" placeholder="75001" readonly style="background:#f7f7fc"></div>
+  </div>
+  <div class="grid2">
+    <div class="field"><label>Téléphone</label><input type="tel" id="bailleurTel" placeholder="+33 6 00 00 00 00"></div>
+    <div class="field"><label>Email</label><input type="email" id="bailleurEmail" placeholder="email@exemple.fr"></div>
+  </div>
+  <div class="loi">Art. 3 loi 89-462 — Adresse complète du bailleur obligatoire dans le contrat</div>
+</div>
+
+<!-- ===== 2. LOCATAIRE ===== -->
+<div class="section" id="s2">
+  <div class="info-box ib-green">🧑 Documents obligatoires (Art. 22-2 Loi ALUR).</div>
+
+  <div class="grid2">
+    <div class="field"><label>Nom</label><input type="text" id="locataireNom" placeholder="Martin"></div>
+    <div class="field"><label>Prénom</label><input type="text" id="locatairePrenom" placeholder="Sophie"></div>
+  </div>
+  <div class="field"><label>Adresse actuelle</label><input type="text" id="locataireAdresse" placeholder="5 allée des Roses"></div>
+  <div class="grid2">
+    <div class="field" style="position:relative">
+      <label>Ville</label>
+      <input type="text" id="locataireVille" placeholder="Lyon" autocomplete="off" oninput="citySearch(this,'locataireCP','sugLocataire')">
+      <div class="city-sug" id="sugLocataire"></div>
+    </div>
+    <div class="field"><label>Code postal</label><input type="text" id="locataireCP" placeholder="69001" readonly style="background:#f7f7fc"></div>
+  </div>
+  <div class="grid2">
+    <div class="field"><label>Téléphone</label><input type="tel" id="locataireTel" placeholder="+33 6 00 00 00 00"></div>
+    <div class="field"><label>Email</label><input type="email" id="locataireEmail" placeholder="email@exemple.fr"></div>
+  </div>
+  <div class="field">
+    <label>N° Pièce d'identité</label>
+    <input type="text" id="locatairePiece" placeholder="N° CNI / Passeport">
+    <div class="loi">Art. 22-2 loi ALUR — Seuls CNI, passeport, titre de séjour sont autorisés</div>
+  </div>
+
+  <div class="card" style="border:1.5px solid var(--accent)">
+    <div class="card-title">📁 Dossier locataire — Documents obligatoires</div>
+    <div class="info-box ib-purple" style="margin-bottom:12px">Art. 22-2 loi ALUR — Liste limitative des documents exigibles. Tout autre document est interdit.</div>
+
+    <div class="doc-item">
+      <div class="doc-header">
+        <div class="doc-info">
+          <span class="doc-icon">🪪</span>
+          <div>
+            <div class="doc-name">Pièce d'identité</div>
+            <div class="doc-tag">CNI, Passeport ou titre de séjour · Obligatoire</div>
+          </div>
+        </div>
+        <div class="doc-status" id="st-cni">⏳</div>
+      </div>
+      <div class="doc-actions">
+        <button class="doc-btn-cam" onclick="markDoc('cni')">📷 Recto</button>
+        <button class="doc-btn-cam" onclick="markDoc('cni')">📷 Verso</button>
+        <label class="doc-btn-file">📎 Fichier<input type="file" accept="image/*,application/pdf" style="display:none" onchange="markDoc('cni')"></label>
+      </div>
+    </div>
+
+    <div class="doc-item">
+      <div class="doc-header">
+        <div class="doc-info">
+          <span class="doc-icon">💼</span>
+          <div>
+            <div class="doc-name">3 derniers bulletins de salaire</div>
+            <div class="doc-tag">Art. 22-2 loi ALUR · Obligatoire</div>
+          </div>
+        </div>
+        <div class="doc-status" id="st-salaire">⏳</div>
+      </div>
+      <div class="doc-actions">
+        <button class="doc-btn-cam" onclick="markDoc('salaire')">📷 Caméra</button>
+        <label class="doc-btn-file">📎 Fichier(s)<input type="file" accept="image/*,application/pdf" multiple style="display:none" onchange="markDoc('salaire')"></label>
+      </div>
+    </div>
+
+    <div class="doc-item">
+      <div class="doc-header">
+        <div class="doc-info">
+          <span class="doc-icon">📋</span>
+          <div>
+            <div class="doc-name">2 derniers avis d'imposition</div>
+            <div class="doc-tag">Art. 22-2 loi ALUR · Obligatoire</div>
+          </div>
+        </div>
+        <div class="doc-status" id="st-impots">⏳</div>
+      </div>
+      <div class="doc-actions">
+        <button class="doc-btn-cam" onclick="markDoc('impots')">📷 Caméra</button>
+        <label class="doc-btn-file">📎 Fichier(s)<input type="file" accept="image/*,application/pdf" multiple style="display:none" onchange="markDoc('impots')"></label>
+      </div>
+    </div>
+
+    <div class="doc-item">
+      <div class="doc-header">
+        <div class="doc-info">
+          <span class="doc-icon">📝</span>
+          <div>
+            <div class="doc-name">Contrat de travail</div>
+            <div class="doc-tag">Art. 22-2 loi ALUR · Obligatoire</div>
+          </div>
+        </div>
+        <div class="doc-status" id="st-contrat">⏳</div>
+      </div>
+      <div class="doc-actions">
+        <button class="doc-btn-cam" onclick="markDoc('contrat')">📷 Caméra</button>
+        <label class="doc-btn-file">📎 Fichier<input type="file" accept="image/*,application/pdf" style="display:none" onchange="markDoc('contrat')"></label>
+      </div>
+    </div>
+
+    <div class="doc-item" style="border:none;margin-bottom:0;padding-bottom:0">
+      <div class="doc-header">
+        <div class="doc-info">
+          <span class="doc-icon">🧾</span>
+          <div>
+            <div class="doc-name">3 dernières quittances de loyer</div>
+            <div class="doc-tag">Art. 22-2 loi ALUR · Obligatoire</div>
+          </div>
+        </div>
+        <div class="doc-status" id="st-quittances">⏳</div>
+      </div>
+      <div class="doc-actions">
+        <button class="doc-btn-cam" onclick="markDoc('quittances')">📷 Caméra</button>
+        <label class="doc-btn-file">📎 Fichier(s)<input type="file" accept="image/*,application/pdf" multiple style="display:none" onchange="markDoc('quittances')"></label>
+      </div>
+    </div>
+  </div>
+
+  <button class="action-btn btn-blue">⬇️ Télécharger le dossier complet</button>
+</div>
+
+<!-- ===== 3. BIEN ===== -->
+<div class="section" id="s3">
+  <div class="field">
+    <label>Adresse du bien</label>
+    <input type="text" id="bienAdresse" placeholder="15 avenue des Fleurs">
+    <div class="loi">Art. 3 loi 89-462 — Désignation précise et localisation du logement obligatoires</div>
+  </div>
+  <div class="grid2">
+    <div class="field" style="position:relative">
+      <label>Ville</label>
+      <input type="text" id="bienVille" placeholder="Lyon" autocomplete="off" oninput="citySearch(this,'bienCP','sugBien')">
+      <div class="city-sug" id="sugBien"></div>
+    </div>
+    <div class="field"><label>Code postal</label><input type="text" id="bienCP" placeholder="69001" readonly style="background:#f7f7fc"></div>
+  </div>
+  <div class="grid2">
+    <div class="field">
+      <label>Type de bien</label>
+      <select id="bienType">
+        <option>Appartement</option>
+        <option>Maison</option>
+        <option>Studio</option>
+        <option>Chambre</option>
+        <option>Local professionnel</option>
+        <option>Autre</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Immeuble</label>
+      <select id="bienImmeuble">
+        <option value="copropriete">Copropriété</option>
+        <option value="individuel">Individuel</option>
+      </select>
+    </div>
+    <div class="field"><label>Étage</label><input type="text" id="bienEtage" placeholder="3ème"></div>
+    <div class="field"><label>Nb de lots (copro)</label><input type="number" id="bienLots" placeholder="24"></div>
+    <div class="field">
+      <label>Surface (m²)</label>
+      <input type="number" id="bienSurface" placeholder="45">
+      <div class="loi">Art. 3 loi ALUR — Surface habitable obligatoire · Loi Carrez si copropriété</div>
+    </div>
+    <div class="field"><label>Nb pièces</label><input type="number" id="bienPieces" placeholder="3"></div>
+  </div>
+  <div class="field">
+    <label>Description / Équipements</label>
+    <textarea id="bienDesc" placeholder="Cave, balcon..."></textarea>
+    <div class="loi">Art. 3 loi 89-462 — Équipements et annexes (cave, parking, garage) à mentionner</div>
+  </div>
+  <div class="grid2">
+    <div class="field">
+      <label>Parking</label>
+      <select id="bienParking">
+        <option value="non">Sans parking</option>
+        <option value="oui">Avec parking</option>
+      </select>
+    </div>
+    <div class="field"><label>N° de parking</label><input type="text" id="bienParkingNum" placeholder="Ex : 12 / B3"></div>
+  </div>
+  <div class="field">
+    <label>Classe DPE</label>
+    <div class="hint">F/G = gel de loyer depuis 24/08/2022</div>
+    <select id="bienDPE">
+      <option>A</option><option>B</option><option>C</option>
+      <option>D</option><option>E</option>
+      <option>F (passoire thermique)</option>
+      <option>G (passoire thermique)</option>
+    </select>
+    <div class="loi">Art. 3-3 loi ALUR — DPE obligatoire joint au contrat · Logements F/G : interdiction d'augmentation du loyer</div>
+  </div>
+  <div class="field">
+    <label>Zone géographique</label>
+    <select id="bienZone">
+      <option>Paris et Île-de-France</option>
+      <option>Lyon (69)</option>
+      <option>Marseille (13)</option>
+      <option>Toulouse (31)</option>
+      <option>Nice (06)</option>
+      <option>Bordeaux (33)</option>
+      <option>Nantes (44)</option>
+      <option selected>Zone non tendue</option>
+    </select>
+    <div class="loi">Art. 17 loi ALUR — Zone tendue : préavis locataire réduit à 1 mois, encadrement des loyers applicable</div>
+  </div>
+</div>
+
+<!-- ===== 4. FINANCES ===== -->
+<div class="section" id="s4">
+  <div class="info-box ib-blue" id="finInfo">💶 Dépôt max 1 mois HC (location vide, art. 22 ALUR).</div>
+  <div class="grid2">
+    <div class="field">
+      <label>Loyer mensuel (€)</label>
+      <input type="number" id="loyer" placeholder="800" oninput="checkDepot()">
+      <div class="loi">Art. 17 loi 89-462 — Loyer fixé librement à la 1ère location (sauf zone tendue)</div>
+    </div>
+    <div class="field">
+      <label>Charges (€)</label>
+      <input type="number" id="charges" placeholder="80">
+      <div class="loi">Art. 23 loi 89-462 — Charges récupérables limitées au décret 87-713</div>
+    </div>
+    <div class="field">
+      <label>Dépôt (€)</label>
+      <input type="number" id="depot" placeholder="800" oninput="checkDepot()">
+      <div class="loi">Art. 22 loi ALUR — Max 1 mois HC (vide) · 2 mois HC (meublé) · Restitution sous 1 mois</div>
+    </div>
+    <div class="field">
+      <label>Échéance (jour)</label>
+      <input type="number" id="echeance" value="1">
+      <div class="loi">Art. 3 loi 89-462 — Date de paiement mensuel obligatoire dans le contrat</div>
+    </div>
+  </div>
+  <div id="depotWarn" class="warning" style="display:none"></div>
+  <div class="field">
+    <label>Mode de paiement</label>
+    <select id="paiement">
+      <option>Virement bancaire</option>
+      <option>Prélèvement automatique</option>
+      <option>Chèque</option>
+      <option>Espèces</option>
+    </select>
+    <div class="loi">Art. 7 loi 89-462 — Le locataire est tenu de payer le loyer aux termes convenus</div>
+  </div>
+  <div class="field">
+    <label>Révision annuelle</label>
+    <select id="revType" onchange="toggleIRL()">
+      <option value="IRL">Indice IRL (recommandé)</option>
+      <option value="fixe">Loyer fixe</option>
+    </select>
+    <div class="loi">Art. 17-1 loi 89-462 — Révision plafonnée à l'IRL INSEE · Une seule révision par an · Préavis 1 mois</div>
+  </div>
+  <div id="irlRef" class="field">
+    <label>Trimestre IRL référence</label>
+    <select id="trimRef">
+      <option>T1 2026 — 146.60 (+0.78%)</option>
+      <option>T4 2025 — 145.78 (+0.79%)</option>
+      <option>T3 2025 — 145.77 (+0.87%)</option>
+    </select>
+    <div class="loi">Art. 17-1 — Trimestre du dernier IRL connu à la date de signature du contrat</div>
+  </div>
+</div>
+
+<!-- ===== 5. CLAUSES ===== -->
+<div class="section" id="s5">
+
+  <div style="background:linear-gradient(135deg,var(--primary),#16213e);border-radius:12px;padding:14px 16px;margin-bottom:14px">
+    <div style="font-size:10px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:2px;margin-bottom:4px">Clause légale</div>
+    <div style="font-size:14px;font-weight:700;color:var(--gold)">📈 Indexation du loyer</div>
+    <div style="font-size:11px;color:rgba(255,255,255,0.6);margin-top:4px;line-height:1.6">Le loyer sera indexé automatiquement et sans préavis, à la date anniversaire du contrat, sur l'Indice de Référence des Loyers (IRL) publié par l'INSEE. L'indice à retenir est le dernier indice publié à la signature du contrat.</div>
+    <div class="loi" style="margin-top:8px">Art. 17-1 loi 89-462 mod. ALUR — Une seule révision par an · Plafonnée à l'IRL INSEE</div>
+  </div>
+
+  <div class="sec-header" style="background:linear-gradient(135deg,#1a1a2e,#16213e)">
+    <div class="sec-hd-title">📋 OBLIGATIONS DU PRENEUR</div>
+    <div class="sec-hd-sub">Le locataire est tenu aux obligations suivantes</div>
+  </div>
+
+  <div class="clause checked" onclick="toggleClause(this)">
+    <div class="cb"><span class="cbm">✓</span></div>
+    <div><div class="cl-text">Payer le loyer et les charges récupérables aux termes convenus</div><div class="cl-tag">Art. 7a loi 89-462</div></div>
+  </div>
+  <div class="clause checked" onclick="toggleClause(this)">
+    <div class="cb"><span class="cbm">✓</span></div>
+    <div><div class="cl-text">User paisiblement du logement suivant la destination prévue au contrat (exclusivement habitation)</div><div class="cl-tag">Art. 7b loi 89-462</div></div>
+  </div>
+  <div class="clause checked" onclick="toggleClause(this)">
+    <div class="cb"><span class="cbm">✓</span></div>
+    <div><div class="cl-text">Répondre des dégradations et pertes survenant pendant le contrat, sauf force majeure, fraude du bailleur ou fait d'un tiers non introduit</div><div class="cl-tag">Art. 7c loi 89-462</div></div>
+  </div>
+  <div class="clause checked" onclick="toggleClause(this)">
+    <div class="cb"><span class="cbm">✓</span></div>
+    <div><div class="cl-text">Prendre en charge l'entretien courant du logement et les réparations locatives (décret n°87-712 du 26/08/1987), sauf vétusté, malfaçon, vice de construction ou force majeure</div><div class="cl-tag">Décret n°87-712 du 26 août 1987</div></div>
+  </div>
+  <div class="clause checked" onclick="toggleClause(this)">
+    <div class="cb"><span class="cbm">✓</span></div>
+    <div><div class="cl-text">Souscrire un contrat d'entretien annuel de la chaudière auprès d'un professionnel qualifié et en justifier chaque année sur simple demande du bailleur</div><div class="cl-tag">Art. 7e loi 89-462</div></div>
+  </div>
+  <div class="clause checked" onclick="toggleClause(this)">
+    <div class="cb"><span class="cbm">✓</span></div>
+    <div><div class="cl-text">Ne pas transformer les locaux et équipements sans accord exprès et écrit du bailleur — à défaut, remise en état aux frais du locataire</div><div class="cl-tag">Art. 7f loi 89-462</div></div>
+  </div>
+  <div class="clause checked" onclick="toggleClause(this)">
+    <div class="cb"><span class="cbm">✓</span></div>
+    <div><div class="cl-text">S'assurer contre les risques locatifs (MRH) et en justifier lors de la remise des clés, puis chaque année</div><div class="cl-tag">Art. 7g loi 89-462 mod. ALUR</div></div>
+  </div>
+  <div class="clause checked" onclick="toggleClause(this)">
+    <div class="cb"><span class="cbm">✓</span></div>
+    <div><div class="cl-text">Souffrir la réalisation par le bailleur des réparations urgentes ne pouvant être différées, sans indemnité — Art. 1724 Code civil</div><div class="cl-tag">Art. 1724 Code civil</div></div>
+  </div>
+  <div class="clause checked" onclick="toggleClause(this)">
+    <div class="cb"><span class="cbm">✓</span></div>
+    <div><div class="cl-text">Laisser visiter le logement (congé donné/reçu ou mise en vente) — 2 heures par jour, jours ouvrables</div><div class="cl-tag">Art. 4 loi 89-462</div></div>
+  </div>
+  <div class="clause checked" onclick="toggleClause(this)">
+    <div class="cb"><span class="cbm">✓</span></div>
+    <div><div class="cl-text">Ne pas céder le contrat de location ni sous-louer sans accord exprès et écrit du bailleur</div><div class="cl-tag">Art. 8 loi 89-462</div></div>
+  </div>
+
+  <div class="sec-header" style="background:linear-gradient(135deg,#06d6a0,#00897b);margin-top:16px">
+    <div class="sec-hd-title">🏠 OBLIGATIONS DU BAILLEUR</div>
+    <div class="sec-hd-sub">Le bailleur est tenu aux principales obligations suivantes</div>
+  </div>
+
+  <div class="clause checked" onclick="toggleClause(this)">
+    <div class="cb"><span class="cbm">✓</span></div>
+    <div><div class="cl-text">Délivrer un logement décent conforme aux normes du décret n°2002-120 du 30/01/2002 — Si immeuble collectif avec permis avant 01/07/1997 : remettre le dossier amiante sur simple demande</div><div class="cl-tag">Décret n°2002-120 · Art. 6 loi 89-462</div></div>
+  </div>
+  <div class="clause checked" onclick="toggleClause(this)">
+    <div class="cb"><span class="cbm">✓</span></div>
+    <div><div class="cl-text">Délivrer le logement en bon état d'usage et de réparations de toute espèce, et les équipements mentionnés au contrat en bon état de fonctionnement</div><div class="cl-tag">Art. 1720 Code civil · Art. 6 loi 89-462</div></div>
+  </div>
+  <div class="clause checked" onclick="toggleClause(this)">
+    <div class="cb"><span class="cbm">✓</span></div>
+    <div><div class="cl-text">Assurer la jouissance paisible du logement et garantir le locataire contre les vices ou défauts cachés empêchant l'usage, même ignorés lors de la conclusion — Art. 1721 Code civil</div><div class="cl-tag">Art. 1719 et 1721 Code civil</div></div>
+  </div>
+  <div class="clause checked" onclick="toggleClause(this)">
+    <div class="cb"><span class="cbm">✓</span></div>
+    <div><div class="cl-text">Entretenir les locaux en état de servir à l'usage prévu et y faire toutes les réparations nécessaires autres que locatives</div><div class="cl-tag">Art. 1719 Code civil · Art. 6 loi 89-462</div></div>
+  </div>
+  <div class="clause checked" onclick="toggleClause(this)">
+    <div class="cb"><span class="cbm">✓</span></div>
+    <div><div class="cl-text">Remettre gratuitement une quittance de loyer sur simple demande du locataire</div><div class="cl-tag">Art. 21 loi 89-462 mod. ALUR</div></div>
+  </div>
+  <div class="clause checked" onclick="toggleClause(this)">
+    <div class="cb"><span class="cbm">✓</span></div>
+    <div><div class="cl-text">Annexer au contrat le dossier de diagnostic technique (DDT) comprenant notamment le DPE établi depuis moins de 10 ans par un diagnostiqueur certifié</div><div class="cl-tag">Art. 3-1 loi du 6 juillet 1989 · Art. 3-3 loi ALUR</div></div>
+  </div>
+
+  <div class="cg-title">⚙️ Clauses optionnelles</div>
+  <div class="clause" onclick="toggleClause(this)">
+    <div class="cb"><span class="cbm">✓</span></div>
+    <div><div class="cl-text">Animaux domestiques autorisés (hors chiens catégorie 1 et 2)</div><div class="cl-tag">Art. 10 loi 89-462</div></div>
+  </div>
+  <div class="clause" onclick="toggleClause(this)">
+    <div class="cb"><span class="cbm">✓</span></div>
+    <div><div class="cl-text">Travaux de personnalisation par le locataire (peinture, revêtements) autorisés sous conditions de remise en état</div><div class="cl-tag">Art. 7f loi 89-462</div></div>
+  </div>
+  <div class="clause" onclick="toggleClause(this)">
+    <div class="cb"><span class="cbm">✓</span></div>
+    <div><div class="cl-text">Sous-location partielle autorisée avec accord préalable écrit du bailleur</div><div class="cl-tag">Art. 8 loi 89-462</div></div>
+  </div>
+</div>
+
+<!-- ===== 6. CLAUSE RÉSOLUTOIRE ===== -->
+<div class="section" id="s6">
+  <div style="background:linear-gradient(135deg,var(--red),#c0392b);border-radius:12px;padding:14px 16px;margin-bottom:14px">
+    <div style="font-size:10px;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:2px;margin-bottom:4px">Clause obligatoire</div>
+    <div style="font-size:14px;font-weight:700;color:white">⚖️ Clause résolutoire</div>
+    <div style="font-size:11px;color:rgba(255,255,255,0.8);margin-top:6px;line-height:1.7">
+      Il est convenu expressément que le présent contrat sera résolu de plein droit et sans mise en demeure, si bon semble au bailleur, en cas :<br>
+      · de non-paiement du loyer ou des charges aux termes convenus ;<br>
+      · de non-versement du dépôt de garantie ;<br>
+      · de défaut d'assurance locative ;<br>
+      · de troubles de voisinage constatés par décision de justice.
+    </div>
+    <div class="loi" style="margin-top:8px">Art. 24 loi 89-462 mod. ALUR — Commandement de payer par huissier requis avant résolution · Délai 2 mois</div>
+  </div>
+
+  <div class="field">
+    <label>Délai de préavis du locataire</label>
+    <select id="preavisLoc">
+      <option value="3">3 mois (vide — zone non tendue)</option>
+      <option value="1">1 mois (vide — zone tendue)</option>
+      <option value="1m">1 mois (meublé)</option>
+      <option value="1s">Fin de séjour (saisonnier)</option>
+      <option value="6">6 mois (professionnel)</option>
+    </select>
+    <div class="loi">Art. 15 loi 89-462 — Préavis réduit si zone tendue, mutation, perte d'emploi, état de santé</div>
+  </div>
+
+  <div class="field">
+    <label>Délai de préavis du bailleur</label>
+    <select id="preavisBail">
+      <option>6 mois (vide)</option>
+      <option>3 mois (meublé)</option>
+      <option>6 mois (professionnel)</option>
+    </select>
+    <div class="loi">Art. 15-I loi 89-462 — Congé pour vente, reprise ou motif légitime et sérieux uniquement</div>
+  </div>
+
+  <div class="clause checked" onclick="toggleClause(this)">
+    <div class="cb"><span class="cbm">✓</span></div>
+    <div><div class="cl-text">Solidarité entre colocataires — chaque locataire est tenu solidairement et indivisiblement au paiement du loyer et charges</div><div class="cl-tag">Art. 1200 Code civil</div></div>
+  </div>
+  <div class="clause checked" onclick="toggleClause(this)">
+    <div class="cb"><span class="cbm">✓</span></div>
+    <div><div class="cl-text">Attribution de juridiction — tout litige relatif au présent contrat sera soumis au tribunal judiciaire du lieu de situation du bien loué</div><div class="cl-tag">Art. R. 221-38 Code de l'organisation judiciaire</div></div>
+  </div>
+</div>
+
+<!-- ===== 7. DIAGNOSTICS ===== -->
+<div class="section" id="s7">
+  <div class="info-box ib-purple">📎 <strong>Dossier de Diagnostic Technique (DDT)</strong> — Art. 3-3 loi ALUR. Ces documents doivent être annexés au contrat.</div>
+
+  <div class="diag-grid">
+    <div class="diag-card" id="dc-dpe">
+      <div class="diag-icon">🌡️</div>
+      <div class="diag-name">DPE</div>
+      <div class="diag-tag">Obligatoire · Valable 10 ans</div>
+      <div class="diag-status-row">
+        <button class="diag-btn" onclick="setDiag('dpe','ok',this)">✓ OK</button>
+        <button class="diag-btn" onclick="setDiag('dpe','nok',this)">✗ Manquant</button>
+        <button class="diag-btn" onclick="setDiag('dpe','na',this)">N/A</button>
+      </div>
+    </div>
+    <div class="diag-card" id="dc-crep">
+      <div class="diag-icon">🔵</div>
+      <div class="diag-name">CREP (Plomb)</div>
+      <div class="diag-tag">Avant 1949 · Obligatoire</div>
+      <div class="diag-status-row">
+        <button class="diag-btn" onclick="setDiag('crep','ok',this)">✓ OK</button>
+        <button class="diag-btn" onclick="setDiag('crep','nok',this)">✗ Manquant</button>
+        <button class="diag-btn" onclick="setDiag('crep','na',this)">N/A</button>
+      </div>
+    </div>
+    <div class="diag-card" id="dc-amiante">
+      <div class="diag-icon">⚪</div>
+      <div class="diag-name">Amiante</div>
+      <div class="diag-tag">Avant 01/07/1997</div>
+      <div class="diag-status-row">
+        <button class="diag-btn" onclick="setDiag('amiante','ok',this)">✓ OK</button>
+        <button class="diag-btn" onclick="setDiag('amiante','nok',this)">✗ Manquant</button>
+        <button class="diag-btn" onclick="setDiag('amiante','na',this)">N/A</button>
+      </div>
+    </div>
+    <div class="diag-card" id="dc-gaz">
+      <div class="diag-icon">🟡</div>
+      <div class="diag-name">Gaz</div>
+      <div class="diag-tag">Installation >15 ans · Valable 6 ans</div>
+      <div class="diag-status-row">
+        <button class="diag-btn" onclick="setDiag('gaz','ok',this)">✓ OK</button>
+        <button class="diag-btn" onclick="setDiag('gaz','nok',this)">✗ Manquant</button>
+        <button class="diag-btn" onclick="setDiag('gaz','na',this)">N/A</button>
+      </div>
+    </div>
+    <div class="diag-card" id="dc-elec">
+      <div class="diag-icon">⚡</div>
+      <div class="diag-name">Électricité</div>
+      <div class="diag-tag">Installation >15 ans · Valable 6 ans</div>
+      <div class="diag-status-row">
+        <button class="diag-btn" onclick="setDiag('elec','ok',this)">✓ OK</button>
+        <button class="diag-btn" onclick="setDiag('elec','nok',this)">✗ Manquant</button>
+        <button class="diag-btn" onclick="setDiag('elec','na',this)">N/A</button>
+      </div>
+    </div>
+    <div class="diag-card" id="dc-bruit">
+      <div class="diag-icon">🔊</div>
+      <div class="diag-name">Bruit (ERP)</div>
+      <div class="diag-tag">Zone aéroportuaire</div>
+      <div class="diag-status-row">
+        <button class="diag-btn" onclick="setDiag('bruit','ok',this)">✓ OK</button>
+        <button class="diag-btn" onclick="setDiag('bruit','nok',this)">✗ Manquant</button>
+        <button class="diag-btn" onclick="setDiag('bruit','na',this)">N/A</button>
+      </div>
+    </div>
+    <div class="diag-card" id="dc-risques">
+      <div class="diag-icon">⚠️</div>
+      <div class="diag-name">ERP / ESRIS</div>
+      <div class="diag-tag">État des risques · Obligatoire</div>
+      <div class="diag-status-row">
+        <button class="diag-btn" onclick="setDiag('risques','ok',this)">✓ OK</button>
+        <button class="diag-btn" onclick="setDiag('risques','nok',this)">✗ Manquant</button>
+        <button class="diag-btn" onclick="setDiag('risques','na',this)">N/A</button>
+      </div>
+    </div>
+    <div class="diag-card" id="dc-radon">
+      <div class="diag-icon">☢️</div>
+      <div class="diag-name">Radon</div>
+      <div class="diag-tag">Zones à potentiel significatif</div>
+      <div class="diag-status-row">
+        <button class="diag-btn" onclick="setDiag('radon','ok',this)">✓ OK</button>
+        <button class="diag-btn" onclick="setDiag('radon','nok',this)">✗ Manquant</button>
+        <button class="diag-btn" onclick="setDiag('radon','na',this)">N/A</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="loi" style="margin-bottom:14px">Art. 3-3 loi ALUR — Absence de DDT : engagement de la responsabilité du bailleur. DPE manquant = nullité relative du contrat</div>
+</div>
+
+<!-- ===== 8. IRL ===== -->
+<div class="section" id="s8">
+  <div class="info-box ib-blue">📈 <strong>Indice de Référence des Loyers (IRL)</strong> — Source INSEE. Utilisé pour la révision annuelle du loyer.</div>
+
+  <table class="irl-table">
+    <thead>
+      <tr>
+        <th>Trimestre</th>
+        <th>Indice</th>
+        <th>Évolution</th>
+        <th>Statut</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>T1 2026</td>
+        <td><strong>146.60</strong></td>
+        <td>+0.78%</td>
+        <td><span class="badge-irl">Dernier</span></td>
+      </tr>
+      <tr>
+        <td>T4 2025</td>
+        <td>145.78</td>
+        <td>+0.79%</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>T3 2025</td>
+        <td>145.77</td>
+        <td>+0.87%</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>T2 2025</td>
+        <td>144.51</td>
+        <td>+1.22%</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>T1 2025</td>
+        <td>143.32</td>
+        <td>+1.47%</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="calc-box">
+    <div style="font-size:13px;font-weight:700;color:white;margin-bottom:12px">🧮 Calculateur de révision</div>
+    <label>Loyer actuel (€)</label>
+    <input type="number" id="calcLoyer" placeholder="800" oninput="calcRevision()">
+    <label>IRL de référence</label>
+    <select id="calcIRLRef" onchange="calcRevision()">
+      <option value="144.51">T2 2025 — 144.51</option>
+      <option value="143.32">T1 2025 — 143.32</option>
+      <option value="142.11">T4 2024 — 142.11</option>
+    </select>
+    <label style="margin-top:4px">Nouvel IRL appliqué</label>
+    <select id="calcIRLNew" onchange="calcRevision()">
+      <option value="146.60">T1 2026 — 146.60</option>
+      <option value="145.78">T4 2025 — 145.78</option>
+      <option value="145.77">T3 2025 — 145.77</option>
+    </select>
+    <div class="calc-result" id="calcResult"></div>
+  </div>
+
+  <div class="loi">Art. 17-1 loi 89-462 — Nouveau loyer = Loyer actuel × (Nouvel IRL / IRL référence). Arrondi au centime.</div>
+</div>
+
+<!-- ===== 9. SIGNATURE ===== -->
+<div class="section" id="s9">
+
+  <!-- RÉCAPITULATIF -->
+  <div class="card" style="margin-bottom:14px">
+    <div class="card-title">📋 Récapitulatif du contrat</div>
+    <div id="recapContent">
+      <div class="recap-row"><span class="rk">Type</span><span class="rv" id="rcType">—</span></div>
+      <div class="recap-row"><span class="rk">Bailleur</span><span class="rv" id="rcBailleur">—</span></div>
+      <div class="recap-row"><span class="rk">Locataire</span><span class="rv" id="rcLocataire">—</span></div>
+      <div class="recap-row"><span class="rk">Bien</span><span class="rv" id="rcBien">—</span></div>
+      <div class="recap-row"><span class="rk">Loyer + Charges</span><span class="rv" id="rcLoyer">—</span></div>
+      <div class="recap-row"><span class="rk">Dépôt</span><span class="rv" id="rcDepot">—</span></div>
+      <div class="recap-row"><span class="rk">Durée</span><span class="rv" id="rcDuree">—</span></div>
+    </div>
+  </div>
+
+  <!-- SIGNATURE BAILLEUR -->
+  <div class="card">
+    <div class="card-title">✍️ Signature bailleur</div>
+    <div class="field" style="margin-bottom:8px">
+      <label>Lieu et date de signature</label>
+      <input type="text" id="signLieu" placeholder="Paris, le 24/05/2026">
+    </div>
+    <div class="sign-canvas-wrap">
+      <canvas id="signBailleur" width="500" height="140"></canvas>
+    </div>
+    <div class="sign-actions">
+      <button class="sign-clear" onclick="clearSign('signBailleur')">🗑 Effacer</button>
+      <div class="sign-ok" id="okBailleur" style="display:none">✅ Signé</div>
+    </div>
+    <div class="loi">Art. 3 loi 89-462 — Signature manuscrite des deux parties obligatoire</div>
+  </div>
+
+  <!-- SIGNATURE LOCATAIRE -->
+  <div class="card">
+    <div class="card-title">✍️ Signature locataire</div>
+    <div class="sign-canvas-wrap">
+      <canvas id="signLocataire" width="500" height="140"></canvas>
+    </div>
+    <div class="sign-actions">
+      <button class="sign-clear" onclick="clearSign('signLocataire')">🗑 Effacer</button>
+      <div class="sign-ok" id="okLocataire" style="display:none">✅ Signé</div>
+    </div>
+  </div>
+
+  <!-- ACTIONS FINALES -->
+  <div id="autoSaveIndicator" style="text-align:center;font-size:11px;color:var(--muted);margin-bottom:10px;transition:opacity 0.5s;opacity:0;font-family:Inter,sans-serif"></div>
+
+  <button class="action-btn btn-red" onclick="genererContrat()">⚖️ Générer le contrat PDF</button>
+  <button class="action-btn btn-green" onclick="const t=sauvegarderDonnees();if(t)alert('✅ Données sauvegardées localement\n🕐 '+t)">💾 Sauvegarder maintenant</button>
+  <button id="installBtn" class="action-btn btn-blue" onclick="installerApp()" style="display:none">📲 Installer l'app (hors ligne)</button>
+  <button class="action-btn" style="background:linear-gradient(135deg,#ff9800,#f57c00);box-shadow:0 4px 16px rgba(255,152,0,.3)" onclick="installerApp()">📲 Installer sur l'écran d'accueil</button>
+  <button class="action-btn btn-dark" onclick="reinitialiser()">🔄 Nouveau contrat</button>
+</div>
+
+
+<!-- ===== 10. QUITTANCE DE LOYER ===== -->
+<div class="section" id="s10">
+  <div class="info-box ib-green">🧾 Générez une quittance mensuelle. Elle est due gratuitement sur simple demande du locataire (Art. 21 loi 89-462).</div>
+
+  <div class="card" style="border:1.5px solid var(--green)">
+    <div class="card-title">🧾 Quittance de loyer</div>
+
+    <div class="grid2">
+      <div class="field">
+        <label>Mois concerné</label>
+        <select id="qMois">
+          <option>Janvier</option><option>Février</option><option>Mars</option>
+          <option>Avril</option><option>Mai</option><option>Juin</option>
+          <option>Juillet</option><option>Août</option><option>Septembre</option>
+          <option>Octobre</option><option>Novembre</option><option>Décembre</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Année</label>
+        <input type="number" id="qAnnee" value="2026" min="2020" max="2035">
+      </div>
+    </div>
+
+    <div class="grid2">
+      <div class="field">
+        <label>Loyer HC (€)</label>
+        <input type="number" id="qLoyer" placeholder="800" oninput="calcQuittance()">
+      </div>
+      <div class="field">
+        <label>Charges (€)</label>
+        <input type="number" id="qCharges" placeholder="80" oninput="calcQuittance()">
+      </div>
+    </div>
+
+    <div id="qTotal" style="background:linear-gradient(135deg,var(--green),#00b494);border-radius:10px;padding:12px 16px;margin-bottom:14px;display:none">
+      <div style="font-size:10px;color:rgba(255,255,255,0.7);text-transform:uppercase;letter-spacing:1px">Total TTC</div>
+      <div style="font-size:22px;font-weight:800;color:white" id="qTotalVal">0 €</div>
+      <div style="font-size:10px;color:rgba(255,255,255,0.6);margin-top:2px" id="qTotalDetail"></div>
+    </div>
+
+    <div class="field">
+      <label>Date de paiement reçu le</label>
+      <input type="date" id="qDatePaie">
+    </div>
+    <div class="field">
+      <label>Mode de paiement</label>
+      <select id="qModePaie">
+        <option>Virement bancaire</option>
+        <option>Prélèvement automatique</option>
+        <option>Chèque</option>
+        <option>Espèces</option>
+      </select>
+    </div>
+
+    <div class="loi" style="margin-bottom:14px">Art. 21 loi 89-462 mod. ALUR — Quittance gratuite obligatoire · Mention du détail loyer / charges requise</div>
+
+    <!-- APERÇU QUITTANCE -->
+    <div id="qPreview" style="background:#f9f9fd;border:1.5px dashed var(--border);border-radius:12px;padding:16px;margin-bottom:14px;display:none;font-size:12px;line-height:1.8">
+      <div style="text-align:center;margin-bottom:12px">
+        <div style="font-size:16px;font-weight:800;color:var(--text)">QUITTANCE DE LOYER</div>
+        <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px">Conforme à l'art. 21 loi 89-462</div>
+      </div>
+      <div id="qPreviewContent"></div>
+    </div>
+
+    <button class="action-btn btn-green" style="margin-bottom:8px" onclick="genererQuittance()">📄 Générer la quittance</button>
+    <button class="action-btn btn-blue" onclick="envoyerQuittanceMail()">📧 Envoyer par email au locataire</button>
+  </div>
+
+  <!-- CNI PHOTO -->
+  <div class="card" style="border:1.5px solid var(--blue);margin-top:14px">
+    <div class="card-title">🪪 Photo CNI — Pièce d'identité locataire</div>
+    <div class="info-box ib-blue" style="margin-bottom:12px">Art. 22-2 loi ALUR — Seuls CNI, passeport et titre de séjour sont autorisés. La copie doit être conservée par le bailleur.</div>
+
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px">
+      <div id="cniRectoWrap" style="flex:1;min-width:130px">
+        <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px">Recto</div>
+        <label style="display:block;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:10px;padding:24px 12px;text-align:center;cursor:pointer;color:white;font-size:12px;font-weight:700">
+          <div style="font-size:24px;margin-bottom:4px">📷</div>
+          Prendre / Importer
+          <input type="file" accept="image/*" capture="environment" id="cniRecto" style="display:none" onchange="previewCNI('cniRecto','prevRecto')">
+        </label>
+        <div id="prevRecto" style="margin-top:8px"></div>
+      </div>
+      <div id="cniVersoWrap" style="flex:1;min-width:130px">
+        <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px">Verso</div>
+        <label style="display:block;background:linear-gradient(135deg,var(--blue),#3a7bd5);border-radius:10px;padding:24px 12px;text-align:center;cursor:pointer;color:white;font-size:12px;font-weight:700">
+          <div style="font-size:24px;margin-bottom:4px">📷</div>
+          Prendre / Importer
+          <input type="file" accept="image/*" capture="environment" id="cniVerso" style="display:none" onchange="previewCNI('cniVerso','prevVerso')">
+        </label>
+        <div id="prevVerso" style="margin-top:8px"></div>
+      </div>
+    </div>
+
+    <div id="cniStatus" class="info-box ib-orange">⏳ Aucune photo CNI ajoutée pour le moment.</div>
+    <button class="action-btn btn-dark" style="margin-top:4px" onclick="envoyerCNIMail()">📧 Envoyer la CNI par email au bailleur</button>
+  </div>
+</div>
+
+<!-- ===== 11. ÉTAT DES LIEUX ===== -->
+<div class="section" id="s11">
+  <div class="info-box ib-purple">🏠 <strong>État des lieux contradictoire</strong> — Obligatoire à l'entrée et à la sortie (Art. 3-2 loi ALUR). Sélectionnez le type de bail pour afficher le formulaire adapté.</div>
+
+  <!-- SÉLECTEUR TYPE EDL -->
+  <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
+    <button class="edl-tab active" id="edl-tab-vide" onclick="setEDL('vide')">🏠 Vide</button>
+    <button class="edl-tab" id="edl-tab-meuble" onclick="setEDL('meuble')">🛋️ Meublé</button>
+    <button class="edl-tab" id="edl-tab-saisonnier" onclick="setEDL('saisonnier')">🌴 Saisonnier</button>
+    <button class="edl-tab" id="edl-tab-professionnel" onclick="setEDL('professionnel')">💼 Professionnel</button>
+  </div>
+
+  <!-- EDL COMMUN -->
+  <div class="card">
+    <div class="card-title" id="edlTypeLabel">🏠 État des lieux — Location vide</div>
+
+    <div class="grid2">
+      <div class="field">
+        <label>Type d'EDL</label>
+        <select id="edlType">
+          <option value="entree">Entrée</option>
+          <option value="sortie">Sortie</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Date</label>
+        <input type="date" id="edlDate">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Adresse du bien</label>
+      <input type="text" id="edlAdresse" placeholder="Reprend l'adresse du contrat">
+    </div>
+
+    <div class="field">
+      <label>Présents lors de l'EDL</label>
+      <input type="text" id="edlPresents" placeholder="Bailleur + Locataire / Mandataire...">
+    </div>
+
+    <!-- CLÉS -->
+    <div style="background:var(--bg);border-radius:10px;padding:12px;margin-bottom:14px">
+      <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px">🗝️ Remise des clés</div>
+      <div class="grid2">
+        <div class="field" style="margin-bottom:0"><label>Nb clés porte</label><input type="number" id="edlClesPorte" placeholder="2"></div>
+        <div class="field" style="margin-bottom:0"><label>Nb badges / digicode</label><input type="number" id="edlBadges" placeholder="1"></div>
+        <div class="field" style="margin-bottom:0"><label>Nb clés boîte aux lettres</label><input type="number" id="edlClesBAL" placeholder="1"></div>
+        <div class="field" style="margin-bottom:0"><label>Nb clés parking</label><input type="number" id="edlClesParking" placeholder="0"></div>
+      </div>
+    </div>
+
+    <!-- RELEVÉS COMPTEURS -->
+    <div style="background:var(--bg);border-radius:10px;padding:12px;margin-bottom:14px">
+      <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px">⚡ Relevés de compteurs</div>
+      <div class="grid2">
+        <div class="field" style="margin-bottom:0"><label>Électricité (kWh)</label><input type="number" id="edlElec" placeholder="1234"></div>
+        <div class="field" style="margin-bottom:0"><label>Gaz (m³)</label><input type="number" id="edlGaz" placeholder="456"></div>
+        <div class="field" style="margin-bottom:0"><label>Eau froide (m³)</label><input type="number" id="edlEauF" placeholder="78"></div>
+        <div class="field" style="margin-bottom:0"><label>Eau chaude (m³)</label><input type="number" id="edlEauC" placeholder="12"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PIÈCES PAR PIÈCE -->
+  <div class="card" id="edlPiecesCard">
+    <div class="card-title">🚪 État pièce par pièce</div>
+    <div id="edlPiecesList"></div>
+    <button class="add-btn" onclick="addPiece()">+ Ajouter une pièce</button>
+  </div>
+
+  <!-- SECTION MOBILIER (meublé uniquement) -->
+  <div class="card" id="edlMobilierCard" style="display:none;border:1.5px solid var(--gold)">
+    <div class="card-title" style="color:#b8860b">🛋️ Inventaire du mobilier (Décret 31/07/2015)</div>
+    <div class="info-box ib-orange" style="margin-bottom:12px">Obligatoire pour tout bail meublé. Chaque meuble doit être listé avec son état.</div>
+    <div id="edlMobilierList"></div>
+    <button class="add-btn" onclick="addMeuble()">+ Ajouter un meuble</button>
+  </div>
+
+  <!-- SECTION SAISONNIER spécifique -->
+  <div class="card" id="edlSaisonnierCard" style="display:none;border:1.5px solid var(--green)">
+    <div class="card-title" style="color:#00695c">🌴 Informations spécifiques — Saisonnier</div>
+    <div class="grid2">
+      <div class="field"><label>Durée du séjour</label><input type="text" id="edlSaisonDuree" placeholder="Ex : 15 jours"></div>
+      <div class="field"><label>Arrhes versées (€)</label><input type="number" id="edlSaisonArrhes" placeholder="300"></div>
+    </div>
+    <div class="field">
+      <label>Inventaire du linge de maison</label>
+      <textarea id="edlSaisonLinge" placeholder="Draps, serviettes, couvertures..."></textarea>
+    </div>
+    <div class="field">
+      <label>État de propreté à l'arrivée</label>
+      <select id="edlSaisonProprete">
+        <option>Très bon</option><option>Bon</option><option>Passable</option><option>Mauvais</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- SECTION PROFESSIONNEL spécifique -->
+  <div class="card" id="edlProCard" style="display:none;border:1.5px solid var(--blue)">
+    <div class="card-title" style="color:#0d47a1">💼 Informations spécifiques — Bail professionnel</div>
+    <div class="field"><label>Activité exercée</label><input type="text" id="edlProActivite" placeholder="Médecin, Avocat..."></div>
+    <div class="field"><label>État des installations spécifiques</label><textarea id="edlProInstall" placeholder="Salle d'attente, équipements médicaux, câblage réseau..."></textarea></div>
+    <div class="grid2">
+      <div class="field"><label>Nb accès sécurisés</label><input type="number" id="edlProAcces" placeholder="2"></div>
+      <div class="field"><label>Interphone / Visiophone</label><select id="edlProInterphone"><option>Oui</option><option>Non</option></select></div>
+    </div>
+    <div class="loi">Loi du 23/12/1986 — EDL obligatoire pour bail professionnel libéral · Valeur contractuelle</div>
+  </div>
+
+  <!-- OBSERVATIONS + PHOTOS -->
+  <div class="card">
+    <div class="card-title">📸 Photos & Observations générales</div>
+    <div class="field">
+      <label>Observations générales</label>
+      <textarea id="edlObs" placeholder="Remarques diverses, réserves..."></textarea>
+    </div>
+    <div style="margin-bottom:12px">
+      <label style="display:block;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">Photos de l'état des lieux</label>
+      <label style="display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:10px;padding:10px 16px;cursor:pointer;color:white;font-size:12px;font-weight:700">
+        📷 Ajouter des photos
+        <input type="file" accept="image/*" multiple id="edlPhotos" style="display:none" onchange="previewEDLPhotos()">
+      </label>
+    </div>
+    <div id="edlPhotoPreview" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px"></div>
+    <div class="loi">Art. 3-2 loi ALUR — Les photos peuvent être annexées à l'EDL et ont valeur de preuve</div>
+  </div>
+
+  <!-- SIGNATURES EDL -->
+  <div class="card">
+    <div class="card-title">✍️ Signatures — État des lieux</div>
+    <div style="margin-bottom:12px">
+      <div style="font-size:11px;font-weight:700;color:var(--muted);margin-bottom:6px">Bailleur / Mandataire</div>
+      <div class="sign-canvas-wrap">
+        <canvas id="signEDLBailleur" width="500" height="100"></canvas>
+      </div>
+      <div class="sign-actions">
+        <button class="sign-clear" onclick="clearSign('signEDLBailleur')">🗑 Effacer</button>
+        <div class="sign-ok" id="okEDLBailleur" style="display:none">✅ Signé</div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:11px;font-weight:700;color:var(--muted);margin-bottom:6px">Locataire</div>
+      <div class="sign-canvas-wrap">
+        <canvas id="signEDLLocataire" width="500" height="100"></canvas>
+      </div>
+      <div class="sign-actions">
+        <button class="sign-clear" onclick="clearSign('signEDLLocataire')">🗑 Effacer</button>
+        <div class="sign-ok" id="okEDLLocataire" style="display:none">✅ Signé</div>
+      </div>
+    </div>
+  </div>
+
+  <button class="action-btn btn-red" onclick="genererEDL()">📄 Générer l'EDL PDF</button>
+  <button class="action-btn btn-blue" onclick="envoyerEDLMail()">📧 Envoyer l'EDL aux deux parties</button>
+</div>
+
+<!-- ===== 12. ENVOI EMAIL ===== -->
+<div class="section" id="s12">
+  <div class="info-box ib-blue">📧 Envoyez tous les documents du dossier par email au bailleur et au locataire. L'email s'ouvrira dans votre application mail.</div>
+
+  <!-- DESTINATAIRES -->
+  <div class="card" style="border:1.5px solid var(--accent)">
+    <div class="card-title">📬 Destinataires</div>
+    <div class="field">
+      <label>Email bailleur</label>
+      <input type="email" id="mailBailleur" placeholder="bailleur@exemple.fr">
+    </div>
+    <div class="field">
+      <label>Email locataire</label>
+      <input type="email" id="mailLocataire" placeholder="locataire@exemple.fr">
+    </div>
+  </div>
+
+  <!-- DOCUMENTS À ENVOYER -->
+  <div class="card">
+    <div class="card-title">📎 Documents à inclure</div>
+
+    <div class="send-item" id="send-contrat">
+      <div class="send-check checked" onclick="toggleSend(this)"><span class="send-cbm">✓</span></div>
+      <div class="send-info">
+        <div class="send-name">⚖️ Contrat de location</div>
+        <div class="send-tag">PDF généré · Mentions légales complètes</div>
+      </div>
+      <div class="send-status" id="ss-contrat">✅</div>
+    </div>
+
+    <div class="send-item" id="send-edl">
+      <div class="send-check checked" onclick="toggleSend(this)"><span class="send-cbm">✓</span></div>
+      <div class="send-info">
+        <div class="send-name">🏠 État des lieux</div>
+        <div class="send-tag">Entrée / Sortie · Signé des deux parties</div>
+      </div>
+      <div class="send-status" id="ss-edl">✅</div>
+    </div>
+
+    <div class="send-item" id="send-quittance">
+      <div class="send-check checked" onclick="toggleSend(this)"><span class="send-cbm">✓</span></div>
+      <div class="send-info">
+        <div class="send-name">🧾 Quittance de loyer</div>
+        <div class="send-tag">Mois en cours · Art. 21 loi 89-462</div>
+      </div>
+      <div class="send-status" id="ss-quittance">✅</div>
+    </div>
+
+    <div class="send-item" id="send-cni">
+      <div class="send-check" onclick="toggleSend(this)"><span class="send-cbm">✓</span></div>
+      <div class="send-info">
+        <div class="send-name">🪪 Copie CNI locataire</div>
+        <div class="send-tag">Recto / Verso · Art. 22-2 loi ALUR</div>
+      </div>
+      <div class="send-status" id="ss-cni">⏳</div>
+    </div>
+
+    <div class="send-item" id="send-diag">
+      <div class="send-check checked" onclick="toggleSend(this)"><span class="send-cbm">✓</span></div>
+      <div class="send-info">
+        <div class="send-name">📎 Diagnostics techniques (DDT)</div>
+        <div class="send-tag">DPE, Plomb, Amiante... · Art. 3-3 ALUR</div>
+      </div>
+      <div class="send-status" id="ss-diag">✅</div>
+    </div>
+  </div>
+
+  <!-- MESSAGE PERSONNALISÉ -->
+  <div class="card">
+    <div class="card-title">✏️ Message personnalisé</div>
+    <div class="field">
+      <label>Objet de l'email</label>
+      <input type="text" id="mailObjet" value="Contrat de location — Documents officiels">
+    </div>
+    <div class="field">
+      <label>Corps du message</label>
+      <textarea id="mailCorps" rows="5" style="min-height:120px">Bonjour,
+
+Veuillez trouver ci-joint l'ensemble des documents relatifs à votre contrat de location.
+
+Cordialement,</textarea>
+    </div>
+  </div>
+
+  <!-- APERÇU EN TEMPS RÉEL -->
+  <div class="card" style="background:linear-gradient(135deg,#0f0f1a,#1a1a3e);border:none;margin-bottom:14px">
+    <div class="card-title" style="color:rgba(255,255,255,0.5)">👁 Aperçu de l'envoi</div>
+    <div id="mailPreview" style="font-size:12px;color:rgba(255,255,255,0.8);line-height:2">
+      <div>📬 <strong style="color:white">À :</strong> <span id="prevDest" style="color:#4cc9f0">—</span></div>
+      <div>📋 <strong style="color:white">Objet :</strong> <span id="prevObjet" style="color:var(--gold)">—</span></div>
+      <div style="margin-top:8px;padding:10px;background:rgba(255,255,255,0.05);border-radius:8px;white-space:pre-wrap;font-size:11px" id="prevCorps"></div>
+    </div>
+  </div>
+
+  <!-- BOUTONS ENVOI -->
+  <div style="background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:var(--radius-sm);padding:16px;margin-bottom:14px;text-align:center">
+    <div style="font-size:11px;color:rgba(255,255,255,0.7);margin-bottom:10px;text-transform:uppercase;letter-spacing:1px">Envoyer par email</div>
+    <button class="action-btn" style="background:white;color:var(--accent);margin-bottom:8px;font-size:15px" onclick="envoyerTout()">📧 Envoyer aux DEUX parties</button>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <button class="action-btn btn-dark" style="margin-bottom:0;font-size:13px" onclick="envoyerParti('bailleur')">👤 Bailleur seul</button>
+      <button class="action-btn btn-dark" style="margin-bottom:0;font-size:13px" onclick="envoyerParti('locataire')">🧑 Locataire seul</button>
+    </div>
+  </div>
+
+  <button class="action-btn btn-dark" onclick="reinitialiser()">🔄 Nouveau contrat</button>
+</div>
+
+</div><!-- /content -->
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <button class="btn-prev" id="btnPrev" onclick="navigate(-1)" disabled>← Retour</button>
+  <select id="stepSelect" onchange="goTo(parseInt(this.value))" style="flex:1.2;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:0 10px;font-size:13px;font-weight:600;color:var(--text);font-family:Inter,sans-serif;outline:none;-webkit-appearance:none;text-align:center">
+    <option value="0">📋 Type</option>
+    <option value="1">👤 Bailleur</option>
+    <option value="2">🧑 Locataire</option>
+    <option value="3">🏡 Bien</option>
+    <option value="4">💶 Finances</option>
+    <option value="5">📜 Clauses</option>
+    <option value="6">⚖️ Résolutoire</option>
+    <option value="7">📎 Diagnostics</option>
+    <option value="8">📈 IRL</option>
+    <option value="9">✍️ Signature</option>
+    <option value="10">🧾 Quittance</option>
+    <option value="11">🏠 État des lieux</option>
+    <option value="12">📧 Envoi email</option>
+  </select>
+  <button class="btn-next" id="btnNext" onclick="navigate(1)">Suivant →</button>
+</div>
+
+</div><!-- /app -->
+
+<script>
+// ===================== STATE =====================
+const STEPS = [
+  { id: 's0',  title: '📋 Type de contrat',    pill: '📋 Type' },
+  { id: 's1',  title: '👤 Bailleur',            pill: '👤 Bailleur' },
+  { id: 's2',  title: '🧑 Locataire',           pill: '🧑 Locataire' },
+  { id: 's3',  title: '🏡 Bien loué',           pill: '🏡 Bien' },
+  { id: 's4',  title: '💶 Finances',            pill: '💶 Finances' },
+  { id: 's5',  title: '📜 Clauses',             pill: '📜 Clauses' },
+  { id: 's6',  title: '⚖️ Clause résolutoire',  pill: '⚖️ Résolutoire' },
+  { id: 's7',  title: '📎 Diagnostics',         pill: '📎 Diagnostics' },
+  { id: 's8',  title: '📈 IRL',                 pill: '📈 IRL' },
+  { id: 's9',  title: '✍️ Signature',           pill: '✍️ Signature' },
+  { id: 's10', title: '🧾 Quittance & CNI',     pill: '🧾 Quittance' },
+  { id: 's11', title: '🏠 État des lieux',      pill: '🏠 État des lieux' },
+  { id: 's12', title: '📧 Envoi email',         pill: '📧 Envoi' },
+];
+
+let currentStep = 0;
+let contractType = 'vide';
+
+// ===================== NAVIGATION =====================
+function navigate(dir) {
+  goTo(currentStep + dir);
+}
+
+function goTo(step) {
+  if (step < 0 || step >= STEPS.length) return;
+
+  document.getElementById(STEPS[currentStep].id).classList.remove('active');
+  currentStep = step;
+  document.getElementById(STEPS[currentStep].id).classList.add('active');
+
+  updateUI();
+
+  if (step === 9)  buildRecap();
+  if (step === 10) prefillQuittance();
+  if (step === 12) { syncEmails(); buildMailPreview(); }
+
+  window.scrollTo(0, 0);
+}
+
+function updateUI() {
+  const total = STEPS.length;
+  const cur = currentStep + 1;
+
+  document.getElementById('hTitle').textContent = 'Contrat de Location';
+  document.getElementById('secTitle').textContent = STEPS[currentStep].title;
+  document.getElementById('badge').textContent = `${cur}/${total}`;
+  document.getElementById('progress').style.width = `${(cur / total) * 100}%`;
+
+  document.getElementById('btnPrev').disabled = currentStep === 0;
+  document.getElementById('btnNext').textContent = currentStep === total - 1 ? '✓ Terminer' : 'Suivant →';
+
+  // Sync dropdown
+  document.getElementById('stepSelect').value = currentStep;
+
+  // Update pill active state
+  const pills = document.querySelectorAll('.pill');
+  pills.forEach((p, i) => p.classList.toggle('active', i === currentStep));
+
+  // Scroll active pill into view
+  const activePill = document.querySelectorAll('.pill')[currentStep];
+  if (activePill) activePill.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+}
+
+// ===================== TYPE SELECTION =====================
+function selectType(type) {
+  contractType = type;
+  ['vide','meuble','saisonnier','professionnel'].forEach(t => {
+    document.getElementById(`card-${t}`).classList.toggle('active', t === type);
+    document.getElementById(`ti-${t}`).style.display = t === type ? '' : 'none';
+  });
+
+  // Show étudiant option for meublé
+  document.getElementById('fEtudiant').style.display = type === 'meuble' ? '' : 'none';
+}
+
+// ===================== DURATION =====================
+function calcDuree() {
+  const d1 = document.getElementById('dateDebut').value;
+  const d2 = document.getElementById('dateFin').value;
+  const el = document.getElementById('dureeResult');
+  if (!d1 || !d2) { el.style.display = 'none'; return; }
+
+  const diff = new Date(d2) - new Date(d1);
+  if (diff <= 0) { el.style.display = 'none'; return; }
+
+  const days = Math.floor(diff / 86400000);
+  const months = Math.floor(days / 30);
+  const years = Math.floor(months / 12);
+  const remMonths = months % 12;
+
+  let txt = '';
+  if (years > 0) txt += `${years} an${years > 1 ? 's' : ''} `;
+  if (remMonths > 0) txt += `${remMonths} mois `;
+  txt += `(${days} jours)`;
+
+  el.textContent = '📅 Durée : ' + txt;
+  el.style.display = 'block';
+}
+
+// ===================== FINANCES =====================
+function checkDepot() {
+  const loyer = parseFloat(document.getElementById('loyer').value) || 0;
+  const depot = parseFloat(document.getElementById('depot').value) || 0;
+  const warn  = document.getElementById('depotWarn');
+
+  if (!loyer || !depot) { warn.style.display = 'none'; return; }
+
+  const max = contractType === 'meuble' ? loyer * 2 : loyer;
+  if (depot > max) {
+    warn.textContent = `⚠️ Dépôt trop élevé ! Maximum autorisé : ${max.toFixed(2)} € (${contractType === 'meuble' ? '2 mois' : '1 mois'} HC)`;
+    warn.style.display = 'block';
+  } else {
+    warn.style.display = 'none';
+  }
+}
+
+function toggleIRL() {
+  const v = document.getElementById('revType').value;
+  document.getElementById('irlRef').style.display = v === 'IRL' ? '' : 'none';
+}
+
+// ===================== CLAUSES =====================
+function toggleClause(el) {
+  el.classList.toggle('checked');
+}
+
+// ===================== DIAGNOSTICS =====================
+function setDiag(name, status, btn) {
+  const card = document.getElementById(`dc-${name}`);
+  card.className = 'diag-card ' + (status === 'ok' ? 'ok' : status === 'nok' ? 'nok' : 'na');
+
+  card.querySelectorAll('.diag-btn').forEach(b => {
+    b.className = 'diag-btn';
+  });
+
+  btn.className = `diag-btn active-${status}`;
+}
+
+// ===================== IRL CALCULATOR =====================
+function calcRevision() {
+  const loyer = parseFloat(document.getElementById('calcLoyer').value);
+  const irlRef = parseFloat(document.getElementById('calcIRLRef').value);
+  const irlNew = parseFloat(document.getElementById('calcIRLNew').value);
+  const res = document.getElementById('calcResult');
+
+  if (!loyer || !irlRef || !irlNew) { res.style.display = 'none'; return; }
+
+  const newLoyer = (loyer * irlNew / irlRef).toFixed(2);
+  const diff = (newLoyer - loyer).toFixed(2);
+  const pct  = ((irlNew - irlRef) / irlRef * 100).toFixed(2);
+
+  res.innerHTML = `Nouveau loyer : <strong>${newLoyer} €</strong> (+${diff} € / +${pct}%)`;
+  res.style.display = 'block';
+}
+
+// ===================== DOCUMENTS =====================
+function markDoc(id) {
+  const el = document.getElementById(`st-${id}`);
+  if (el) el.textContent = '✅';
+}
+
+// ===================== SIGNATURES =====================
+function initCanvas(id) {
+  const canvas = document.getElementById(id);
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let drawing = false;
+
+  // Resize canvas to actual display size
+  function resize() {
+    const rect = canvas.getBoundingClientRect();
+    canvas.width  = rect.width  * window.devicePixelRatio;
+    canvas.height = rect.height * window.devicePixelRatio;
+    ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+    canvas.style.width  = rect.width + 'px';
+    canvas.style.height = rect.height + 'px';
+  }
+
+  resize();
+
+  function getPos(e) {
+    const rect = canvas.getBoundingClientRect();
+    const src  = e.touches ? e.touches[0] : e;
+    return { x: src.clientX - rect.left, y: src.clientY - rect.top };
+  }
+
+  function start(e) {
+    e.preventDefault();
+    drawing = true;
+    const pos = getPos(e);
+    ctx.beginPath();
+    ctx.moveTo(pos.x, pos.y);
+  }
+
+  function move(e) {
+    e.preventDefault();
+    if (!drawing) return;
+    const pos = getPos(e);
+    ctx.lineTo(pos.x, pos.y);
+    ctx.strokeStyle = '#1a1a2e';
+    ctx.lineWidth = 2;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.stroke();
+
+    // Show "signed" indicator
+    const okMap = {
+      signBailleur:    'okBailleur',
+      signLocataire:   'okLocataire',
+      signEDLBailleur: 'okEDLBailleur',
+      signEDLLocataire:'okEDLLocataire',
+    };
+    const okId = okMap[id];
+    if (okId) document.getElementById(okId).style.display = 'flex';
+  }
+
+  function end() { drawing = false; }
+
+  canvas.addEventListener('mousedown',  start);
+  canvas.addEventListener('mousemove',  move);
+  canvas.addEventListener('mouseup',    end);
+  canvas.addEventListener('touchstart', start, { passive: false });
+  canvas.addEventListener('touchmove',  move,  { passive: false });
+  canvas.addEventListener('touchend',   end);
+}
+
+function clearSign(id) {
+  const canvas = document.getElementById(id);
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  const okMap = {
+    signBailleur:    'okBailleur',
+    signLocataire:   'okLocataire',
+    signEDLBailleur: 'okEDLBailleur',
+    signEDLLocataire:'okEDLLocataire',
+  };
+  const okId = okMap[id];
+  if (okId) document.getElementById(okId).style.display = 'none';
+}
+
+// ===================== RECAP =====================
+function buildRecap() {
+  const typeMap = { vide: 'Location vide', meuble: 'Meublée', saisonnier: 'Saisonnière', professionnel: 'Professionnel' };
+  const bNom  = document.getElementById('bailleurNom').value;
+  const bPren = document.getElementById('bailleurPrenom').value;
+  const lNom  = document.getElementById('locataireNom').value;
+  const lPren = document.getElementById('locatairePrenom').value;
+  const bAdresse = document.getElementById('bienAdresse').value;
+  const bVille   = document.getElementById('bienVille').value;
+  const loyer    = document.getElementById('loyer').value;
+  const charges  = document.getElementById('charges').value;
+  const depot    = document.getElementById('depot').value;
+  const d1 = document.getElementById('dateDebut').value;
+  const d2 = document.getElementById('dateFin').value;
+
+  document.getElementById('rcType').textContent     = typeMap[contractType] || '—';
+  document.getElementById('rcBailleur').textContent  = [bPren, bNom].filter(Boolean).join(' ') || '—';
+  document.getElementById('rcLocataire').textContent = [lPren, lNom].filter(Boolean).join(' ') || '—';
+  document.getElementById('rcBien').textContent      = [bAdresse, bVille].filter(Boolean).join(', ') || '—';
+  document.getElementById('rcLoyer').textContent     = loyer ? `${loyer} € + ${charges || 0} € charges` : '—';
+  document.getElementById('rcDepot').textContent     = depot ? `${depot} €` : '—';
+
+  if (d1 && d2) {
+    const diff = Math.floor((new Date(d2) - new Date(d1)) / 86400000);
+    document.getElementById('rcDuree').textContent = `${d1} → ${d2} (${diff} j)`;
+  }
+}
+
+// ===================== ACTIONS =====================
+function genererContrat() {
+  const typeMap  = { vide:'Location vide', meuble:'Location meublee', saisonnier:'Location saisonniere', professionnel:'Bail professionnel liberal' };
+  const dureeMap = { vide:'3 ans minimum', meuble:'1 an minimum', saisonnier:'Maximum 90 jours', professionnel:'6 ans minimum' };
+
+  const d = {
+    type:     typeMap[contractType]  || '—',
+    dureeMin: dureeMap[contractType] || '—',
+    ref:      v('refContrat'),
+    dateDebut:v('dateDebut'),   dateFin:v('dateFin'),
+    bNom:     v('bailleurPrenom') + ' ' + v('bailleurNom'),
+    bAdresse: v('bailleurAdresse'),
+    bVille:   v('bailleurCP') + ' ' + v('bailleurVille'),
+    bTel:     v('bailleurTel'),   bEmail:v('bailleurEmail'),
+    lNom:     v('locatairePrenom') + ' ' + v('locataireNom'),
+    lAdresse: v('locataireAdresse'),
+    lVille:   v('locataireCP') + ' ' + v('locataireVille'),
+    lTel:     v('locataireTel'),  lEmail:v('locataireEmail'),
+    lPiece:   v('locatairePiece'),
+    bienAdresse:v('bienAdresse'), bienVille:v('bienCP')+' '+v('bienVille'),
+    bienType: v('bienType'),    bienSurface:v('bienSurface'),
+    bienPieces:v('bienPieces'), bienEtage:v('bienEtage'),
+    bienDPE:  v('bienDPE'),     bienZone:v('bienZone'),
+    loyer:    v('loyer'),       charges:v('charges'),
+    depot:    v('depot'),       echeance:v('echeance'),
+    paiement: v('paiement'),    signLieu:v('signLieu'),
+  };
+
+  const total = (d.loyer && d.charges) ? ((parseFloat(d.loyer)||0) + (parseFloat(d.charges)||0)).toFixed(2) + ' \u20ac' : '—';
+
+  const LOGO = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 180" width="56" height="50">'
+    + '<polyline points="20,90 100,20 180,90" fill="none" stroke="#1a1a2e" stroke-width="10" stroke-linejoin="round" stroke-linecap="round"/>'
+    + '<polyline points="40,75 40,155 160,155 160,75" fill="none" stroke="#1a1a2e" stroke-width="10" stroke-linejoin="round" stroke-linecap="round"/>'
+    + '<g transform="translate(60,88) scale(0.42)">'
+    + '<path d="M10,60 C10,60 20,40 40,35 C55,30 65,38 75,45 L95,55" fill="none" stroke="#1a1a2e" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>'
+    + '<path d="M180,60 C180,60 160,40 140,35 C125,30 115,38 105,45 L85,55" fill="none" stroke="#1a1a2e" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>'
+    + '<path d="M75,45 C80,50 90,55 105,45" fill="none" stroke="#1a1a2e" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>'
+    + '<path d="M50,55 C45,68 42,80 44,90" fill="none" stroke="#1a1a2e" stroke-width="9" stroke-linecap="round"/>'
+    + '<path d="M64,58 C60,71 58,83 60,93" fill="none" stroke="#1a1a2e" stroke-width="9" stroke-linecap="round"/>'
+    + '<path d="M76,60 C73,73 72,85 74,95" fill="none" stroke="#1a1a2e" stroke-width="9" stroke-linecap="round"/>'
+    + '<path d="M140,55 C145,68 148,80 146,90" fill="none" stroke="#1a1a2e" stroke-width="9" stroke-linecap="round"/>'
+    + '<path d="M126,58 C130,71 132,83 130,93" fill="none" stroke="#1a1a2e" stroke-width="9" stroke-linecap="round"/>'
+    + '<path d="M114,60 C117,73 118,85 116,95" fill="none" stroke="#1a1a2e" stroke-width="9" stroke-linecap="round"/>'
+    + '</g></svg>';
+
+  const signB64 = (document.getElementById('signBailleur') && !isCanvasBlank('signBailleur'))
+    ? document.getElementById('signBailleur').toDataURL() : '';
+  const signL64 = (document.getElementById('signLocataire') && !isCanvasBlank('signLocataire'))
+    ? document.getElementById('signLocataire').toDataURL() : '';
+
+  const sigImgB = signB64 ? '<img src="' + signB64 + '" style="max-width:100%;height:70px;object-fit:contain;border-bottom:1px solid #1a1a2e">' : '<div style="height:70px;border-bottom:1px solid #1a1a2e"></div>';
+  const sigImgL = signL64 ? '<img src="' + signL64 + '" style="max-width:100%;height:70px;object-fit:contain;border-bottom:1px solid #1a1a2e">' : '<div style="height:70px;border-bottom:1px solid #1a1a2e"></div>';
+
+  const clausesLoc = [
+    ['Payer le loyer et les charges aux termes convenus','Art. 7a loi 89-462'],
+    ['User paisiblement du logement (usage habitation exclusif)','Art. 7b loi 89-462'],
+    ['Repondre des degradations survenant pendant le contrat sauf force majeure','Art. 7c loi 89-462'],
+    ['Prendre en charge l\'entretien courant et les reparations locatives','Decret 87-712 du 26/08/1987'],
+    ['Souscrire un entretien annuel de la chaudiere et en justifier','Art. 7e loi 89-462'],
+    ['Ne pas transformer les locaux sans accord ecrit du bailleur','Art. 7f loi 89-462'],
+    ['S\'assurer contre les risques locatifs (MRH) et en justifier chaque annee','Art. 7g loi 89-462 mod. ALUR'],
+    ['Ne pas ceder ni sous-louer sans accord ecrit du bailleur','Art. 8 loi 89-462'],
+  ];
+
+  const clausesBail = [
+    ['Delivrer un logement decent conforme au decret 2002-120','Art. 6 loi 89-462'],
+    ['Delivrer le logement en bon etat d\'usage et de reparations','Art. 1720 Code civil'],
+    ['Assurer la jouissance paisible et garantir contre les vices caches','Art. 1721 Code civil'],
+    ['Entretenir les locaux et y faire les reparations necessaires','Art. 6 loi 89-462'],
+    ['Remettre gratuitement une quittance sur simple demande','Art. 21 loi 89-462 mod. ALUR'],
+    ['Annexer le dossier de diagnostic technique (DDT) au contrat','Art. 3-3 loi ALUR'],
+  ];
+
+  function clauseRow(t, r, color) {
+    return '<div style="display:flex;gap:8px;padding:5px 0;border-bottom:1px solid #f0f0f8;font-size:9pt;align-items:flex-start">'
+      + '<div style="width:14px;height:14px;background:' + color + ';border-radius:3px;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:white;font-size:8pt;margin-top:1px">&#10003;</div>'
+      + '<div><div>' + t + '</div><div style="font-size:7pt;color:#8888aa;font-style:italic;margin-top:1px">' + r + '</div></div></div>';
+  }
+
+  const css = '@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");'
+    + '*{box-sizing:border-box;margin:0;padding:0}'
+    + 'body{font-family:Inter,Arial,sans-serif;color:#1a1a2e;font-size:10pt;line-height:1.5}'
+    + '.page{max-width:794px;margin:0 auto;padding:32px 40px}'
+    + '.header{display:flex;align-items:center;justify-content:space-between;padding-bottom:16px;border-bottom:2.5px solid #1a1a2e;margin-bottom:20px}'
+    + '.brand{font-size:22pt;font-weight:900;letter-spacing:-1px;color:#1a1a2e}'
+    + '.brand span{color:#6c63ff}'
+    + '.section{margin-bottom:18px}'
+    + '.sec-title{font-size:9pt;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:white;background:#1a1a2e;padding:6px 12px;border-radius:6px;margin-bottom:10px}'
+    + '.sec-title.acc{background:linear-gradient(135deg,#6c63ff,#a855f7)}'
+    + '.sec-title.grn{background:linear-gradient(135deg,#06d6a0,#00b494)}'
+    + '.sec-title.red{background:#e63946}'
+    + '.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}'
+    + '.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}'
+    + '.field{margin-bottom:8px}'
+    + '.field label{font-size:7.5pt;font-weight:700;color:#8888aa;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px}'
+    + '.field .val{font-size:10pt;font-weight:600;color:#1a1a2e;padding:5px 8px;background:#f7f7fc;border-radius:6px;min-height:24px;border-left:3px solid #6c63ff}'
+    + '.loi{font-size:7pt;color:#6c63ff;background:#f3f0ff;border-left:2px solid #6c63ff;padding:4px 8px;border-radius:0 4px 4px 0;margin-top:4px;font-weight:600}'
+    + 'table{width:100%;border-collapse:collapse;margin-bottom:8px}'
+    + 'th{background:#1a1a2e;color:white;font-size:8pt;font-weight:700;padding:7px 10px;text-align:left}'
+    + 'td{padding:7px 10px;border-bottom:1px solid #e8e8f0;font-size:9.5pt}'
+    + '.tr-even td{background:#f7f7fc}'
+    + '.tr-total td{background:#f3f0ff;font-weight:800;color:#6c63ff;border-top:2px solid #6c63ff}'
+    + '.alur{display:inline-block;background:#f3f0ff;border:1px solid #6c63ff;border-radius:20px;padding:3px 10px;font-size:7pt;font-weight:700;color:#6c63ff}'
+    + '.sig-block{border:1.5px solid #e8e8f0;border-radius:8px;padding:12px;text-align:center}'
+    + '.sig-label{font-size:8pt;font-weight:700;color:#8888aa;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}'
+    + '.footer{margin-top:24px;padding-top:12px;border-top:1px solid #e8e8f0;display:flex;justify-content:space-between;font-size:7pt;color:#aaa}'
+    + '.pb{page-break-before:always;padding-top:32px}'
+    + '.p2hdr{display:flex;justify-content:space-between;padding-bottom:10px;border-bottom:1.5px solid #e8e8f0;margin-bottom:16px;font-size:8pt}'
+    + '@media print{.no-print{display:none!important}@page{margin:10mm;size:A4}}';
+
+  const today = new Date().toLocaleDateString('fr-FR');
+
+  let html = '<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8">'
+    + '<title>Contrat de Location — Baileve</title>'
+    + '<style>' + css + '</style></head><body>'
+    + '<div class="page">'
+
+    // HEADER
+    + '<div class="header">'
+    + '<div style="display:flex;align-items:center;gap:14px">'
+    + LOGO
+    + '<div><div class="brand">BAILE<span>VE</span></div>'
+    + '<div style="font-size:7pt;color:#8888aa;text-transform:uppercase;letter-spacing:2px;margin-top:2px">Gestion locative simplifiee</div>'
+    + '<div class="alur">&#9878; Loi ALUR N&#176;2014-366</div>'
+    + '</div></div>'
+    + '<div style="text-align:right">'
+    + '<div style="font-size:13pt;font-weight:800">' + d.type + '</div>'
+    + '<div style="font-size:8pt;color:#8888aa;margin-top:3px">Ref. ' + (d.ref||'—') + '</div>'
+    + '<div style="font-size:8pt;color:#8888aa">Du ' + (d.dateDebut||'—') + ' au ' + (d.dateFin||'—') + '</div>'
+    + '<div style="font-size:8pt;color:#8888aa">Duree min. : ' + d.dureeMin + '</div>'
+    + '</div></div>'
+
+    // PARTIES
+    + '<div class="section">'
+    + '<div class="sec-title acc">Parties au contrat</div>'
+    + '<div class="grid2">'
+    + '<div><div style="font-size:8pt;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:#6c63ff;margin-bottom:8px;padding-bottom:4px;border-bottom:2px solid #6c63ff">Bailleur</div>'
+    + '<div class="field"><label>Nom &amp; Prenom</label><div class="val">' + (d.bNom.trim()||'—') + '</div></div>'
+    + '<div class="field"><label>Adresse</label><div class="val">' + (d.bAdresse||'—') + '</div></div>'
+    + '<div class="field"><label>Ville</label><div class="val">' + (d.bVille.trim()||'—') + '</div></div>'
+    + '<div class="field"><label>Tel.</label><div class="val">' + (d.bTel||'—') + '</div></div>'
+    + '<div class="field"><label>Email</label><div class="val">' + (d.bEmail||'—') + '</div></div>'
+    + '</div>'
+    + '<div><div style="font-size:8pt;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:#06d6a0;margin-bottom:8px;padding-bottom:4px;border-bottom:2px solid #06d6a0">Locataire</div>'
+    + '<div class="field"><label>Nom &amp; Prenom</label><div class="val">' + (d.lNom.trim()||'—') + '</div></div>'
+    + '<div class="field"><label>Adresse</label><div class="val">' + (d.lAdresse||'—') + '</div></div>'
+    + '<div class="field"><label>Ville</label><div class="val">' + (d.lVille.trim()||'—') + '</div></div>'
+    + '<div class="field"><label>Tel.</label><div class="val">' + (d.lTel||'—') + '</div></div>'
+    + '<div class="field"><label>Piece identite</label><div class="val">' + (d.lPiece||'—') + '</div></div>'
+    + '</div></div>'
+    + '<div class="loi">Art. 3 loi 89-462 — Identification complete des parties obligatoire dans le contrat ecrit</div>'
+    + '</div>'
+
+    // BIEN
+    + '<div class="section">'
+    + '<div class="sec-title">Designation du bien loue</div>'
+    + '<div class="grid3">'
+    + '<div class="field"><label>Adresse</label><div class="val">' + (d.bienAdresse||'—') + '</div></div>'
+    + '<div class="field"><label>Ville</label><div class="val">' + (d.bienVille.trim()||'—') + '</div></div>'
+    + '<div class="field"><label>Type</label><div class="val">' + (d.bienType||'—') + '</div></div>'
+    + '<div class="field"><label>Surface</label><div class="val">' + (d.bienSurface ? d.bienSurface+' m\u00b2' : '—') + '</div></div>'
+    + '<div class="field"><label>Nb pieces</label><div class="val">' + (d.bienPieces||'—') + '</div></div>'
+    + '<div class="field"><label>Etage</label><div class="val">' + (d.bienEtage||'—') + '</div></div>'
+    + '<div class="field"><label>DPE</label><div class="val">' + (d.bienDPE||'—') + '</div></div>'
+    + '<div class="field"><label>Zone</label><div class="val">' + (d.bienZone||'—') + '</div></div>'
+    + '</div>'
+    + '<div class="loi">Art. 3 loi 89-462 — Designation precise obligatoire · Surface habitable requise</div>'
+    + '</div>'
+
+    // FINANCES
+    + '<div class="section">'
+    + '<div class="sec-title acc">Conditions financieres</div>'
+    + '<table><thead><tr><th>Element</th><th>Montant</th><th>Base legale</th></tr></thead><tbody>'
+    + '<tr><td>Loyer mensuel hors charges</td><td><strong>' + (d.loyer ? d.loyer+' \u20ac' : '—') + '</strong></td><td style="font-size:8pt;color:#8888aa">Art. 17 loi 89-462</td></tr>'
+    + '<tr class="tr-even"><td>Charges recuperables</td><td><strong>' + (d.charges ? d.charges+' \u20ac' : '—') + '</strong></td><td style="font-size:8pt;color:#8888aa">Art. 23 loi 89-462</td></tr>'
+    + '<tr class="tr-total"><td><strong>TOTAL mensuel TTC</strong></td><td><strong>' + total + '</strong></td><td></td></tr>'
+    + '<tr><td>Depot de garantie</td><td><strong>' + (d.depot ? d.depot+' \u20ac' : '—') + '</strong></td><td style="font-size:8pt;color:#8888aa">Art. 22 loi ALUR</td></tr>'
+    + '<tr class="tr-even"><td>Echeance</td><td>Le ' + (d.echeance||'—') + ' de chaque mois</td><td style="font-size:8pt;color:#8888aa">Art. 3 loi 89-462</td></tr>'
+    + '<tr><td>Mode de paiement</td><td>' + (d.paiement||'—') + '</td><td></td></tr>'
+    + '</tbody></table>'
+    + '<div class="loi">Art. 22 loi ALUR — Depot max 1 mois HC (vide) · 2 mois HC (meuble) · Restitution sous 1 mois sans degradation</div>'
+    + '</div>'
+
+    // PAGE 2
+    + '<div class="pb">'
+    + '<div class="p2hdr">'
+    + '<span>Contrat de Location — ' + d.type + ' | Ref. ' + (d.ref||'—') + '</span>'
+    + '<span style="color:#6c63ff;font-weight:700">BAILEVE | Page 2</span>'
+    + '</div>'
+
+    // OBLIGATIONS LOCATAIRE
+    + '<div class="section">'
+    + '<div class="sec-title">Obligations du preneur (locataire)</div>'
+    + clausesLoc.map(function(c){ return clauseRow(c[0],c[1],'#6c63ff'); }).join('')
+    + '</div>'
+
+    // OBLIGATIONS BAILLEUR
+    + '<div class="section">'
+    + '<div class="sec-title grn">Obligations du bailleur</div>'
+    + clausesBail.map(function(c){ return clauseRow(c[0],c[1],'#06d6a0'); }).join('')
+    + '</div>'
+
+    // CLAUSE RÉSOLUTOIRE
+    + '<div class="section">'
+    + '<div class="sec-title red">Clause resolutoire</div>'
+    + '<div style="font-size:9pt;line-height:1.7;padding:10px;background:#fff0f0;border-radius:6px;border-left:3px solid #e63946">'
+    + 'Il est convenu expressement que le present contrat sera resolu de plein droit en cas de non-paiement du loyer ou charges, de non-versement du depot de garantie, de defaut d\'assurance locative, ou de troubles de voisinage constates par decision de justice.'
+    + '</div>'
+    + '<div class="loi">Art. 24 loi 89-462 mod. ALUR — Commandement de payer par huissier requis · Delai 2 mois</div>'
+    + '</div>'
+
+    // SIGNATURES
+    + '<div class="section">'
+    + '<div class="sec-title acc">Signatures</div>'
+    + '<div style="font-size:9pt;margin-bottom:12px">Fait a <strong>' + (d.signLieu||'___________________') + '</strong>, en deux exemplaires originaux.</div>'
+    + '<div class="grid2" style="gap:20px">'
+    + '<div class="sig-block"><div class="sig-label">Le Bailleur</div>' + sigImgB + '<div style="font-size:9pt;font-weight:600;margin-top:6px">' + (d.bNom.trim()||'___________________') + '</div></div>'
+    + '<div class="sig-block"><div class="sig-label">Le Locataire</div>' + sigImgL + '<div style="font-size:9pt;font-weight:600;margin-top:6px">' + (d.lNom.trim()||'___________________') + '</div></div>'
+    + '</div></div>'
+
+    // FOOTER
+    + '<div class="footer">'
+    + '<span>Document genere par Baileve | Conforme loi ALUR N&#176;2014-366 | ' + today + '</span>'
+    + '<span style="color:#6c63ff;font-weight:700">BAILEVE</span>'
+    + '</div>'
+    + '</div>'  // .pb
+    + '</div>'  // .page
+    + '<div class="no-print" style="text-align:center;padding:20px;background:#f4f4f9">'
+    + '<button onclick="window.print()" style="background:linear-gradient(135deg,#6c63ff,#a855f7);border:none;border-radius:12px;padding:14px 32px;color:white;font-size:14px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif">Imprimer / Enregistrer en PDF</button>'
+    + '<button onclick="window.close()" style="background:#e8e8f0;border:none;border-radius:12px;padding:14px 24px;color:#1a1a2e;font-size:14px;font-weight:600;cursor:pointer;margin-left:10px;font-family:Inter,sans-serif">Fermer</button>'
+    + '</div>'
+    + '</body></html>';
+
+  const w = window.open('', '_blank');
+  if (w) { w.document.write(html); w.document.close(); }
+  else { alert('Autorisez les popups pour generer le PDF.'); }
+}
+
+
+function v(id) {
+  const el = document.getElementById(id);
+  return el ? el.value.trim() : '';
+}
+
+function isCanvasBlank(id) {
+  const canvas = document.getElementById(id);
+  if (!canvas) return true;
+  const ctx = canvas.getContext('2d');
+  const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+  return !data.some(ch => ch !== 0);
+}
+
+function sauvegarder() {
+  alert('💾 Contrat sauvegardé localement.');
+}
+
+function reinitialiser() {
+  if (!confirm('Réinitialiser le formulaire ? Toutes les données seront perdues.')) return;
+  effacerDonnees();
+  document.querySelectorAll('input:not([type=file]), select, textarea').forEach(el => {
+    if (el.type === 'checkbox') el.checked = false;
+    else el.value = '';
+  });
+  goTo(0);
+  selectType('vide');
+}
+
+// ===================== QUITTANCE =====================
+function syncEmails() {
+  const be = document.getElementById('bailleurEmail').value;
+  const le = document.getElementById('locataireEmail').value;
+  if (be) document.getElementById('mailBailleur').value  = be;
+  if (le) document.getElementById('mailLocataire').value = le;
+}
+
+function prefillQuittance() {
+  const loyer   = document.getElementById('loyer').value;
+  const charges = document.getElementById('charges').value;
+  if (loyer)   document.getElementById('qLoyer').value   = loyer;
+  if (charges) document.getElementById('qCharges').value = charges;
+  calcQuittance();
+  syncEmails();
+}
+
+function calcQuittance() {
+  const loyer   = parseFloat(document.getElementById('qLoyer').value) || 0;
+  const charges = parseFloat(document.getElementById('qCharges').value) || 0;
+  const total   = loyer + charges;
+  const box     = document.getElementById('qTotal');
+
+  if (!loyer) { box.style.display = 'none'; return; }
+
+  document.getElementById('qTotalVal').textContent    = total.toFixed(2) + ' €';
+  document.getElementById('qTotalDetail').textContent = `Loyer HC ${loyer.toFixed(2)} € + Charges ${charges.toFixed(2)} €`;
+  box.style.display = 'block';
+}
+
+function genererQuittance() {
+  const mois    = document.getElementById('qMois').value;
+  const annee   = document.getElementById('qAnnee').value;
+  const loyer   = parseFloat(document.getElementById('qLoyer').value) || 0;
+  const charges = parseFloat(document.getElementById('qCharges').value) || 0;
+  const total   = loyer + charges;
+  const datePaie= document.getElementById('qDatePaie').value;
+  const mode    = document.getElementById('qModePaie').value;
+
+  const bNom  = [v('bailleurPrenom'), v('bailleurNom')].filter(Boolean).join(' ') || 'Le bailleur';
+  const bAddr = [v('bailleurAdresse'), v('bailleurCP'), v('bailleurVille')].filter(Boolean).join(', ') || '—';
+  const lNom  = [v('locatairePrenom'), v('locataireNom')].filter(Boolean).join(' ') || 'Le locataire';
+  const bien  = [v('bienAdresse'), v('bienCP'), v('bienVille')].filter(Boolean).join(', ') || '—';
+
+  const html = `<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8">
+<title>Quittance ${mois} ${annee} — Baileve</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',Arial,sans-serif;color:#1a1a2e;background:white;padding:20px}
+  .page{max-width:600px;margin:20px auto;padding:36px 40px;border:1.5px solid #e8e8f0;border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,0.08)}
+  .header{display:flex;align-items:center;justify-content:space-between;padding-bottom:16px;border-bottom:2.5px solid #1a1a2e;margin-bottom:20px}
+  .brand{font-size:20pt;font-weight:900;letter-spacing:-1px}
+  .brand span{color:#6c63ff}
+  .parties{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:16px;padding:14px;background:#f7f7fc;border-radius:10px}
+  .party-label{font-size:7.5pt;font-weight:800;color:#8888aa;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+  .party-name{font-size:11pt;font-weight:700}
+  .bien{background:#f3f0ff;border-radius:8px;padding:10px 14px;margin-bottom:16px}
+  table{width:100%;border-collapse:collapse;margin-bottom:8px}
+  td{padding:9px 12px;border-bottom:1px solid #f0f0f8;font-size:10pt}
+  .total-row td{background:#f3f0ff;font-weight:800;font-size:12pt;color:#6c63ff;border:none;border-top:2px solid #6c63ff}
+  .attestation{margin:16px 0;padding:12px 14px;background:#e8fff8;border-left:3px solid #06d6a0;border-radius:0 8px 8px 0;font-size:9pt;line-height:1.6;color:#00695c}
+  .loi{font-size:7.5pt;color:#6c63ff;background:#f3f0ff;border-left:2px solid #6c63ff;padding:4px 10px;border-radius:0 4px 4px 0;margin-top:8px}
+  .footer{margin-top:20px;padding-top:10px;border-top:1px solid #e8e8f0;display:flex;justify-content:space-between;font-size:7.5pt;color:#aaa}
+  @media print{.no-print{display:none!important}@page{margin:10mm}}
+</style></head><body>
+<div class="page">
+  <div class="header">
+    <div>
+      <div class="brand">BAILE<span>VE</span></div>
+      <div style="font-size:7.5pt;color:#8888aa;text-transform:uppercase;letter-spacing:2px;margin-top:2px">Gestion locative</div>
+    </div>
+    <div style="text-align:right">
+      <div style="font-size:14pt;font-weight:800">QUITTANCE DE LOYER</div>
+      <div style="font-size:10pt;color:#6c63ff;font-weight:700">${mois} ${annee}</div>
+    </div>
+  </div>
+  <div class="parties">
+    <div><div class="party-label">Bailleur</div><div class="party-name">${bNom}</div><div style="font-size:8.5pt;color:#666;margin-top:2px">${bAddr}</div></div>
+    <div><div class="party-label">Locataire</div><div class="party-name">${lNom}</div></div>
+  </div>
+  <div class="bien"><div style="font-size:7.5pt;font-weight:800;color:#6c63ff;text-transform:uppercase;letter-spacing:1px;margin-bottom:2px">Bien loué</div><div style="font-size:10pt;font-weight:600">${bien}</div></div>
+  <table><tbody>
+    <tr><td>Loyer hors charges</td><td style="text-align:right;font-weight:700">${loyer.toFixed(2)} €</td></tr>
+    <tr><td>Charges récupérables</td><td style="text-align:right;font-weight:700">${charges.toFixed(2)} €</td></tr>
+    <tr class="total-row"><td>TOTAL RÉGLÉ</td><td style="text-align:right">${total.toFixed(2)} €</td></tr>
+  </tbody></table>
+  ${datePaie ? `<div style="font-size:9pt;color:#666;margin-bottom:12px">Reçu le <strong>${datePaie}</strong> · Paiement par <strong>${mode}</strong></div>` : ""}
+  <div class="attestation">Je soussigné(e) <strong>${bNom}</strong> certifie avoir reçu de <strong>${lNom}</strong> la somme de <strong>${total.toFixed(2)} €</strong> au titre du loyer et charges de <strong>${mois} ${annee}</strong> pour le bien situé au <strong>${bien}</strong>, et lui en donne quittance.</div>
+  <div class="loi">Art. 21 loi 89-462 mod. ALUR — Quittance gratuite sur demande · Détail loyer/charges obligatoire</div>
+  <div class="footer">
+    <span>Baileve · Quittance ${mois} ${annee} · ${new Date().toLocaleDateString("fr-FR")}</span>
+    <span style="color:#6c63ff;font-weight:700">Conforme loi ALUR</span>
+  </div>
+</div>
+<div class="no-print" style="text-align:center;padding:16px;background:#f4f4f9">
+  <button onclick="window.print()" style="background:linear-gradient(135deg,#06d6a0,#00b494);border:none;border-radius:12px;padding:12px 28px;color:white;font-size:13px;font-weight:700;cursor:pointer">🖨️ Imprimer / PDF</button>
+  <button onclick="window.close()" style="background:#e8e8f0;border:none;border-radius:12px;padding:12px 20px;color:#1a1a2e;font-size:13px;font-weight:600;cursor:pointer;margin-left:8px">✕ Fermer</button>
+</div>
+</body></html>`;
+
+  // Show inline preview
+  document.getElementById('qPreviewContent').innerHTML = `
+    <div style="text-align:center;border-bottom:2px solid #e8e8f0;padding-bottom:12px;margin-bottom:12px">
+      <div style="font-size:18px;font-weight:800;color:#1a1a2e">QUITTANCE DE LOYER</div>
+      <div style="font-size:10px;color:#8888aa;margin-top:2px">${mois} ${annee}</div>
+    </div>
+    <div style="margin-bottom:8px"><strong>Bailleur :</strong> ${bNom}</div>
+    <div style="margin-bottom:8px"><strong>Locataire :</strong> ${lNom}</div>
+    <div style="margin-bottom:8px"><strong>Bien loué :</strong> ${bien}</div>
+    <div style="border-top:1px solid #e8e8f0;padding-top:10px;margin-top:10px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span>Loyer HC</span><strong>${loyer.toFixed(2)} €</strong></div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span>Charges</span><strong>${charges.toFixed(2)} €</strong></div>
+      <div style="display:flex;justify-content:space-between;background:#f0fff8;padding:8px;border-radius:8px;margin-top:6px"><span><strong>TOTAL</strong></span><strong style="color:#06d6a0">${total.toFixed(2)} €</strong></div>
+    </div>`;
+  document.getElementById('qPreview').style.display = 'block';
+  document.getElementById('qPreview').scrollIntoView({ behavior: 'smooth' });
+
+  const w = window.open('', '_blank');
+  if (w) { w.document.write(html); w.document.close(); }
+}
+
+function envoyerQuittanceMail() {
+  const to      = document.getElementById('locataireEmail').value || document.getElementById('mailLocataire').value;
+  const mois    = document.getElementById('qMois').value;
+  const annee   = document.getElementById('qAnnee').value;
+  const loyer   = document.getElementById('qLoyer').value || '—';
+  const charges = document.getElementById('qCharges').value || '0';
+  const total   = (parseFloat(loyer)||0) + (parseFloat(charges)||0);
+  const lNom    = [document.getElementById('locatairePrenom').value, document.getElementById('locataireNom').value].filter(Boolean).join(' ') || 'Locataire';
+  const bien    = document.getElementById('bienAdresse').value || 'votre logement';
+
+  const sujet = encodeURIComponent(`Quittance de loyer — ${mois} ${annee}`);
+  const corps = encodeURIComponent(
+    `Bonjour ${lNom},\n\nVeuillez trouver ci-joint votre quittance de loyer pour le mois de ${mois} ${annee}.\n\n` +
+    `Bien loué : ${bien}\nLoyer HC : ${loyer} €\nCharges : ${charges} €\nTotal réglé : ${total.toFixed(2)} €\n\n` +
+    `Conformément à l'art. 21 de la loi du 6 juillet 1989, cette quittance atteste du paiement intégral.\n\nCordialement,`
+  );
+
+  window.location.href = `mailto:${to}?subject=${sujet}&body=${corps}`;
+}
+
+function envoyerCNIMail() {
+  const to   = document.getElementById('bailleurEmail').value || document.getElementById('mailBailleur').value;
+  const lNom = [document.getElementById('locatairePrenom').value, document.getElementById('locataireNom').value].filter(Boolean).join(' ') || 'Le locataire';
+  const sujet = encodeURIComponent(`Copie CNI — ${lNom}`);
+  const corps = encodeURIComponent(
+    `Bonjour,\n\nVeuillez trouver en pièce jointe la copie de la pièce d'identité de ${lNom}.\n\n` +
+    `Conformément à l'art. 22-2 de la loi ALUR, ce document est obligatoire pour le dossier de location.\n\nCordialement,`
+  );
+  window.location.href = `mailto:${to}?subject=${sujet}&body=${corps}`;
+}
+
+// ===================== CNI PREVIEW =====================
+function previewCNI(inputId, previewId) {
+  const input   = document.getElementById(inputId);
+  const preview = document.getElementById(previewId);
+  if (!input.files[0]) return;
+
+  const reader = new FileReader();
+  reader.onload = e => {
+    preview.innerHTML = `<img src="${e.target.result}" class="cni-thumb" alt="CNI">`;
+    document.getElementById('cniStatus').className = 'info-box ib-green';
+    document.getElementById('cniStatus').textContent = '✅ Photo CNI ajoutée avec succès.';
+  };
+  reader.readAsDataURL(input.files[0]);
+}
+
+// ===================== ÉTAT DES LIEUX =====================
+let currentEDL = 'vide';
+let pieceCount  = 0;
+let meubleCount = 0;
+
+const PIECES_DEFAULT = {
+  vide:         ['Entrée', 'Séjour', 'Cuisine', 'Chambre 1', 'Salle de bain', 'WC', 'Couloir'],
+  meuble:       ['Entrée', 'Séjour / Salle à manger', 'Cuisine équipée', 'Chambre 1', 'Salle de bain', 'WC'],
+  saisonnier:   ['Entrée', 'Séjour', 'Cuisine', 'Chambre', 'Salle de bain / WC', 'Terrasse / Jardin'],
+  professionnel:['Entrée / Accueil', 'Salle d\'attente', 'Bureau / Cabinet', 'Salle de soins', 'Sanitaires', 'Local technique'],
+};
+
+const MEUBLES_DEFAULT = [
+  'Lit (1 place)', 'Table de nuit', 'Armoire / Penderie', 'Table + Chaises',
+  'Canapé', 'Cuisine (réfrigérateur, plaques, four)', 'Vaisselle complète', 'Luminaires',
+];
+
+function setEDL(type) {
+  currentEDL = type;
+  ['vide','meuble','saisonnier','professionnel'].forEach(t => {
+    document.getElementById(`edl-tab-${t}`).classList.toggle('active', t === type);
+  });
+
+  const labels = {
+    vide:         HOUSE_SVG + ' État des lieux — Location vide',
+    meuble:       '🛋️ État des lieux — Location meublée',
+    saisonnier:   '🌴 État des lieux — Location saisonnière',
+    professionnel:'💼 État des lieux — Bail professionnel'
+  };
+  document.getElementById('edlTypeLabel').innerHTML = labels[type];
+
+  // Update tab icons
+  const tabVide = document.getElementById('edl-tab-vide');
+  if (tabVide) tabVide.innerHTML = HOUSE_SVG + ' Vide';
+
+  document.getElementById('edlMobilierCard').style.display   = type === 'meuble'       ? '' : 'none';
+  document.getElementById('edlSaisonnierCard').style.display = type === 'saisonnier'   ? '' : 'none';
+  document.getElementById('edlProCard').style.display        = type === 'professionnel'? '' : 'none';
+
+  // Reset and fill pieces
+  document.getElementById('edlPiecesList').innerHTML = '';
+  pieceCount = 0;
+  (PIECES_DEFAULT[type] || []).forEach(nom => addPiece(nom));
+
+  // Fill mobilier for meublé
+  if (type === 'meuble') {
+    document.getElementById('edlMobilierList').innerHTML = '';
+    meubleCount = 0;
+    MEUBLES_DEFAULT.forEach(nom => addMeuble(nom));
+  }
+
+  // Pre-fill address
+  const addr = document.getElementById('bienAdresse').value;
+  if (addr) document.getElementById('edlAdresse').value = addr;
+}
+
+function addPiece(nom) {
+  pieceCount++;
+  const n   = pieceCount;
+  const camId  = 'cam_piece_' + n;
+  const prevId = 'prev_piece_' + n;
+  const div = document.createElement('div');
+  div.className = 'piece-card';
+  div.id = 'piece_' + n;
+  div.innerHTML = `
+    <div class="piece-header">
+      <input type="text" value="${nom || 'Pièce ' + n}" style="background:transparent;border:none;font-size:13px;font-weight:700;color:var(--text);outline:none;flex:1;font-family:Inter,sans-serif">
+      <button class="piece-del" onclick="this.closest('.piece-card').remove()">✕</button>
+    </div>
+
+    <div class="grid2" style="margin-bottom:10px">
+      <div>
+        <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px">Sol</div>
+        <div class="etat-btns">
+          <button class="etat-btn" onclick="selEtat(this,'sel-bon')">Bon</button>
+          <button class="etat-btn" onclick="selEtat(this,'sel-usage')">Usage</button>
+          <button class="etat-btn" onclick="selEtat(this,'sel-moyen')">Moyen</button>
+          <button class="etat-btn" onclick="selEtat(this,'sel-mauvais')">Mauvais</button>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px">Murs / Plafond</div>
+        <div class="etat-btns">
+          <button class="etat-btn" onclick="selEtat(this,'sel-bon')">Bon</button>
+          <button class="etat-btn" onclick="selEtat(this,'sel-usage')">Usage</button>
+          <button class="etat-btn" onclick="selEtat(this,'sel-moyen')">Moyen</button>
+          <button class="etat-btn" onclick="selEtat(this,'sel-mauvais')">Mauvais</button>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px">Fenêtres / Portes</div>
+        <div class="etat-btns">
+          <button class="etat-btn" onclick="selEtat(this,'sel-bon')">Bon</button>
+          <button class="etat-btn" onclick="selEtat(this,'sel-usage')">Usage</button>
+          <button class="etat-btn" onclick="selEtat(this,'sel-moyen')">Moyen</button>
+          <button class="etat-btn" onclick="selEtat(this,'sel-mauvais')">Mauvais</button>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px">Électricité</div>
+        <div class="etat-btns">
+          <button class="etat-btn" onclick="selEtat(this,'sel-bon')">Bon</button>
+          <button class="etat-btn" onclick="selEtat(this,'sel-usage')">Usage</button>
+          <button class="etat-btn" onclick="selEtat(this,'sel-moyen')">Moyen</button>
+          <button class="etat-btn" onclick="selEtat(this,'sel-mauvais')">Mauvais</button>
+        </div>
+      </div>
+    </div>
+
+    <textarea placeholder="Observations pour cette pièce..." style="width:100%;background:var(--card);border:1.5px solid var(--border);border-radius:8px;padding:8px 10px;font-size:12px;font-family:Inter,sans-serif;resize:vertical;min-height:48px;outline:none;margin-bottom:10px"></textarea>
+
+    <!-- CAMÉRA PAR PIÈCE -->
+    <div style="background:var(--bg);border-radius:10px;padding:10px">
+      <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">📷 Photos de cette pièce</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px" id="${prevId}"></div>
+      <div style="display:flex;gap:8px">
+        <label style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:9px;padding:9px 12px;cursor:pointer;color:white;font-size:12px;font-weight:700">
+          📷 Caméra
+          <input type="file" accept="image/*" capture="environment" multiple style="display:none" onchange="addPiecePhotos(this,'${prevId}')">
+        </label>
+        <label style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;background:linear-gradient(135deg,var(--blue),#3a7bd5);border-radius:9px;padding:9px 12px;cursor:pointer;color:white;font-size:12px;font-weight:700">
+          🖼 Galerie
+          <input type="file" accept="image/*" multiple style="display:none" onchange="addPiecePhotos(this,'${prevId}')">
+        </label>
+      </div>
+    </div>
+  `;
+  document.getElementById('edlPiecesList').appendChild(div);
+}
+
+function addPiecePhotos(input, prevId) {
+  const preview = document.getElementById(prevId);
+  Array.from(input.files).forEach(file => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const wrap = document.createElement('div');
+      wrap.style.cssText = 'position:relative;display:inline-block';
+      wrap.innerHTML = `
+        <img src="${e.target.result}" style="width:72px;height:72px;object-fit:cover;border-radius:8px;border:2px solid var(--accent);display:block">
+        <button onclick="this.parentElement.remove()" style="position:absolute;top:-4px;right:-4px;background:var(--red);border:none;border-radius:50%;width:18px;height:18px;color:white;font-size:10px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1">✕</button>
+      `;
+      preview.appendChild(wrap);
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+function addMeuble(nom) {
+  meubleCount++;
+  const div = document.createElement('div');
+  div.style.cssText = 'background:var(--bg);border-radius:10px;padding:10px;margin-bottom:8px;display:flex;align-items:center;gap:10px';
+  div.innerHTML = `
+    <input type="text" value="${nom || 'Meuble ' + meubleCount}" style="flex:1;background:white;border:1.5px solid var(--border);border-radius:8px;padding:7px 10px;font-size:12px;font-family:Inter,sans-serif;outline:none">
+    <select style="background:white;border:1.5px solid var(--border);border-radius:8px;padding:7px 10px;font-size:12px;font-family:Inter,sans-serif;outline:none">
+      <option>Bon état</option><option>État d'usage</option><option>Moyen</option><option>Mauvais état</option><option>Absent</option>
+    </select>
+    <button onclick="this.parentElement.remove()" style="background:var(--red);border:none;border-radius:6px;padding:6px 10px;color:white;font-size:11px;cursor:pointer">✕</button>
+  `;
+  document.getElementById('edlMobilierList').appendChild(div);
+}
+
+function selEtat(btn, cls) {
+  const group = btn.closest('.etat-btns');
+  group.querySelectorAll('.etat-btn').forEach(b => b.className = 'etat-btn');
+  btn.classList.add(cls);
+}
+
+function previewEDLPhotos() {
+  const input   = document.getElementById('edlPhotos');
+  const preview = document.getElementById('edlPhotoPreview');
+  preview.innerHTML = '';
+  Array.from(input.files).forEach(file => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const img = document.createElement('img');
+      img.src = e.target.result;
+      img.style.cssText = 'width:80px;height:80px;object-fit:cover;border-radius:8px;border:2px solid var(--accent)';
+      preview.appendChild(img);
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+function genererEDL() {
+  const edlTypeLabel = { vide:'Location vide', meuble:'Location meublée', saisonnier:'Location saisonnière', professionnel:'Bail professionnel' };
+  const typeEDL  = document.getElementById('edlType')?.value || 'Entrée';
+  const dateEDL  = document.getElementById('edlDate')?.value || new Date().toLocaleDateString('fr-FR');
+  const adresse  = document.getElementById('edlAdresse')?.value || '—';
+  const presents = document.getElementById('edlPresents')?.value || '—';
+  const elec     = document.getElementById('edlElec')?.value;
+  const gaz      = document.getElementById('edlGaz')?.value;
+  const eauF     = document.getElementById('edlEauF')?.value;
+  const eauC     = document.getElementById('edlEauC')?.value;
+  const clesP    = document.getElementById('edlClesPorte')?.value;
+  const badges   = document.getElementById('edlBadges')?.value;
+  const obs      = document.getElementById('edlObs')?.value || '';
+
+  // Collect pieces
+  let piecesHTML = '';
+  document.querySelectorAll('#edlPiecesList .piece-card').forEach(card => {
+    const nom  = card.querySelector('input')?.value || '';
+    const obs2 = card.querySelector('textarea')?.value || '';
+    const etats = [];
+    const labels = ['Sol','Murs / Plafond','Fenêtres / Portes','Électricité'];
+    card.querySelectorAll('.etat-btns').forEach((g, i) => {
+      const sel = g.querySelector('[class*="sel-"]');
+      etats.push(`<td style="font-size:8pt">${labels[i]}: <strong>${sel ? sel.textContent : '—'}</strong></td>`);
+    });
+    piecesHTML += `<tr style="border-bottom:1px solid #e8e8f0">
+      <td style="font-weight:700;padding:6px 8px;font-size:9pt">${nom}</td>
+      ${etats.join('')}
+      <td style="font-size:8pt;color:#666;padding:6px 8px">${obs2}</td>
+    </tr>`;
+  });
+
+  const obsSection = obs ? '<div class="section"><div class="sec-title">Observations generales</div><div style="padding:10px;background:#f7f7fc;border-radius:6px;font-size:9.5pt">' + obs + '</div></div>' : '';
+  const edlLabel = edlTypeLabel[currentEDL] || currentEDL;
+
+  const html = '<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8">'
+    + '<title>Etat des lieux — Baileve</title>'
+    + '<style>'
+    + '@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap");'
+    + '*{box-sizing:border-box;margin:0;padding:0}'
+    + 'body{font-family:Inter,Arial,sans-serif;color:#1a1a2e;font-size:10pt;line-height:1.5}'
+    + '.page{max-width:794px;margin:0 auto;padding:28px 36px}'
+    + '.header{display:flex;align-items:center;justify-content:space-between;padding-bottom:12px;border-bottom:2.5px solid #1a1a2e;margin-bottom:16px}'
+    + '.brand{font-size:16pt;font-weight:900;letter-spacing:-1px;color:#1a1a2e}'
+    + '.brand span{color:#6c63ff}'
+    + '.badge{display:inline-block;background:#f3f0ff;border:1px solid #6c63ff;border-radius:20px;padding:2px 10px;font-size:7pt;font-weight:700;color:#6c63ff}'
+    + '.sec-title{font-size:9pt;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:white;background:#1a1a2e;padding:5px 10px;border-radius:5px;margin-bottom:8px}'
+    + '.section{margin-bottom:16px}'
+    + '.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}'
+    + '.field label{font-size:7.5pt;font-weight:700;color:#8888aa;text-transform:uppercase;display:block;margin-bottom:2px}'
+    + '.field .val{font-size:10pt;font-weight:600;padding:4px 8px;background:#f7f7fc;border-radius:5px;border-left:3px solid #6c63ff}'
+    + '.compteur{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}'
+    + '.cpt{background:#f7f7fc;border-radius:8px;padding:8px 10px;text-align:center;flex:1;border:1px solid #e8e8f0;min-width:80px}'
+    + '.cpt-label{font-size:7pt;font-weight:700;color:#8888aa;text-transform:uppercase}'
+    + '.cpt-val{font-size:11pt;font-weight:800;color:#1a1a2e;margin-top:2px}'
+    + 'table{width:100%;border-collapse:collapse}'
+    + 'th{background:#1a1a2e;color:white;font-size:8pt;font-weight:700;padding:6px 8px;text-align:left}'
+    + '.sig-block{border:1.5px solid #e8e8f0;border-radius:8px;padding:12px;text-align:center}'
+    + '.sig-label{font-size:8pt;font-weight:700;color:#8888aa;text-transform:uppercase;margin-bottom:6px}'
+    + '.footer{margin-top:20px;padding-top:10px;border-top:1px solid #e8e8f0;display:flex;justify-content:space-between;font-size:7pt;color:#aaa}'
+    + '@media print{.no-print{display:none!important}@page{margin:10mm;size:A4}}'
+    + '</style></head><body>'
+    + '<div class="page">'
+    + '<div class="header">'
+    + '<div style="display:flex;align-items:center;gap:12px">'
+    + LOGO
+    + '<div><div class="brand">BAILE<span>VE</span></div>'
+    + '<div style="font-size:7.5pt;color:#8888aa;text-transform:uppercase;letter-spacing:2px">Etat des lieux</div></div></div>'
+    + '<div style="text-align:right">'
+    + '<div style="font-size:13pt;font-weight:800">' + typeEDL + ' — ' + edlLabel + '</div>'
+    + '<div style="font-size:8pt;color:#8888aa">Date : ' + dateEDL + '</div>'
+    + '<div class="badge">Art. 3-2 Loi ALUR</div>'
+    + '</div></div>'
+    + '<div class="section"><div class="sec-title">Informations generales</div>'
+    + '<div class="grid2">'
+    + '<div class="field"><label>Adresse du bien</label><div class="val">' + adresse + '</div></div>'
+    + '<div class="field"><label>Personnes presentes</label><div class="val">' + presents + '</div></div>'
+    + '</div></div>'
+    + '<div class="section"><div class="sec-title">Remise des cles · Compteurs</div>'
+    + '<div class="compteur">'
+    + '<div class="cpt"><div class="cpt-label">Cles porte</div><div class="cpt-val">' + (clesP||'—') + '</div></div>'
+    + '<div class="cpt"><div class="cpt-label">Badges</div><div class="cpt-val">' + (badges||'—') + '</div></div>'
+    + '<div class="cpt"><div class="cpt-label">Electr.</div><div class="cpt-val">' + (elec ? elec+' kWh' : '—') + '</div></div>'
+    + '<div class="cpt"><div class="cpt-label">Gaz</div><div class="cpt-val">' + (gaz ? gaz+' m3' : '—') + '</div></div>'
+    + '<div class="cpt"><div class="cpt-label">Eau F.</div><div class="cpt-val">' + (eauF ? eauF+' m3' : '—') + '</div></div>'
+    + '<div class="cpt"><div class="cpt-label">Eau C.</div><div class="cpt-val">' + (eauC ? eauC+' m3' : '—') + '</div></div>'
+    + '</div></div>'
+    + '<div class="section"><div class="sec-title">Etat piece par piece</div>'
+    + '<table><thead><tr><th>Piece</th><th>Sol</th><th>Murs/Plafond</th><th>Fenetres</th><th>Electricite</th><th>Observations</th></tr></thead>'
+    + '<tbody>' + (piecesHTML || '<tr><td colspan="6" style="padding:10px;color:#aaa;text-align:center">Aucune piece renseignee</td></tr>') + '</tbody></table></div>'
+    + obsSection
+    + '<div class="section"><div class="sec-title">Signatures</div>'
+    + '<div class="grid2" style="gap:20px">'
+    + '<div class="sig-block"><div class="sig-label">Bailleur / Mandataire</div><div style="height:60px;border-bottom:1px solid #1a1a2e;margin-bottom:8px"></div><div style="font-size:9pt;font-weight:600">' + v('bailleurPrenom') + ' ' + v('bailleurNom') + '</div></div>'
+    + '<div class="sig-block"><div class="sig-label">Locataire</div><div style="height:60px;border-bottom:1px solid #1a1a2e;margin-bottom:8px"></div><div style="font-size:9pt;font-weight:600">' + v('locatairePrenom') + ' ' + v('locataireNom') + '</div></div>'
+    + '</div></div>'
+    + '<div class="footer"><span>Baileve · Etat des lieux ' + typeEDL + ' · ' + dateEDL + '</span><span>Conforme Art. 3-2 Loi ALUR N&deg;2014-366</span></div>'
+    + '</div>'
+    + '<div class="no-print" style="text-align:center;padding:16px;background:#f4f4f9">'
+    + '<button onclick="window.print()" style="background:linear-gradient(135deg,#6c63ff,#a855f7);border:none;border-radius:12px;padding:12px 28px;color:white;font-size:13px;font-weight:700;cursor:pointer">Imprimer / PDF</button>'
+    + '<button onclick="window.close()" style="background:#e8e8f0;border:none;border-radius:12px;padding:12px 20px;color:#1a1a2e;font-size:13px;font-weight:600;cursor:pointer;margin-left:8px">Fermer</button>'
+    + '</div></body></html>';
+
+  const w = window.open('', '_blank');
+  if (w) { w.document.write(html); w.document.close(); }
+  else { alert('Autorisez les popups pour générer le PDF, ou utilisez le bouton Imprimer du navigateur.'); }
+}
+
+function envoyerEDLMail() {
+  const toB   = document.getElementById('mailBailleur').value  || document.getElementById('bailleurEmail').value;
+  const toL   = document.getElementById('mailLocataire').value || document.getElementById('locataireEmail').value;
+  const to    = [toB, toL].filter(Boolean).join(',');
+  const type  = { vide:'vide', meuble:'meublée', saisonnier:'saisonnière', professionnel:'professionnelle' }[currentEDL];
+  const edlType = document.getElementById('edlType').value;
+  const date  = document.getElementById('edlDate').value || new Date().toLocaleDateString('fr-FR');
+
+  const sujet = encodeURIComponent(`État des lieux ${edlType} — ${date}`);
+  const corps = encodeURIComponent(
+    `Bonjour,\n\nVeuillez trouver ci-joint l'état des lieux d'${edlType} pour la location ${type}.\n\n` +
+    `Date : ${date}\nAdresse : ${document.getElementById('edlAdresse').value || '—'}\n\n` +
+    `Ce document a été établi contradictoirement et signé par les deux parties.\n\nCordialement,`
+  );
+
+  if (!to) { alert('⚠️ Renseignez au moins un email (étape Bailleur ou Locataire)'); return; }
+  window.location.href = `mailto:${to}?subject=${sujet}&body=${corps}`;
+}
+
+// ===================== ENVOI GLOBAL =====================
+function toggleSend(el) {
+  el.classList.toggle('checked');
+}
+
+function buildMailPreview() {
+  const toB  = document.getElementById('mailBailleur').value  || document.getElementById('bailleurEmail').value;
+  const toL  = document.getElementById('mailLocataire').value || document.getElementById('locataireEmail').value;
+  const to   = [toB, toL].filter(Boolean).join(', ') || '—';
+  const obj  = document.getElementById('mailObjet').value;
+  const body = document.getElementById('mailCorps').value;
+
+  document.getElementById('prevDest').textContent  = to;
+  document.getElementById('prevObjet').textContent = obj;
+  document.getElementById('prevCorps').textContent = body;
+}
+
+function buildMailBody(extra) {
+  return encodeURIComponent(
+    document.getElementById('mailCorps').value +
+    (extra ? '\n\n' + extra : '') +
+    '\n\n---\nEnvoyé via Baileve · Contrat de location conforme loi ALUR'
+  );
+}
+
+function envoyerTout() {
+  const toB = document.getElementById('mailBailleur').value  || document.getElementById('bailleurEmail').value;
+  const toL = document.getElementById('mailLocataire').value || document.getElementById('locataireEmail').value;
+  const to  = [toB, toL].filter(Boolean).join(',');
+
+  if (!to) { alert('⚠️ Renseignez les emails bailleur et locataire.'); return; }
+
+  const sujet = encodeURIComponent(document.getElementById('mailObjet').value);
+  const corps = buildMailBody(buildDocList());
+
+  window.location.href = `mailto:${to}?subject=${sujet}&body=${corps}`;
+}
+
+function envoyerParti(qui) {
+  const to = qui === 'bailleur'
+    ? (document.getElementById('mailBailleur').value || document.getElementById('bailleurEmail').value)
+    : (document.getElementById('mailLocataire').value || document.getElementById('locataireEmail').value);
+
+  if (!to) { alert(`⚠️ Email ${qui} manquant.`); return; }
+
+  const sujet = encodeURIComponent(document.getElementById('mailObjet').value);
+  const corps = buildMailBody(buildDocList());
+
+  window.location.href = `mailto:${to}?subject=${sujet}&body=${corps}`;
+}
+
+function buildDocList() {
+  const docs = [];
+  if (document.querySelector('#send-contrat .send-check.checked'))   docs.push('• Contrat de location');
+  if (document.querySelector('#send-edl .send-check.checked'))        docs.push('• État des lieux');
+  if (document.querySelector('#send-quittance .send-check.checked'))  docs.push('• Quittance de loyer');
+  if (document.querySelector('#send-cni .send-check.checked'))        docs.push('• Copie CNI locataire');
+  if (document.querySelector('#send-diag .send-check.checked'))       docs.push('• Dossier diagnostics (DDT)');
+  return docs.length ? 'Documents inclus :\n' + docs.join('\n') : '';
+}
+
+// ===================== CITY AUTOCOMPLETE =====================
+// Base embarquée — top villes France + DOM-TOM
+const VILLES_FR = [{"n":"Abbeville","cp":"80100","d":"80"},{"n":"Agde","cp":"34300","d":"34"},{"n":"Agen","cp":"47000","d":"47"},{"n":"Aix-en-Provence","cp":"13100","d":"13"},{"n":"Aix-les-Bains","cp":"73100","d":"73"},{"n":"Ajaccio","cp":"20000","d":"20"},{"n":"Albert","cp":"80300","d":"80"},{"n":"Albertville","cp":"73200","d":"73"},{"n":"Albi","cp":"81000","d":"81"},{"n":"Alençon","cp":"61000","d":"61"},{"n":"Alfortville","cp":"94140","d":"94"},{"n":"Allonnes","cp":"72700","d":"72"},{"n":"Alès","cp":"30100","d":"30"},{"n":"Amboise","cp":"37400","d":"37"},{"n":"Ambérieu-en-Bugey","cp":"01500","d":"01"},{"n":"Amiens","cp":"80000","d":"80"},{"n":"Amilly","cp":"45200","d":"45"},{"n":"Andrézieux-Bouthéon","cp":"42160","d":"42"},{"n":"Angers","cp":"49000","d":"49"},{"n":"Anglet","cp":"64600","d":"64"},{"n":"Angoulême","cp":"16000","d":"16"},{"n":"Annecy","cp":"74000","d":"74"},{"n":"Annemasse","cp":"74100","d":"74"},{"n":"Annonay","cp":"07100","d":"07"},{"n":"Antibes","cp":"06600","d":"06"},{"n":"Antony","cp":"92160","d":"92"},{"n":"Apt","cp":"84400","d":"84"},{"n":"Arcachon","cp":"33120","d":"33"},{"n":"Arcueil","cp":"94110","d":"94"},{"n":"Argentan","cp":"61200","d":"61"},{"n":"Argenteuil","cp":"95100","d":"95"},{"n":"Arles","cp":"13200","d":"13"},{"n":"Armentières","cp":"59280","d":"59"},{"n":"Arras","cp":"62000","d":"62"},{"n":"Asnières-sur-Seine","cp":"92600","d":"92"},{"n":"Athis-Mons","cp":"91200","d":"91"},{"n":"Aubagne","cp":"13400","d":"13"},{"n":"Aubenas","cp":"07200","d":"07"},{"n":"Aubervilliers","cp":"93300","d":"93"},{"n":"Aubière","cp":"63170","d":"63"},{"n":"Aubusson","cp":"23200","d":"23"},{"n":"Auch","cp":"32000","d":"32"},{"n":"Audincourt","cp":"25400","d":"25"},{"n":"Aulnay-sous-Bois","cp":"93600","d":"93"},{"n":"Aups","cp":"83630","d":"83"},{"n":"Auray","cp":"56400","d":"56"},{"n":"Aurillac","cp":"15000","d":"15"},{"n":"Autun","cp":"71400","d":"71"},{"n":"Auxerre","cp":"89000","d":"89"},{"n":"Auxonne","cp":"21130","d":"21"},{"n":"Avignon","cp":"84000","d":"84"},{"n":"Avranches","cp":"50300","d":"50"},{"n":"Avrillé","cp":"49240","d":"49"},{"n":"Aytré","cp":"17440","d":"17"},{"n":"Bagneux","cp":"92220","d":"92"},{"n":"Bagnolet","cp":"93170","d":"93"},{"n":"Bagnols-sur-Cèze","cp":"30200","d":"30"},{"n":"Baie-Mahault","cp":"97122","d":"971"},{"n":"Balma","cp":"31130","d":"31"},{"n":"Bandol","cp":"83150","d":"83"},{"n":"Bandraboua","cp":"97650","d":"976"},{"n":"Bar-le-Duc","cp":"55000","d":"55"},{"n":"Bar-sur-Aube","cp":"10200","d":"10"},{"n":"Barjols","cp":"83670","d":"83"},{"n":"Basse-Terre","cp":"97100","d":"971"},{"n":"Bastia","cp":"20200","d":"20"},{"n":"Baume-les-Dames","cp":"25110","d":"25"},{"n":"Bayeux","cp":"14400","d":"14"},{"n":"Bayonne","cp":"64100","d":"64"},{"n":"Beaucaire","cp":"30300","d":"30"},{"n":"Beaune","cp":"21200","d":"21"},{"n":"Beauvais","cp":"60000","d":"60"},{"n":"Belfort","cp":"90000","d":"90"},{"n":"Bellegarde-sur-Valserine","cp":"01200","d":"01"},{"n":"Bellerive-sur-Allier","cp":"03700","d":"03"},{"n":"Belley","cp":"01300","d":"01"},{"n":"Bergerac","cp":"24100","d":"24"},{"n":"Bernay","cp":"27300","d":"27"},{"n":"Berre-l'Étang","cp":"13130","d":"13"},{"n":"Besançon","cp":"25000","d":"25"},{"n":"Betton","cp":"35830","d":"35"},{"n":"Biarritz","cp":"64200","d":"64"},{"n":"Biscarrosse","cp":"40600","d":"40"},{"n":"Bischheim","cp":"67800","d":"67"},{"n":"Bischwiller","cp":"67240","d":"67"},{"n":"Blagnac","cp":"31700","d":"31"},{"n":"Blaye","cp":"33390","d":"33"},{"n":"Blois","cp":"41000","d":"41"},{"n":"Bobigny","cp":"93000","d":"93"},{"n":"Bois-Colombes","cp":"92270","d":"92"},{"n":"Bondy","cp":"93140","d":"93"},{"n":"Bonneville","cp":"74130","d":"74"},{"n":"Bordeaux","cp":"33000","d":"33"},{"n":"Bormes-les-Mimosas","cp":"83230","d":"83"},{"n":"Bouguenais","cp":"44340","d":"44"},{"n":"Boulogne-Billancourt","cp":"92100","d":"92"},{"n":"Boulogne-sur-Mer","cp":"62200","d":"62"},{"n":"Bourg-en-Bresse","cp":"01000","d":"01"},{"n":"Bourg-lès-Valence","cp":"26500","d":"26"},{"n":"Bourges","cp":"18000","d":"18"},{"n":"Bourgoin-Jallieu","cp":"38300","d":"38"},{"n":"Bressuire","cp":"79300","d":"79"},{"n":"Brest","cp":"29200","d":"29"},{"n":"Briançon","cp":"05100","d":"05"},{"n":"Brignoles","cp":"83170","d":"83"},{"n":"Brioude","cp":"43100","d":"43"},{"n":"Brive-la-Gaillarde","cp":"19100","d":"19"},{"n":"Bron","cp":"69500","d":"69"},{"n":"Bruay-la-Buissière","cp":"62700","d":"62"},{"n":"Bruges","cp":"33520","d":"33"},{"n":"Bruz","cp":"35170","d":"35"},{"n":"Bègles","cp":"33130","d":"33"},{"n":"Béthune","cp":"62400","d":"62"},{"n":"Béziers","cp":"34500","d":"34"},{"n":"Caen","cp":"14000","d":"14"},{"n":"Cagnes-sur-Mer","cp":"06800","d":"06"},{"n":"Cahors","cp":"46000","d":"46"},{"n":"Calais","cp":"62100","d":"62"},{"n":"Caluire-et-Cuire","cp":"69300","d":"69"},{"n":"Cambrai","cp":"59400","d":"59"},{"n":"Canet-en-Roussillon","cp":"66140","d":"66"},{"n":"Cannes","cp":"06400","d":"06"},{"n":"Capesterre-Belle-Eau","cp":"97130","d":"971"},{"n":"Carcassonne","cp":"11000","d":"11"},{"n":"Carhaix-Plouguer","cp":"29270","d":"29"},{"n":"Carpentras","cp":"84200","d":"84"},{"n":"Carquefou","cp":"44470","d":"44"},{"n":"Carqueiranne","cp":"83320","d":"83"},{"n":"Carros","cp":"06510","d":"06"},{"n":"Castanet-Tolosan","cp":"31320","d":"31"},{"n":"Castelnau-le-Lez","cp":"34170","d":"34"},{"n":"Castelnaudary","cp":"11400","d":"11"},{"n":"Castelsarrasin","cp":"82100","d":"82"},{"n":"Castres","cp":"81100","d":"81"},{"n":"Cavaillon","cp":"84300","d":"84"},{"n":"Cavalaire-sur-Mer","cp":"83240","d":"83"},{"n":"Cayenne","cp":"97300","d":"973"},{"n":"Cenon","cp":"33150","d":"33"},{"n":"Cergy","cp":"95000","d":"95"},{"n":"Cernay","cp":"68700","d":"68"},{"n":"Cesson-Sévigné","cp":"35510","d":"35"},{"n":"Cestas","cp":"33610","d":"33"},{"n":"Challans","cp":"85300","d":"85"},{"n":"Chalon-sur-Saône","cp":"71100","d":"71"},{"n":"Chamalières","cp":"63400","d":"63"},{"n":"Chambray-lès-Tours","cp":"37170","d":"37"},{"n":"Chambéry","cp":"73000","d":"73"},{"n":"Champagnole","cp":"39300","d":"39"},{"n":"Champigny-sur-Marne","cp":"94500","d":"94"},{"n":"Charenton-le-Pont","cp":"94220","d":"94"},{"n":"Charleville-Mézières","cp":"08000","d":"08"},{"n":"Chartres","cp":"28000","d":"28"},{"n":"Chaumont","cp":"52000","d":"52"},{"n":"Chauny","cp":"02300","d":"02"},{"n":"Chelles","cp":"77500","d":"77"},{"n":"Chenôve","cp":"21300","d":"21"},{"n":"Cherbourg-en-Cotentin","cp":"50100","d":"50"},{"n":"Chinon","cp":"37500","d":"37"},{"n":"Choisy-le-Roi","cp":"94600","d":"94"},{"n":"Cholet","cp":"49300","d":"49"},{"n":"Châlette-sur-Loing","cp":"45120","d":"45"},{"n":"Châlons-en-Champagne","cp":"51000","d":"51"},{"n":"Château-Arnoux-Saint-Auban","cp":"04160","d":"04"},{"n":"Château-Thierry","cp":"02400","d":"02"},{"n":"Châteaubriant","cp":"44110","d":"44"},{"n":"Châteaudun","cp":"28200","d":"28"},{"n":"Châteauneuf-les-Martigues","cp":"13220","d":"13"},{"n":"Châteauroux","cp":"36000","d":"36"},{"n":"Châtellerault","cp":"86100","d":"86"},{"n":"Châtenay-Malabry","cp":"92290","d":"92"},{"n":"Châtillon","cp":"92320","d":"92"},{"n":"Clamart","cp":"92140","d":"92"},{"n":"Clapiers","cp":"34830","d":"34"},{"n":"Clermont-Ferrand","cp":"63000","d":"63"},{"n":"Clichy","cp":"92110","d":"92"},{"n":"Clichy-sous-Bois","cp":"93390","d":"93"},{"n":"Cluses","cp":"74300","d":"74"},{"n":"Cognac","cp":"16100","d":"16"},{"n":"Cognin","cp":"73160","d":"73"},{"n":"Cogolin","cp":"83310","d":"83"},{"n":"Collobrières","cp":"83610","d":"83"},{"n":"Colmar","cp":"68000","d":"68"},{"n":"Colombes","cp":"92700","d":"92"},{"n":"Colomiers","cp":"31770","d":"31"},{"n":"Commentry","cp":"03600","d":"03"},{"n":"Compiègne","cp":"60200","d":"60"},{"n":"Concarneau","cp":"29900","d":"29"},{"n":"Condom","cp":"32100","d":"32"},{"n":"Conflans-Sainte-Honorine","cp":"78700","d":"78"},{"n":"Corbeil-Essonnes","cp":"91100","d":"91"},{"n":"Corte","cp":"20250","d":"20"},{"n":"Cosne-Cours-sur-Loire","cp":"58200","d":"58"},{"n":"Cotignac","cp":"83570","d":"83"},{"n":"Coudekerque-Branche","cp":"59210","d":"59"},{"n":"Courbevoie","cp":"92400","d":"92"},{"n":"Cournon-d'Auvergne","cp":"63800","d":"63"},{"n":"Couëron","cp":"44220","d":"44"},{"n":"Creil","cp":"60100","d":"60"},{"n":"Crest","cp":"26400","d":"26"},{"n":"Créteil","cp":"94000","d":"94"},{"n":"Cuers","cp":"83390","d":"83"},{"n":"Cugnaux","cp":"31270","d":"31"},{"n":"Cusset","cp":"03300","d":"03"},{"n":"Dax","cp":"40100","d":"40"},{"n":"Decazeville","cp":"12300","d":"12"},{"n":"Decize","cp":"58300","d":"58"},{"n":"Delle","cp":"90100","d":"90"},{"n":"Denain","cp":"59220","d":"59"},{"n":"Dieppe","cp":"76200","d":"76"},{"n":"Digne-les-Bains","cp":"04000","d":"04"},{"n":"Dijon","cp":"21000","d":"21"},{"n":"Dinan","cp":"22100","d":"22"},{"n":"Dole","cp":"39100","d":"39"},{"n":"Domérat","cp":"03410","d":"03"},{"n":"Douai","cp":"59500","d":"59"},{"n":"Douarnenez","cp":"29100","d":"29"},{"n":"Draguignan","cp":"83300","d":"83"},{"n":"Drancy","cp":"93700","d":"93"},{"n":"Dreux","cp":"28100","d":"28"},{"n":"Dumbéa","cp":"98835","d":"988"},{"n":"Dunkerque","cp":"59140","d":"59"},{"n":"Dzaoudzi","cp":"97615","d":"976"},{"n":"Décines-Charpieu","cp":"69150","d":"69"},{"n":"Déols","cp":"36130","d":"36"},{"n":"Eaubonne","cp":"95600","d":"95"},{"n":"Elbeuf","cp":"76500","d":"76"},{"n":"Ermont","cp":"95120","d":"95"},{"n":"Espalion","cp":"12500","d":"12"},{"n":"Eysines","cp":"33320","d":"33"},{"n":"Faches-Thumesnil","cp":"59155","d":"59"},{"n":"Fayence","cp":"83440","d":"83"},{"n":"Ferney-Voltaire","cp":"01210","d":"01"},{"n":"Figeac","cp":"46100","d":"46"},{"n":"Firminy","cp":"42700","d":"42"},{"n":"Flassans-sur-Issole","cp":"83340","d":"83"},{"n":"Flers","cp":"61100","d":"61"},{"n":"Fleury-les-Aubrais","cp":"45400","d":"45"},{"n":"Floirac","cp":"33270","d":"33"},{"n":"Foix","cp":"09000","d":"09"},{"n":"Fontaine","cp":"38600","d":"38"},{"n":"Fontainebleau","cp":"77300","d":"77"},{"n":"Fontenay-aux-Roses","cp":"92260","d":"92"},{"n":"Fontenay-le-Comte","cp":"85200","d":"85"},{"n":"Fontenay-sous-Bois","cp":"94120","d":"94"},{"n":"Forbach","cp":"57600","d":"57"},{"n":"Forcalquier","cp":"04300","d":"04"},{"n":"Fort-de-France","cp":"97200","d":"972"},{"n":"Fos-sur-Mer","cp":"13270","d":"13"},{"n":"Fougères","cp":"35300","d":"35"},{"n":"Franconville","cp":"95130","d":"95"},{"n":"Fresnes","cp":"94260","d":"94"},{"n":"Frontignan","cp":"34110","d":"34"},{"n":"Fréjus","cp":"83600","d":"83"},{"n":"Fécamp","cp":"76400","d":"76"},{"n":"Gaillac","cp":"81600","d":"81"},{"n":"Gaillard","cp":"74240","d":"74"},{"n":"Gap","cp":"05000","d":"05"},{"n":"Gardanne","cp":"13120","d":"13"},{"n":"Garges-lès-Gonesse","cp":"95140","d":"95"},{"n":"Garéoult","cp":"83136","d":"83"},{"n":"Gennevilliers","cp":"92230","d":"92"},{"n":"Gex","cp":"01170","d":"01"},{"n":"Gif-sur-Yvette","cp":"91190","d":"91"},{"n":"Gigean","cp":"34770","d":"34"},{"n":"Gisors","cp":"27140","d":"27"},{"n":"Givet","cp":"08600","d":"08"},{"n":"Givors","cp":"69700","d":"69"},{"n":"Gonfaron","cp":"83590","d":"83"},{"n":"Goussainville","cp":"95190","d":"95"},{"n":"Gradignan","cp":"33170","d":"33"},{"n":"Grande-Synthe","cp":"59760","d":"59"},{"n":"Granville","cp":"50400","d":"50"},{"n":"Grasse","cp":"06130","d":"06"},{"n":"Gray","cp":"70100","d":"70"},{"n":"Grenoble","cp":"38000","d":"38"},{"n":"Grimaud","cp":"83310","d":"83"},{"n":"Guebwiller","cp":"68500","d":"68"},{"n":"Guilherand-Granges","cp":"07500","d":"07"},{"n":"Guingamp","cp":"22200","d":"22"},{"n":"Guise","cp":"02120","d":"02"},{"n":"Guyancourt","cp":"78280","d":"78"},{"n":"Guéret","cp":"23000","d":"23"},{"n":"Haguenau","cp":"67500","d":"67"},{"n":"Hayange","cp":"57700","d":"57"},{"n":"Hazebrouck","cp":"59190","d":"59"},{"n":"Hendaye","cp":"64700","d":"64"},{"n":"Hennebont","cp":"56700","d":"56"},{"n":"Herblay-sur-Seine","cp":"95220","d":"95"},{"n":"Hirson","cp":"02500","d":"02"},{"n":"Houilles","cp":"78800","d":"78"},{"n":"Hyères","cp":"83400","d":"83"},{"n":"Hénin-Beaumont","cp":"62110","d":"62"},{"n":"Héricourt","cp":"70400","d":"70"},{"n":"Hérouville-Saint-Clair","cp":"14200","d":"14"},{"n":"Illkirch-Graffenstaden","cp":"67400","d":"67"},{"n":"Illzach","cp":"68110","d":"68"},{"n":"Issoire","cp":"63500","d":"63"},{"n":"Issoudun","cp":"36100","d":"36"},{"n":"Issy-les-Moulineaux","cp":"92130","d":"92"},{"n":"Istres","cp":"13800","d":"13"},{"n":"Ivry-sur-Seine","cp":"94200","d":"94"},{"n":"Jacou","cp":"34830","d":"34"},{"n":"Joigny","cp":"89300","d":"89"},{"n":"Joinville-le-Pont","cp":"94340","d":"94"},{"n":"Joué-lès-Tours","cp":"37300","d":"37"},{"n":"Juvisy-sur-Orge","cp":"91260","d":"91"},{"n":"Kingersheim","cp":"68260","d":"68"},{"n":"Koungou","cp":"97600","d":"976"},{"n":"Kourou","cp":"97310","d":"973"},{"n":"L'Haÿ-les-Roses","cp":"94240","d":"94"},{"n":"L'Isle-d'Abeau","cp":"38080","d":"38"},{"n":"L'Isle-sur-la-Sorgue","cp":"84800","d":"84"},{"n":"L'Union","cp":"31240","d":"31"},{"n":"La Baule-Escoublac","cp":"44500","d":"44"},{"n":"La Cadière-d'Azur","cp":"83740","d":"83"},{"n":"La Chapelle-Saint-Luc","cp":"10600","d":"10"},{"n":"La Chapelle-sur-Erdre","cp":"44240","d":"44"},{"n":"La Ciotat","cp":"13600","d":"13"},{"n":"La Courneuve","cp":"93120","d":"93"},{"n":"La Crau","cp":"83260","d":"83"},{"n":"La Flèche","cp":"72200","d":"72"},{"n":"La Garde","cp":"83130","d":"83"},{"n":"La Garenne-Colombes","cp":"92250","d":"92"},{"n":"La Grand-Combe","cp":"30110","d":"30"},{"n":"La Londe-les-Maures","cp":"83250","d":"83"},{"n":"La Madeleine","cp":"59110","d":"59"},{"n":"La Possession","cp":"97419","d":"974"},{"n":"La Riche","cp":"37520","d":"37"},{"n":"La Roche-sur-Foron","cp":"74800","d":"74"},{"n":"La Roche-sur-Yon","cp":"85000","d":"85"},{"n":"La Rochelle","cp":"17000","d":"17"},{"n":"La Roquebrussanne","cp":"83136","d":"83"},{"n":"La Seyne-sur-Mer","cp":"83500","d":"83"},{"n":"La Souterraine","cp":"23300","d":"23"},{"n":"La Trinité","cp":"06340","d":"06"},{"n":"La Valette-du-Var","cp":"83160","d":"83"},{"n":"Lagord","cp":"17140","d":"17"},{"n":"Lamballe-Armor","cp":"22400","d":"22"},{"n":"Lambersart","cp":"59130","d":"59"},{"n":"Landerneau","cp":"29800","d":"29"},{"n":"Lanester","cp":"56600","d":"56"},{"n":"Langon","cp":"33210","d":"33"},{"n":"Langres","cp":"52200","d":"52"},{"n":"Lannion","cp":"22300","d":"22"},{"n":"Laon","cp":"02000","d":"02"},{"n":"Lattes","cp":"34970","d":"34"},{"n":"Laval","cp":"53000","d":"53"},{"n":"Lavelanet","cp":"09300","d":"09"},{"n":"Laxou","cp":"54520","d":"54"},{"n":"Le Beausset","cp":"83330","d":"83"},{"n":"Le Blanc-Mesnil","cp":"93150","d":"93"},{"n":"Le Bouscat","cp":"33110","d":"33"},{"n":"Le Cannet","cp":"06110","d":"06"},{"n":"Le Cannet-des-Maures","cp":"83340","d":"83"},{"n":"Le Castellet","cp":"83330","d":"83"},{"n":"Le Creusot","cp":"71200","d":"71"},{"n":"Le François","cp":"97240","d":"972"},{"n":"Le Gosier","cp":"97190","d":"971"},{"n":"Le Grand-Quevilly","cp":"76120","d":"76"},{"n":"Le Havre","cp":"76600","d":"76"},{"n":"Le Kremlin-Bicêtre","cp":"94270","d":"94"},{"n":"Le Lamentin","cp":"97232","d":"972"},{"n":"Le Lavandou","cp":"83980","d":"83"},{"n":"Le Luc","cp":"83340","d":"83"},{"n":"Le Mans","cp":"72000","d":"72"},{"n":"Le Marin","cp":"97290","d":"972"},{"n":"Le Muy","cp":"83490","d":"83"},{"n":"Le Perreux-sur-Marne","cp":"94170","d":"94"},{"n":"Le Petit-Quevilly","cp":"76140","d":"76"},{"n":"Le Plessis-Robinson","cp":"92350","d":"92"},{"n":"Le Pradet","cp":"83220","d":"83"},{"n":"Le Puy-en-Velay","cp":"43000","d":"43"},{"n":"Le Revest-les-Eaux","cp":"83200","d":"83"},{"n":"Le Robert","cp":"97231","d":"972"},{"n":"Le Tampon","cp":"97430","d":"974"},{"n":"Lens","cp":"62300","d":"62"},{"n":"Les Abymes","cp":"97139","d":"971"},{"n":"Les Arcs","cp":"83460","d":"83"},{"n":"Les Herbiers","cp":"85500","d":"85"},{"n":"Les Lilas","cp":"93260","d":"93"},{"n":"Les Mureaux","cp":"78130","d":"78"},{"n":"Les Sables-d'Olonne","cp":"85100","d":"85"},{"n":"Les Ulis","cp":"91940","d":"91"},{"n":"Levallois-Perret","cp":"92300","d":"92"},{"n":"Libourne","cp":"33500","d":"33"},{"n":"Lille","cp":"59000","d":"59"},{"n":"Limoges","cp":"87000","d":"87"},{"n":"Limoux","cp":"11300","d":"11"},{"n":"Lingolsheim","cp":"67380","d":"67"},{"n":"Lisieux","cp":"14100","d":"14"},{"n":"Livry-Gargan","cp":"93190","d":"93"},{"n":"Liévin","cp":"62800","d":"62"},{"n":"Lomme","cp":"59160","d":"59"},{"n":"Longjumeau","cp":"91160","d":"91"},{"n":"Longwy","cp":"54400","d":"54"},{"n":"Lons-le-Saunier","cp":"39000","d":"39"},{"n":"Loos","cp":"59120","d":"59"},{"n":"Lorgues","cp":"83510","d":"83"},{"n":"Lorient","cp":"56100","d":"56"},{"n":"Lormont","cp":"33310","d":"33"},{"n":"Loudéac","cp":"22600","d":"22"},{"n":"Lourdes","cp":"65100","d":"65"},{"n":"Louviers","cp":"27400","d":"27"},{"n":"Lucé","cp":"28110","d":"28"},{"n":"Lunel","cp":"34400","d":"34"},{"n":"Lunéville","cp":"54300","d":"54"},{"n":"Lure","cp":"70200","d":"70"},{"n":"Luxeuil-les-Bains","cp":"70300","d":"70"},{"n":"Lyon 1er","cp":"69001","d":"69"},{"n":"Lyon 2e","cp":"69002","d":"69"},{"n":"Lyon 3e","cp":"69003","d":"69"},{"n":"Lyon 4e","cp":"69004","d":"69"},{"n":"Lyon 5e","cp":"69005","d":"69"},{"n":"Lyon 6e","cp":"69006","d":"69"},{"n":"Lyon 7e","cp":"69007","d":"69"},{"n":"Lyon 8e","cp":"69008","d":"69"},{"n":"Lyon 9e","cp":"69009","d":"69"},{"n":"Lézignan-Corbières","cp":"11200","d":"11"},{"n":"Macouria","cp":"97355","d":"973"},{"n":"Mainvilliers","cp":"28300","d":"28"},{"n":"Maisons-Alfort","cp":"94700","d":"94"},{"n":"Malakoff","cp":"92240","d":"92"},{"n":"Malemort","cp":"19360","d":"19"},{"n":"Mamoudzou","cp":"97600","d":"976"},{"n":"Mandelieu-la-Napoule","cp":"06210","d":"06"},{"n":"Manosque","cp":"04100","d":"04"},{"n":"Mantes-la-Jolie","cp":"78200","d":"78"},{"n":"Marguerittes","cp":"30320","d":"30"},{"n":"Marignane","cp":"13700","d":"13"},{"n":"Marmande","cp":"47200","d":"47"},{"n":"Marseille 10e","cp":"13010","d":"13"},{"n":"Marseille 11e","cp":"13011","d":"13"},{"n":"Marseille 12e","cp":"13012","d":"13"},{"n":"Marseille 13e","cp":"13013","d":"13"},{"n":"Marseille 14e","cp":"13014","d":"13"},{"n":"Marseille 15e","cp":"13015","d":"13"},{"n":"Marseille 16e","cp":"13016","d":"13"},{"n":"Marseille 1er","cp":"13001","d":"13"},{"n":"Marseille 2e","cp":"13002","d":"13"},{"n":"Marseille 3e","cp":"13003","d":"13"},{"n":"Marseille 4e","cp":"13004","d":"13"},{"n":"Marseille 5e","cp":"13005","d":"13"},{"n":"Marseille 6e","cp":"13006","d":"13"},{"n":"Marseille 7e","cp":"13007","d":"13"},{"n":"Marseille 8e","cp":"13008","d":"13"},{"n":"Marseille 9e","cp":"13009","d":"13"},{"n":"Martigues","cp":"13500","d":"13"},{"n":"Massy","cp":"91300","d":"91"},{"n":"Matoury","cp":"97351","d":"973"},{"n":"Maubeuge","cp":"59600","d":"59"},{"n":"Mauguio","cp":"34130","d":"34"},{"n":"Mayenne","cp":"53100","d":"53"},{"n":"Mazamet","cp":"81200","d":"81"},{"n":"Meaux","cp":"77100","d":"77"},{"n":"Melun","cp":"77000","d":"77"},{"n":"Mende","cp":"48000","d":"48"},{"n":"Menton","cp":"06500","d":"06"},{"n":"Metz","cp":"57000","d":"57"},{"n":"Meudon","cp":"92190","d":"92"},{"n":"Meximieux","cp":"01800","d":"01"},{"n":"Meylan","cp":"38240","d":"38"},{"n":"Meyzieu","cp":"69330","d":"69"},{"n":"Millau","cp":"12100","d":"12"},{"n":"Mions","cp":"69780","d":"69"},{"n":"Miramas","cp":"13140","d":"13"},{"n":"Miribel","cp":"01700","d":"01"},{"n":"Mitry-Mory","cp":"77290","d":"77"},{"n":"Moissac","cp":"82200","d":"82"},{"n":"Mondeville","cp":"14120","d":"14"},{"n":"Monistrol-sur-Loire","cp":"43120","d":"43"},{"n":"Mons-en-Barœul","cp":"59370","d":"59"},{"n":"Mont-de-Marsan","cp":"40000","d":"40"},{"n":"Mont-Dore","cp":"98809","d":"988"},{"n":"Mont-Saint-Aignan","cp":"76130","d":"76"},{"n":"Montargis","cp":"45200","d":"45"},{"n":"Montataire","cp":"60160","d":"60"},{"n":"Montauban","cp":"82000","d":"82"},{"n":"Montbard","cp":"21500","d":"21"},{"n":"Montbrison","cp":"42600","d":"42"},{"n":"Montbéliard","cp":"25200","d":"25"},{"n":"Montceau-les-Mines","cp":"71300","d":"71"},{"n":"Montfermeil","cp":"93370","d":"93"},{"n":"Montgeron","cp":"91230","d":"91"},{"n":"Montigny-lès-Metz","cp":"57950","d":"57"},{"n":"Montluel","cp":"01120","d":"01"},{"n":"Montluçon","cp":"03100","d":"03"},{"n":"Montmarault","cp":"03390","d":"03"},{"n":"Montmorency","cp":"95160","d":"95"},{"n":"Montpellier","cp":"34000","d":"34"},{"n":"Montreuil","cp":"93100","d":"93"},{"n":"Montrouge","cp":"92120","d":"92"},{"n":"Montélimar","cp":"26200","d":"26"},{"n":"Morlaix","cp":"29600","d":"29"},{"n":"Mougins","cp":"06250","d":"06"},{"n":"Moulins","cp":"03000","d":"03"},{"n":"Mulhouse","cp":"68100","d":"68"},{"n":"Muret","cp":"31600","d":"31"},{"n":"Mâcon","cp":"71000","d":"71"},{"n":"Mérignac","cp":"33700","d":"33"},{"n":"Méru","cp":"60110","d":"60"},{"n":"Nancy","cp":"54000","d":"54"},{"n":"Nans-les-Pins","cp":"83860","d":"83"},{"n":"Nanterre","cp":"92000","d":"92"},{"n":"Nantes","cp":"44000","d":"44"},{"n":"Narbonne","cp":"11100","d":"11"},{"n":"Neuilly-sur-Marne","cp":"93330","d":"93"},{"n":"Neuilly-sur-Seine","cp":"92200","d":"92"},{"n":"Nevers","cp":"58000","d":"58"},{"n":"Nice","cp":"06000","d":"06"},{"n":"Niort","cp":"79000","d":"79"},{"n":"Noeux-les-Mines","cp":"62290","d":"62"},{"n":"Nogent-le-Rotrou","cp":"28400","d":"28"},{"n":"Nogent-sur-Marne","cp":"94130","d":"94"},{"n":"Nogent-sur-Oise","cp":"60180","d":"60"},{"n":"Nogent-sur-Seine","cp":"10400","d":"10"},{"n":"Noisy-le-Grand","cp":"93160","d":"93"},{"n":"Noisy-le-Sec","cp":"93130","d":"93"},{"n":"Noumea","cp":"98800","d":"988"},{"n":"Nyons","cp":"26110","d":"26"},{"n":"Néris-les-Bains","cp":"03310","d":"03"},{"n":"Nîmes","cp":"30000","d":"30"},{"n":"Obernai","cp":"67210","d":"67"},{"n":"Olivet","cp":"45160","d":"45"},{"n":"Ollioules","cp":"83190","d":"83"},{"n":"Oloron-Sainte-Marie","cp":"64400","d":"64"},{"n":"Onet-le-Château","cp":"12850","d":"12"},{"n":"Orange","cp":"84100","d":"84"},{"n":"Orly","cp":"94310","d":"94"},{"n":"Orléans","cp":"45000","d":"45"},{"n":"Orvault","cp":"44700","d":"44"},{"n":"Ostwald","cp":"67540","d":"67"},{"n":"Oullins","cp":"69600","d":"69"},{"n":"Oyonnax","cp":"01100","d":"01"},{"n":"Pacé","cp":"35740","d":"35"},{"n":"Palaiseau","cp":"91120","d":"91"},{"n":"Pamiers","cp":"09100","d":"09"},{"n":"Pantin","cp":"93500","d":"93"},{"n":"Papeete","cp":"98714","d":"987"},{"n":"Paris 10e","cp":"75010","d":"75"},{"n":"Paris 11e","cp":"75011","d":"75"},{"n":"Paris 12e","cp":"75012","d":"75"},{"n":"Paris 13e","cp":"75013","d":"75"},{"n":"Paris 14e","cp":"75014","d":"75"},{"n":"Paris 15e","cp":"75015","d":"75"},{"n":"Paris 16e","cp":"75016","d":"75"},{"n":"Paris 17e","cp":"75017","d":"75"},{"n":"Paris 18e","cp":"75018","d":"75"},{"n":"Paris 19e","cp":"75019","d":"75"},{"n":"Paris 1er","cp":"75001","d":"75"},{"n":"Paris 20e","cp":"75020","d":"75"},{"n":"Paris 2e","cp":"75002","d":"75"},{"n":"Paris 3e","cp":"75003","d":"75"},{"n":"Paris 4e","cp":"75004","d":"75"},{"n":"Paris 5e","cp":"75005","d":"75"},{"n":"Paris 6e","cp":"75006","d":"75"},{"n":"Paris 7e","cp":"75007","d":"75"},{"n":"Paris 8e","cp":"75008","d":"75"},{"n":"Paris 9e","cp":"75009","d":"75"},{"n":"Parthenay","cp":"79200","d":"79"},{"n":"Pau","cp":"64000","d":"64"},{"n":"Perpignan","cp":"66000","d":"66"},{"n":"Pertuis","cp":"84120","d":"84"},{"n":"Pessac","cp":"33600","d":"33"},{"n":"Peymeinade","cp":"06530","d":"06"},{"n":"Pierrefeu-du-Var","cp":"83390","d":"83"},{"n":"Pierrefitte-sur-Seine","cp":"93380","d":"93"},{"n":"Pierrelatte","cp":"26700","d":"26"},{"n":"Pithiviers","cp":"45300","d":"45"},{"n":"Plan-de-la-Tour","cp":"83120","d":"83"},{"n":"Ploemeur","cp":"56270","d":"56"},{"n":"Ploufragan","cp":"22440","d":"22"},{"n":"Plougastel-Daoulas","cp":"29470","d":"29"},{"n":"Plouzané","cp":"29280","d":"29"},{"n":"Plérin","cp":"22190","d":"22"},{"n":"Pointe-à-Pitre","cp":"97110","d":"971"},{"n":"Poissy","cp":"78300","d":"78"},{"n":"Poitiers","cp":"86000","d":"86"},{"n":"Pont-de-Claix","cp":"38800","d":"38"},{"n":"Pont-à-Mousson","cp":"54700","d":"54"},{"n":"Pontarlier","cp":"25300","d":"25"},{"n":"Pontault-Combault","cp":"77340","d":"77"},{"n":"Pontivy","cp":"56300","d":"56"},{"n":"Pontoise","cp":"95300","d":"95"},{"n":"Pornic","cp":"44210","d":"44"},{"n":"Port-de-Bouc","cp":"13110","d":"13"},{"n":"Portet-sur-Garonne","cp":"31120","d":"31"},{"n":"Porto-Vecchio","cp":"20137","d":"20"},{"n":"Privas","cp":"07000","d":"07"},{"n":"Puget-sur-Argens","cp":"83480","d":"83"},{"n":"Puget-Ville","cp":"83390","d":"83"},{"n":"Puilboreau","cp":"17138","d":"17"},{"n":"Puteaux","cp":"92800","d":"92"},{"n":"Périgny","cp":"17180","d":"17"},{"n":"Périgueux","cp":"24000","d":"24"},{"n":"Péronnas","cp":"01960","d":"01"},{"n":"Pézenas","cp":"34120","d":"34"},{"n":"Quetigny","cp":"21800","d":"21"},{"n":"Quimper","cp":"29000","d":"29"},{"n":"Quimperlé","cp":"29300","d":"29"},{"n":"Ramatuelle","cp":"83350","d":"83"},{"n":"Rambouillet","cp":"78120","d":"78"},{"n":"Reims","cp":"51100","d":"51"},{"n":"Remire-Montjoly","cp":"97354","d":"973"},{"n":"Remiremont","cp":"88200","d":"88"},{"n":"Rennes","cp":"35000","d":"35"},{"n":"Rethel","cp":"08300","d":"08"},{"n":"Revin","cp":"08500","d":"08"},{"n":"Rezé","cp":"44400","d":"44"},{"n":"Ribérac","cp":"24600","d":"24"},{"n":"Rillieux-la-Pape","cp":"69140","d":"69"},{"n":"Riom","cp":"63200","d":"63"},{"n":"Riorges","cp":"42153","d":"42"},{"n":"Ris-Orangis","cp":"91130","d":"91"},{"n":"Rive-de-Gier","cp":"42800","d":"42"},{"n":"Roanne","cp":"42300","d":"42"},{"n":"Rocbaron","cp":"83136","d":"83"},{"n":"Rochefort","cp":"17300","d":"17"},{"n":"Rodez","cp":"12000","d":"12"},{"n":"Rognac","cp":"13340","d":"13"},{"n":"Romainville","cp":"93230","d":"93"},{"n":"Romans-sur-Isère","cp":"26100","d":"26"},{"n":"Romilly-sur-Seine","cp":"10100","d":"10"},{"n":"Romorantin-Lanthenay","cp":"41200","d":"41"},{"n":"Roquebrune-Cap-Martin","cp":"06190","d":"06"},{"n":"Roquebrune-sur-Argens","cp":"83520","d":"83"},{"n":"Rosny-sous-Bois","cp":"93110","d":"93"},{"n":"Roubaix","cp":"59100","d":"59"},{"n":"Rouen","cp":"76000","d":"76"},{"n":"Royan","cp":"17200","d":"17"},{"n":"Rueil-Malmaison","cp":"92500","d":"92"},{"n":"Ruelle-sur-Touvre","cp":"16600","d":"16"},{"n":"Sablé-sur-Sarthe","cp":"72300","d":"72"},{"n":"Saint-Affrique","cp":"12400","d":"12"},{"n":"Saint-Amand-les-Eaux","cp":"59230","d":"59"},{"n":"Saint-Amand-Montrond","cp":"18200","d":"18"},{"n":"Saint-André","cp":"97440","d":"974"},{"n":"Saint-Avertin","cp":"37550","d":"37"},{"n":"Saint-Avold","cp":"57500","d":"57"},{"n":"Saint-Benoît","cp":"97470","d":"974"},{"n":"Saint-Brieuc","cp":"22000","d":"22"},{"n":"Saint-Chamond","cp":"42400","d":"42"},{"n":"Saint-Claude","cp":"39200","d":"39"},{"n":"Saint-Cloud","cp":"92210","d":"92"},{"n":"Saint-Cyr-sur-Loire","cp":"37540","d":"37"},{"n":"Saint-Cyr-sur-Mer","cp":"83270","d":"83"},{"n":"Saint-Denis","cp":"93200","d":"93"},{"n":"Saint-Denis","cp":"97400","d":"974"},{"n":"Saint-Dizier","cp":"52100","d":"52"},{"n":"Saint-Dié-des-Vosges","cp":"88100","d":"88"},{"n":"Saint-Egrève","cp":"38120","d":"38"},{"n":"Saint-Estève","cp":"66240","d":"66"},{"n":"Saint-Flour","cp":"15100","d":"15"},{"n":"Saint-Fons","cp":"69190","d":"69"},{"n":"Saint-François","cp":"97118","d":"971"},{"n":"Saint-Gaudens","cp":"31800","d":"31"},{"n":"Saint-Genis-Laval","cp":"69230","d":"69"},{"n":"Saint-Genis-Pouilly","cp":"01630","d":"01"},{"n":"Saint-Germain-en-Laye","cp":"78100","d":"78"},{"n":"Saint-Gilles","cp":"30800","d":"30"},{"n":"Saint-Girons","cp":"09200","d":"09"},{"n":"Saint-Grégoire","cp":"35760","d":"35"},{"n":"Saint-Herblain","cp":"44800","d":"44"},{"n":"Saint-Jacques-de-la-Lande","cp":"35136","d":"35"},{"n":"Saint-Jean-de-la-Ruelle","cp":"45140","d":"45"},{"n":"Saint-Jean-de-Luz","cp":"64500","d":"64"},{"n":"Saint-Jean-de-Maurienne","cp":"73300","d":"73"},{"n":"Saint-Julien-en-Genevois","cp":"74160","d":"74"},{"n":"Saint-Junien","cp":"87200","d":"87"},{"n":"Saint-Laurent-du-Maroni","cp":"97320","d":"973"},{"n":"Saint-Laurent-du-Var","cp":"06700","d":"06"},{"n":"Saint-Louis","cp":"68300","d":"68"},{"n":"Saint-Louis","cp":"97450","d":"974"},{"n":"Saint-Lô","cp":"50000","d":"50"},{"n":"Saint-Malo","cp":"35400","d":"35"},{"n":"Saint-Mandé","cp":"94160","d":"94"},{"n":"Saint-Martin-d'Hères","cp":"38400","d":"38"},{"n":"Saint-Martin-de-Crau","cp":"13310","d":"13"},{"n":"Saint-Maur-des-Fossés","cp":"94100","d":"94"},{"n":"Saint-Max","cp":"54130","d":"54"},{"n":"Saint-Maximin-la-Sainte-Baume","cp":"83470","d":"83"},{"n":"Saint-Médard-en-Jalles","cp":"33160","d":"33"},{"n":"Saint-Nazaire","cp":"44600","d":"44"},{"n":"Saint-Omer","cp":"62500","d":"62"},{"n":"Saint-Orens-de-Gameville","cp":"31650","d":"31"},{"n":"Saint-Ouen-l'Aumône","cp":"95310","d":"95"},{"n":"Saint-Ouen-sur-Seine","cp":"93400","d":"93"},{"n":"Saint-Paul","cp":"97460","d":"974"},{"n":"Saint-Paul-lès-Dax","cp":"40990","d":"40"},{"n":"Saint-Pierre","cp":"97410","d":"974"},{"n":"Saint-Pierre-des-Corps","cp":"37700","d":"37"},{"n":"Saint-Pourçain-sur-Sioule","cp":"03500","d":"03"},{"n":"Saint-Priest","cp":"69800","d":"69"},{"n":"Saint-Quentin","cp":"02100","d":"02"},{"n":"Saint-Raphaël","cp":"83700","d":"83"},{"n":"Saint-Sébastien-sur-Loire","cp":"44230","d":"44"},{"n":"Saint-Tropez","cp":"83990","d":"83"},{"n":"Saint-Étienne","cp":"42000","d":"42"},{"n":"Saint-Étienne-du-Rouvray","cp":"76800","d":"76"},{"n":"Sainte-Anne","cp":"97180","d":"971"},{"n":"Sainte-Geneviève-des-Bois","cp":"91700","d":"91"},{"n":"Sainte-Luce","cp":"97228","d":"972"},{"n":"Sainte-Luce-sur-Loire","cp":"44980","d":"44"},{"n":"Sainte-Marie","cp":"97230","d":"972"},{"n":"Sainte-Marie","cp":"97438","d":"974"},{"n":"Sainte-Maxime","cp":"83120","d":"83"},{"n":"Saintes","cp":"17100","d":"17"},{"n":"Sallanches","cp":"74700","d":"74"},{"n":"Salon-de-Provence","cp":"13300","d":"13"},{"n":"Sanary-sur-Mer","cp":"83110","d":"83"},{"n":"Saran","cp":"45770","d":"45"},{"n":"Sarcelles","cp":"95200","d":"95"},{"n":"Sarlat-la-Canéda","cp":"24200","d":"24"},{"n":"Sarrebourg","cp":"57400","d":"57"},{"n":"Sarreguemines","cp":"57200","d":"57"},{"n":"Sartrouville","cp":"78500","d":"78"},{"n":"Saumur","cp":"49400","d":"49"},{"n":"Saverne","cp":"67700","d":"67"},{"n":"Savigny-le-Temple","cp":"77176","d":"77"},{"n":"Savigny-sur-Orge","cp":"91600","d":"91"},{"n":"Sceaux","cp":"92330","d":"92"},{"n":"Schiltigheim","cp":"67300","d":"67"},{"n":"Sedan","cp":"08200","d":"08"},{"n":"Senlis","cp":"60300","d":"60"},{"n":"Sens","cp":"89100","d":"89"},{"n":"Sevran","cp":"93270","d":"93"},{"n":"Seyssinet-Pariset","cp":"38170","d":"38"},{"n":"Signes","cp":"83870","d":"83"},{"n":"Sisteron","cp":"04200","d":"04"},{"n":"Six-Fours-les-Plages","cp":"83140","d":"83"},{"n":"Soissons","cp":"02200","d":"02"},{"n":"Solliès-Pont","cp":"83210","d":"83"},{"n":"Solliès-Toucas","cp":"83210","d":"83"},{"n":"Sorgues","cp":"84700","d":"84"},{"n":"Sotteville-lès-Rouen","cp":"76300","d":"76"},{"n":"Soyaux","cp":"16800","d":"16"},{"n":"Stains","cp":"93240","d":"93"},{"n":"Strasbourg","cp":"67000","d":"67"},{"n":"Sucy-en-Brie","cp":"94370","d":"94"},{"n":"Suresnes","cp":"92150","d":"92"},{"n":"Sète","cp":"34200","d":"34"},{"n":"Sélestat","cp":"67600","d":"67"},{"n":"Talant","cp":"21240","d":"21"},{"n":"Talence","cp":"33400","d":"33"},{"n":"Taradeau","cp":"83460","d":"83"},{"n":"Tarbes","cp":"65000","d":"65"},{"n":"Tassin-la-Demi-Lune","cp":"69160","d":"69"},{"n":"Tavernes","cp":"83670","d":"83"},{"n":"Taverny","cp":"95150","d":"95"},{"n":"Tergnier","cp":"02700","d":"02"},{"n":"Thann","cp":"68800","d":"68"},{"n":"Thiais","cp":"94320","d":"94"},{"n":"Thiers","cp":"63300","d":"63"},{"n":"Thionville","cp":"57100","d":"57"},{"n":"Thonon-les-Bains","cp":"74200","d":"74"},{"n":"Tonneins","cp":"47400","d":"47"},{"n":"Torcy","cp":"77200","d":"77"},{"n":"Toulon","cp":"83000","d":"83"},{"n":"Toulouse","cp":"31000","d":"31"},{"n":"Tourcoing","cp":"59200","d":"59"},{"n":"Tournefeuille","cp":"31170","d":"31"},{"n":"Tournon-sur-Rhône","cp":"07300","d":"07"},{"n":"Tours","cp":"37000","d":"37"},{"n":"Trans-en-Provence","cp":"83720","d":"83"},{"n":"Trappes","cp":"78190","d":"78"},{"n":"Tremblay-en-France","cp":"93290","d":"93"},{"n":"Troyes","cp":"10000","d":"10"},{"n":"Trélazé","cp":"49800","d":"49"},{"n":"Trévoux","cp":"01600","d":"01"},{"n":"Tulle","cp":"19000","d":"19"},{"n":"Ussel","cp":"19200","d":"19"},{"n":"Uzès","cp":"30700","d":"30"},{"n":"Val-de-Reuil","cp":"27100","d":"27"},{"n":"Valence","cp":"26000","d":"26"},{"n":"Valenciennes","cp":"59300","d":"59"},{"n":"Valentigney","cp":"25700","d":"25"},{"n":"Vallauris","cp":"06220","d":"06"},{"n":"Vandœuvre-lès-Nancy","cp":"54500","d":"54"},{"n":"Vannes","cp":"56000","d":"56"},{"n":"Vanves","cp":"92170","d":"92"},{"n":"Varennes-sur-Allier","cp":"03150","d":"03"},{"n":"Vaulx-en-Velin","cp":"69120","d":"69"},{"n":"Vauvert","cp":"30600","d":"30"},{"n":"Vence","cp":"06140","d":"06"},{"n":"Vendargues","cp":"34740","d":"34"},{"n":"Vendôme","cp":"41100","d":"41"},{"n":"Verdun","cp":"55100","d":"55"},{"n":"Versailles","cp":"78000","d":"78"},{"n":"Vertou","cp":"44120","d":"44"},{"n":"Vesoul","cp":"70000","d":"70"},{"n":"Vezin-le-Coquet","cp":"35132","d":"35"},{"n":"Vichy","cp":"03200","d":"03"},{"n":"Vidauban","cp":"83550","d":"83"},{"n":"Vienne","cp":"38200","d":"38"},{"n":"Vierzon","cp":"18100","d":"18"},{"n":"Villefontaine","cp":"38090","d":"38"},{"n":"Villefranche-de-Rouergue","cp":"12200","d":"12"},{"n":"Villejuif","cp":"94800","d":"94"},{"n":"Villemomble","cp":"93250","d":"93"},{"n":"Villenave-d'Ornon","cp":"33140","d":"33"},{"n":"Villeneuve-d'Ascq","cp":"59650","d":"59"},{"n":"Villeneuve-la-Garenne","cp":"92390","d":"92"},{"n":"Villeneuve-Loubet","cp":"06270","d":"06"},{"n":"Villeneuve-Saint-Georges","cp":"94190","d":"94"},{"n":"Villeneuve-sur-Lot","cp":"47300","d":"47"},{"n":"Villepinte","cp":"93420","d":"93"},{"n":"Villers-Cotterêts","cp":"02600","d":"02"},{"n":"Villers-lès-Nancy","cp":"54600","d":"54"},{"n":"Villeurbanne","cp":"69100","d":"69"},{"n":"Villiers-sur-Marne","cp":"94350","d":"94"},{"n":"Vincennes","cp":"94300","d":"94"},{"n":"Vire","cp":"14500","d":"14"},{"n":"Viriat","cp":"01440","d":"01"},{"n":"Viry-Châtillon","cp":"91170","d":"91"},{"n":"Vitrolles","cp":"13127","d":"13"},{"n":"Vitry-le-François","cp":"51300","d":"51"},{"n":"Vitry-sur-Seine","cp":"94400","d":"94"},{"n":"Vitré","cp":"35500","d":"35"},{"n":"Voiron","cp":"38500","d":"38"},{"n":"Vénissieux","cp":"69200","d":"69"},{"n":"Wattignies","cp":"59139","d":"59"},{"n":"Wattrelos","cp":"59150","d":"59"},{"n":"Wittenheim","cp":"68270","d":"68"},{"n":"Woippy","cp":"57140","d":"57"},{"n":"Yssingeaux","cp":"43200","d":"43"},{"n":"Yzeure","cp":"03400","d":"03"},{"n":"Échirolles","cp":"38130","d":"38"},{"n":"Épernay","cp":"51200","d":"51"},{"n":"Épinal","cp":"88000","d":"88"},{"n":"Épinay-sur-Seine","cp":"93800","d":"93"},{"n":"Évreux","cp":"27000","d":"27"},{"n":"Évry-Courcouronnes","cp":"91000","d":"91"}];
+
+// Normalize string for search (remove accents, lowercase)
+function norm(s) {
+  return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/['-]/g,' ');
+}
+
+const cityTimers = {};
+
+async function citySearch(input, cpFieldId, sugId) {
+  const q   = input.value.trim();
+  const sug = document.getElementById(sugId);
+
+  if (q.length < 2) { sug.classList.remove('open'); return; }
+
+  clearTimeout(cityTimers[sugId]);
+  cityTimers[sugId] = setTimeout(async () => {
+
+    let results = [];
+    const qn = norm(q);
+    const isNum = /^\d+$/.test(q);
+
+    // 1. Search local database first
+    if (isNum) {
+      results = VILLES_FR.filter(v => v.cp.startsWith(q)).slice(0, 8);
+    } else {
+      results = VILLES_FR.filter(v => norm(v.n).startsWith(qn)).slice(0, 8);
+      if (results.length < 4) {
+        // also match anywhere in name
+        const extra = VILLES_FR.filter(v => !norm(v.n).startsWith(qn) && norm(v.n).includes(qn));
+        results = [...results, ...extra].slice(0, 8);
+      }
+    }
+
+    // 2. Try API for richer results (if online)
+    try {
+      const url = isNum
+        ? `https://geo.api.gouv.fr/communes?codePostal=${encodeURIComponent(q)}&fields=nom,codesPostaux,codeDepartement&limit=8`
+        : `https://geo.api.gouv.fr/communes?nom=${encodeURIComponent(q)}&fields=nom,codesPostaux,codeDepartement&limit=10&boost=population`;
+      const controller = new AbortController();
+      const tid = setTimeout(() => controller.abort(), 2000); // 2s timeout
+      const res  = await fetch(url, { signal: controller.signal });
+      clearTimeout(tid);
+      const data = await res.json();
+      // Merge API results (deduplicate by CP)
+      const existingCPs = new Set(results.map(r => r.cp));
+      data.forEach(c => {
+        const cp = c.codesPostaux?.[0] || '';
+        if (!existingCPs.has(cp)) {
+          results.push({ n: c.nom, cp, d: c.codeDepartement || '' });
+          existingCPs.add(cp);
+        }
+      });
+      results = results.slice(0, 10);
+    } catch(e) {
+      // Offline or slow — use local results only
+    }
+
+    if (!results.length) { sug.classList.remove('open'); return; }
+
+    sug.innerHTML = '';
+    results.forEach(city => {
+      const div = document.createElement('div');
+      div.className = 'city-item';
+      div.innerHTML = `
+        <div>
+          <div class="city-item-name">${city.n}</div>
+          <div class="city-item-dep">Dép. ${city.d}</div>
+        </div>
+        <span class="city-item-cp">${city.cp}</span>
+      `;
+      div.addEventListener('mousedown', e => {
+        e.preventDefault();
+        input.value = city.n;
+        document.getElementById(cpFieldId).value = city.cp;
+        sug.classList.remove('open');
+      });
+      sug.appendChild(div);
+    });
+
+    sug.classList.add('open');
+
+  }, 150);
+}
+
+// Close suggestions when clicking outside
+document.addEventListener('click', e => {
+  document.querySelectorAll('.city-sug').forEach(s => {
+    if (!s.parentElement.contains(e.target)) s.classList.remove('open');
+  });
+});
+
+// ===================== KEYBOARD SCROLL FIX =====================
+// Scroll focused input into view above the keyboard on Android
+function scrollToFocused(el) {
+  setTimeout(() => {
+    if (!el) return;
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, 320); // wait for keyboard animation
+}
+
+// Attach to all inputs, selects, textareas — including dynamically added ones
+document.addEventListener('focusin', e => {
+  const tag = e.target.tagName;
+  if (tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA') {
+    scrollToFocused(e.target);
+  }
+});
+
+// Also use visualViewport API if available (Chrome Android)
+if (window.visualViewport) {
+  window.visualViewport.addEventListener('resize', () => {
+    const focused = document.activeElement;
+    if (focused && ['INPUT','SELECT','TEXTAREA'].includes(focused.tagName)) {
+      scrollToFocused(focused);
+    }
+  });
+}
+
+// ===================== INIT =====================
+window.addEventListener('DOMContentLoaded', () => {
+  initCanvas('signBailleur');
+  initCanvas('signLocataire');
+  initCanvas('signEDLBailleur');
+  initCanvas('signEDLLocataire');
+  selectType('vide');
+  setEDL('vide');
+  applyHouseIcons();
+  updateUI();
+
+  // Restore saved data if available
+  const savedAt = restaurerDonnees();
+  if (savedAt) {
+    setTimeout(() => {
+      const el = document.getElementById('autoSaveIndicator');
+      if (el) { el.textContent = `📂 Données restaurées — ${savedAt}`; el.style.opacity = '1'; setTimeout(() => el.style.opacity='0', 4000); }
+    }, 500);
+  }
+
+  // Live mail preview
+  ['mailObjet','mailCorps','mailBailleur','mailLocataire'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', buildMailPreview);
+  });
+
+  // Sync email fields live as user types in bailleur/locataire steps
+  document.getElementById('bailleurEmail').addEventListener('input', () => {
+    document.getElementById('mailBailleur').value = document.getElementById('bailleurEmail').value;
+    buildMailPreview();
+  });
+  document.getElementById('locataireEmail').addEventListener('input', () => {
+    document.getElementById('mailLocataire').value = document.getElementById('locataireEmail').value;
+    buildMailPreview();
+  });
+});
+</script>
+<script>
+// ===================== OFFLINE DETECTION =====================
+const offlineBanner = document.getElementById('offlineBanner');
+const onlineBanner  = document.getElementById('onlineBanner');
+let onlineTimer = null;
+
+function updateOnlineStatus() {
+  if (!navigator.onLine) {
+    offlineBanner.style.display = 'block';
+    onlineBanner.style.display  = 'none';
+    document.querySelector('.header').style.marginTop = '36px';
+  } else {
+    offlineBanner.style.display = 'none';
+    document.querySelector('.header').style.marginTop = '';
+    onlineBanner.style.display = 'block';
+    clearTimeout(onlineTimer);
+    onlineTimer = setTimeout(() => { onlineBanner.style.display = 'none'; }, 3000);
+  }
+}
+
+window.addEventListener('online',  updateOnlineStatus);
+window.addEventListener('offline', updateOnlineStatus);
+updateOnlineStatus();
+
+// ===================== LOCAL DATA PERSISTENCE =====================
+const STORAGE_KEY = 'baileve_data';
+
+// ===================== HOUSE SVG ICON =====================
+const HOUSE_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" style="flex-shrink:0;vertical-align:middle"><path d="M12,3L2,12h3v8h5v-5h4v5h5v-8h3L12,3z M17,14.5c-0.3,0-0.5-0.2-0.7-0.4l-1.5-2c-0.3-0.4-0.8-0.6-1.3-0.6h-2.1c-0.5,0-1,0.2-1.3,0.6l-1.5,2c-0.2,0.2-0.4,0.4-0.7,0.4c-0.5,0-1-0.4-1-1c0-0.3,0.1-0.5,0.3-0.7l1.5-2C9.4,10.3,10.2,10,11.1,10h1.8c0.9,0,1.7,0.3,2.3,0.8l1.5,2c0.2,0.2,0.3,0.4,0.3,0.7C18,14.1,17.5,14.5,17,14.5z"/></svg>`;
+
+// Replace 🏠 emoji in key labels with the SVG icon
+function applyHouseIcons() {
+  // EDL tab
+  const edlTab = document.getElementById('edl-tab-vide');
+  if (edlTab) edlTab.innerHTML = HOUSE_SVG + ' Vide';
+
+  // EDL type label
+  const edlLabel = document.getElementById('edlTypeLabel');
+  if (edlLabel && edlLabel.textContent.includes('vide')) {
+    edlLabel.innerHTML = HOUSE_SVG + ' État des lieux — Location vide';
+  }
+
+  // Info box vide
+  document.querySelectorAll('.ib-blue strong').forEach(el => {
+    if (el.textContent === 'Location vide') {
+      el.previousSibling && (el.parentElement.innerHTML =
+        el.parentElement.innerHTML.replace('🏠', HOUSE_SVG));
+    }
+  });
+}
+
+function sauvegarderDonnees() {
+  try {
+    const fields = {};
+    document.querySelectorAll('input:not([type=file]), select, textarea').forEach(el => {
+      if (el.id) fields[el.id] = el.value;
+    });
+    fields['_contractType'] = contractType;
+    fields['_savedAt']      = new Date().toLocaleString('fr-FR');
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(fields));
+    return fields['_savedAt'];
+  } catch(e) { return null; }
+}
+
+function restaurerDonnees() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return false;
+    const fields = JSON.parse(raw);
+    Object.entries(fields).forEach(([id, val]) => {
+      if (id.startsWith('_')) return;
+      const el = document.getElementById(id);
+      if (el && el.type !== 'file') el.value = val;
+    });
+    if (fields['_contractType']) {
+      contractType = fields['_contractType'];
+      selectType(contractType);
+    }
+    return fields['_savedAt'] || true;
+  } catch(e) { return false; }
+}
+
+function effacerDonnees() {
+  localStorage.removeItem(STORAGE_KEY);
+}
+
+// Auto-save toutes les 30 secondes
+setInterval(() => {
+  const t = sauvegarderDonnees();
+  const el = document.getElementById('autoSaveIndicator');
+  if (t && el) {
+    el.textContent = `💾 Sauvegardé à ${t}`;
+    el.style.opacity = '1';
+    setTimeout(() => el.style.opacity = '0', 2500);
+  }
+}, 30000);
+
+// ===================== PWA INSTALL PROMPT =====================
+let deferredPrompt = null;
+
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  const btn = document.getElementById('installBtn');
+  if (btn) btn.style.display = 'flex';
+});
+
+window.addEventListener('appinstalled', () => {
+  deferredPrompt = null;
+  const btn = document.getElementById('installBtn');
+  if (btn) btn.style.display = 'none';
+});
+
+function installerApp() {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
+  } else {
+    alert('📲 Pour installer Baileve :\n\n• Android Chrome : Menu ⋮ → "Ajouter à l\'écran d\'accueil"\n• Safari iOS : Bouton Partager ↑ → "Sur l\'écran d\'accueil"');
+  }
+}
+</script>
+</body>
+</html>
