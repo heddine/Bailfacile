@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bailfacile-v4';
+const CACHE_NAME = 'bailfacile-v5';
 const PRECACHE_URLS = ['index.html','manifest.json','icon-192.png','icon-512.png'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE_NAME).then(c => c.addAll(PRECACHE_URLS)).then(() => self.skipWaiting()));
