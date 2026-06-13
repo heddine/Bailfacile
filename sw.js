@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bailfacile-v1';
+const CACHE_NAME = 'bailfacile-v';
 
 const PRECACHE_URLS = [
   'index.html',
